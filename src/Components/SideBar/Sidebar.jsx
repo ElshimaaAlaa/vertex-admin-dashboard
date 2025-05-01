@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import "./sidebar.scss";
 import { useNavigate } from "react-router-dom";
 import Home from "../../Svgs/Home";
-import Cat from "../../Svgs/Cat";
-import Products from "../../Svgs/product";
-import Orders from "../../Svgs/Orders";
 import Clients from "../../Svgs/Clients";
-import Reports from "../../Svgs/reports";
-import Settings from "../../Svgs/Settings";
 import Support from "../../Svgs/Support";
 import Help from "../../Svgs/Help";
 import Logo from "../../Svgs/logo";
 import Text from "../../Svgs/text";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import Discount from "../../Svgs/Discount";
 import Invoices from "../../Svgs/Invoives";
+import ShopIcon from "../../Svgs/ShopIcon";
+import Subscriptions from "../../Svgs/Subscriptions";
+import Permisions from "../../Svgs/Permissions";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -51,89 +48,55 @@ const Sidebar = () => {
       id: "dashboard",
       label: "Dashboard",
       icon: <Home />,
-      onclick: () => navigate("Analytics"),
+      onclick: () => navigate(""),
     },
     {
-      id: "categories",
-      label: "Categories",
-      icon: <Cat />,
+      id: "Shops",
+      label: "Shops",
+      icon: <ShopIcon />,
       padding: "3px",
-      onclick: () => navigate("categories"),
+      onclick: () => navigate(""),
     },
     {
-      id: "products",
-      label: "Products",
-      icon: <Products />,
-      padding: "3px",
-      onclick: () => navigate("products"),
-    },
-    {
-      id: "orders",
-      label: "Orders",
-      icon: <Orders />,
-      subItems: [
-        {
-          id: "orders-pending",
-          label: "Received Orders",
-          onclick: () => navigate("RecivedOrders"),
-        },
-        {
-          id: "orders-processing",
-          label: "Refund Requests",
-          onclick: () => navigate("RefundRequests"),
-        },
-      ],
-    },
-    {
-      id: "invoices",
-      label: "Invoices",
+      id: "Users",
+      label: "Users",
       icon: <Invoices />,
       padding: "4px",
-      onclick: () => navigate("AllInvoices"),
+      onclick: () => navigate(""),
     },
     {
-      id: "clients",
+      id: "Customers",
       label: "Customers",
       icon: <Clients />,
       padding: "3px",
-      onclick: () => navigate("AllCustomers"),
     },
     {
-      id: "promotions",
-      label: "Disc and Promotion",
-      icon: <Discount />,
-      padding: "5px",
-      onclick: () => navigate("AllDiscounts"),
-    },
-    {
-      id: "reports",
-      label: "Reports",
-      icon: <Reports />,
-      onclick: () => navigate("Analytics"),
-    },
-    {
-      id: "settings",
-      label: "Settings",
-      icon: <Settings />,
+      id: "Subscriptions",
+      label: "Subscriptions",
+      icon: <Subscriptions />,
+      padding: "2px",
       subItems: [
         {
-          id: "shipping-providers",
-          label: "Shipping Providers",
-          onclick: () => navigate("ShippingProviders"),
+          id: "Plans",
+          label: "Plans",
+          onclick: () => navigate(""),
         },
         {
-          id: "payment-methods",
-          label: "Payment Methods",
-          onclick: () => navigate("PaymentMethods"),
-        },
-        {
-          id: "support-questions",
-          label: "Support Questions",
-          onclick: () => navigate("SupportQuestion"),
+          id: "Shop subscriptions",
+          label: "Shop subscriptions",
+          onclick: () => navigate(""),
         },
       ],
     },
+    {
+      id: "Permisions",
+      label: "Permisions",
+      icon: <Permisions />,
+      padding: "2px",
+      onclick: () => navigate(""),
+    },
   ];
+
   const bottomMenuItems = [
     {
       id: "support",
@@ -314,5 +277,4 @@ const Sidebar = () => {
     </div>
   );
 };
-
 export default Sidebar;
