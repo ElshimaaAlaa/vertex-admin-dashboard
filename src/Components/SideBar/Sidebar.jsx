@@ -48,21 +48,21 @@ const Sidebar = () => {
       id: "dashboard",
       label: "Dashboard",
       icon: <Home />,
-      onclick: () => navigate(""),
+      onclick: () => navigate("Home"),
     },
     {
       id: "Shops",
       label: "Shops",
       icon: <ShopIcon />,
       padding: "3px",
-      onclick: () => navigate(""),
+      onclick: () => navigate("Shops"),
     },
     {
       id: "Users",
       label: "Users",
       icon: <Invoices />,
       padding: "4px",
-      onclick: () => navigate(""),
+      onclick: () => navigate("Users"),
     },
     {
       id: "Customers",
@@ -93,7 +93,7 @@ const Sidebar = () => {
       label: "Permisions",
       icon: <Permisions />,
       padding: "2px",
-      onclick: () => navigate(""),
+      onclick: () => navigate("AllPermissions"),
     },
   ];
 
@@ -102,7 +102,7 @@ const Sidebar = () => {
       id: "support",
       label: "Support",
       icon: <Support />,
-      onclick: () => navigate("support"),
+      onclick: () => navigate("Support"),
     },
     {
       id: "help",

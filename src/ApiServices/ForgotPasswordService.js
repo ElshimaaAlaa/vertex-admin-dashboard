@@ -12,9 +12,8 @@ export const ForgotPasswordService = async (email) => {
         "Content-Type": "application/json",
       },
     });
-
     if (response.status === 200) {
-      localStorage.setItem("Email Admin", email);
+      localStorage.setItem("Admin Email", email);
       return response.data;
     }
   } catch (error) {

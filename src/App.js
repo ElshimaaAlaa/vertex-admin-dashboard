@@ -10,6 +10,13 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import MainInfo from "./Pesonal Information/Main For Personal Information/MainInfo";
 import PersonalInformation from "./Pesonal Information/Personal Information/PersonalInformation";
 import EditInfo from "./Pesonal Information/Edit Personal Information/EditInfo";
+import Shops from "./Pages/Shops/Shops";
+import Users from "./Pages/Users/Users";
+import AddUser from "./Pages/Users/AddUser";
+import Support from "./Pages/Support/Support";
+import Faqs from "./Pages/Faqs/Faqs";
+import Home from "./Pages/Home/Home";
+import AllPermissions from "./Pages/Permissions/AllPermissions";
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +39,6 @@ function App() {
       </div>
     );
   }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -54,6 +60,16 @@ function App() {
             <Route index element={<PersonalInformation />} />
             <Route path="EditInfo" element={<EditInfo />} />
           </Route>
+          {/* shops */}
+          <Route path="Shops" element={<Shops />} />
+          {/* users */}
+          <Route path="Users" element={<Users />} />
+          <Route path="AddUser" element={<AddUser />} />
+          {/* pages */}
+          <Route path="Home" element={<Home />} />
+          <Route path="Support" element={<Support />} />
+          <Route path="Faqs" element={<Faqs />} />
+          <Route path="AllPermissions" element={<AllPermissions/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

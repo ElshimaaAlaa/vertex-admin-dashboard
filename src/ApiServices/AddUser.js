@@ -1,26 +1,24 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
 const live_shop_domain = localStorage.getItem("live_shop_domain");
-const role = localStorage.getItem("role");
-export const sendSupport = async (email, name, phone, message) => {
+export const addUser = async (formData) => {
   try {
     const response = await axios({
+      url: `${API_BASE_URL}${live_shop_domain}/api/admin/users/store`,
       method: "POST",
-      url: `${API_BASE_URL}${live_shop_domain}/api/${role}/send-contact`,
-      data: { email, name, phone, message },
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
+      data: { formData },
     });
     if (response.status === 200) {
-      console.log("Support sent successfully");
-      return response.data;
+      console.log("user added successfully");
     }
   } catch (error) {
-    console.error("Failed to send support", error);
+    console.error("Failed to add user", error);
     throw error;
   }
 };

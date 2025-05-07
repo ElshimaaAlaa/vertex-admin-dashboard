@@ -14,20 +14,25 @@ import PasswordInput from "../../Components/Password Input/PasswordInput";
 function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // Initialize with rememberMe from localStorage if credentials exist
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
+    rememberMe: false
   });
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("Email");
     const savedPassword = localStorage.getItem("password");
     if (savedEmail && savedPassword) {
-      setInitialValues({ email: savedEmail, password: savedPassword });
-      setRememberMe(true);
+      setInitialValues({
+        email: savedEmail,
+        password: savedPassword,
+        rememberMe: true // This will make the checkbox checked
+      });
     }
   }, []);
 
@@ -45,10 +50,11 @@ function AdminLogin() {
     setError(null);
     try {
       await loginService(values.email, values.password);
-      console.log("Logged in successfully");
-      if (rememberMe) {
+      if (values.rememberMe) {
+        localStorage.setItem("Email", values.email);
         localStorage.setItem("password", values.password);
       } else {
+        localStorage.removeItem("Email");
         localStorage.removeItem("password");
       }
       setTimeout(() => {
@@ -72,7 +78,7 @@ function AdminLogin() {
         <meta charSet="utf-8" />
         <title>Login</title>
       </Helmet>
-      <div className="loginContainer w-[350px] p-5 lg:p-7 md:p-7  lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md">
+      <div className="loginContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md">
         <img
           src="/assets/svgs/vertex.svg"
           alt="logo"
@@ -90,8 +96,9 @@ function AdminLogin() {
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
+          enableReinitialize={true}
         >
-          {({ errors, touched }) => (
+          {({ values, setFieldValue, errors, touched }) => (
             <Form className="loginForm mt-4">
               <AuthInputField
                 name={"email"}
@@ -109,24 +116,29 @@ function AdminLogin() {
               />
               {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
               <div className="flex items-center justify-between mt-5">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <label className="inline-flex items-center cursor-pointer">
                     <Field
-                      as="input"
                       type="checkbox"
                       name="rememberMe"
                       className="hidden peer"
-                      checked={rememberMe}
-                      onChange={() => setRememberMe(!rememberMe)}
+                      checked={values.rememberMe}
+                      onChange={(e) => setFieldValue("rememberMe", e.target.checked)}
                     />
-                    <span className="w-4 h-4 border-2 border-gray-300 rounded flex items-center justify-center transition-all duration-200 ">
-                      <svg
-                        className="w-3 h-3 text-primary opacity-0 transition-all duration-200 peer-checked:opacity-100"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-                      </svg>
+                    <span className={`w-4 h-4 border-2 rounded flex items-center justify-center transition-all duration-200 ${
+                      values.rememberMe 
+                        ? "border-primary bg-primary" 
+                        : "border-gray-300"
+                    }`}>
+                      {values.rememberMe && (
+                        <svg
+                          className="w-3 h-3 text-white"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
+                        </svg>
+                      )}
                     </span>
                     <span className="text-11 lg:text-13 text-gray-600 ms-1">
                       Remember Me
@@ -164,4 +176,5 @@ function AdminLogin() {
     </div>
   );
 }
+
 export default AdminLogin;

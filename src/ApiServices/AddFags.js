@@ -11,7 +11,7 @@ export const addFaqs = async (question, answer) => {
         "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: { question, answer },
     });

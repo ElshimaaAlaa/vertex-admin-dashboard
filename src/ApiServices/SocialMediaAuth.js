@@ -19,5 +19,4 @@ const SocialMediaAuth = async (provider) => {
     throw error;
   }
 };
-
 export default SocialMediaAuth;

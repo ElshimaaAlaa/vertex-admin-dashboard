@@ -3,7 +3,7 @@ import { Search} from "lucide-react";
 
 function SearchBar({onclick , value ,onchange ,text , icon}) {
   return (
-    <div className="flex justify-between items-center gap-5 bg-white mb-5 rounded-md">
+    <div className="flex justify-between items-center gap-3 bg-white mb-5 rounded-md">
       <div className="relative w-full">
         <Search
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5"

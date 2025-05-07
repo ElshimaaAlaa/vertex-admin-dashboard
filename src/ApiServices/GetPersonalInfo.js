@@ -7,7 +7,7 @@ export const GetPersonalInfo = async () => {
       url: `${API_BASE_URL}${live_shop_domain}/api/admin/profile`,
       method: "GET",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {

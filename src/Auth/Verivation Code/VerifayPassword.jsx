@@ -24,7 +24,7 @@ function VerifayPassword() {
 
   const handleSubmit = async (values) => {
     setLoading(true);
-    const email = localStorage.getItem("Email Admin");
+    const email = localStorage.getItem("Admin Email");
     const otp =
       values.otp1 +
       values.otp2 +

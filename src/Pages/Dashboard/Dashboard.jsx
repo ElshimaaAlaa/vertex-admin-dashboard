@@ -3,7 +3,6 @@ import Navbar from "../../Components/NavBar/Navbar";
 import Sidebar from "../../Components/SideBar/Sidebar";
 import { Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
 function Dashboard() {
   return (
     <>
