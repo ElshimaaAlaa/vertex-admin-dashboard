@@ -10,7 +10,6 @@ function AllPermissions() {
         <p className="text-gray-400 text-13">Permissions / Roles</p>
         <h3 className="font-bold mt-2 text-16">Roles</h3>
       </section>
-      
     </div>
   );
 }
