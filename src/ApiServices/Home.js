@@ -4,7 +4,7 @@ const live_shop_domain = localStorage.getItem("live_shop_domain");
 export const getHome = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live_shop_domain}/api/admin/home`,
+      url: `${API_BASE_URL}${live_shop_domain}/api/admin/dashboard`,
       method: "GET",
       headers: {
         "Accept-Language": "en",

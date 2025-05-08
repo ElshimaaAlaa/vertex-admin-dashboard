@@ -4,7 +4,7 @@ const ReportsItem = ({
   icon: Icon,
   title,
   totalNumber,
-  percentage,
+  change_rate,
   duration,
 }) => (
   <div className="bg-white rounded-md border border-gray-200 flex-1 min-w-[200px]">
@@ -15,13 +15,13 @@ const ReportsItem = ({
     <div className="flex items-center gap-4 ps-4">
       <h1 className="text-2xl font-bold">{totalNumber}</h1>
       <p
-        className={`text-13 font-bold rounded-md p-1 ${
-          percentage?.includes("+") || percentage?.includes("زيادة")
-            ? "text-[#34B41E] bg-[#E7F6E5]"
-            : "text-red-600 bg-red-50"
+        className={`font-bold rounded-md py-1 px-3 text-12 ${
+          change_rate?.includes("-") || change_rate?.includes("نقص")
+            ? "text-red-600 bg-red-50"
+            : "text-[#34B41E] bg-[#E7F6E5]"
         }`}
       >
-        {percentage}
+        {change_rate}
       </p>
     </div>
     <p className="text-xs text-gray-400 mt-3 mb-3 ps-4">{duration}</p>

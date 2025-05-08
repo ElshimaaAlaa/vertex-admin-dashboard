@@ -46,7 +46,7 @@ const RevenueChart = ({ data }) => {
   const maxValue = Math.max(...chartData.map((item) => item.value), 0);
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-10 ">
       <h3 className="font-bold text-17">Monthly Revenue</h3>
       <div className="flex items-center justify-between my-3">
         <p className="text-primary font-bold text-lg">

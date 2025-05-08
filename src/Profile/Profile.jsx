@@ -11,15 +11,19 @@ import {
 import LogOut from "../Auth/LogOut/LogOut";
 import { useNavigate } from "react-router-dom";
 import { GetPersonalInfo } from "../ApiServices/GetPersonalInfo";
+
 export default function ProfileMenu() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(false);
-  const userImage = localStorage.getItem("User image");
+  const userImage = localStorage.getItem("admin pic");
   const userName = localStorage.getItem("User Name");
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
   const [personalInfo, setPersonalInfo] = useState({});
+
+  // Default image path
+  const defaultImage = "/assets/images/user.png";
 
   useEffect(() => {
     const getInfo = async () => {
@@ -32,6 +36,7 @@ export default function ProfileMenu() {
     };
     getInfo();
   }, []);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -59,11 +64,14 @@ export default function ProfileMenu() {
       >
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <img
-            src={userImage}
+            src={userImage || defaultImage}
             alt="Profile"
             width={40}
             height={40}
             className="object-cover"
+            onError={(e) => {
+              e.target.src = defaultImage;
+            }}
           />
         </div>
         <ChevronUp className="w-4 h-4 text-black" />
@@ -76,11 +84,14 @@ export default function ProfileMenu() {
           <div className="flex items-center gap-4 py-2">
             <div className="w-14 h-14 rounded-full overflow-hidden">
               <img
-                src={userImage}
+                src={userImage || defaultImage}
                 alt="Profile"
                 width={50}
                 height={50}
                 className="object-cover"
+                onError={(e) => {
+                  e.target.src = defaultImage;
+                }}
               />
             </div>
             <div className="flex flex-col gap-1">

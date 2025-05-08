@@ -17,6 +17,9 @@ import Support from "./Pages/Support/Support";
 import Faqs from "./Pages/Faqs/Faqs";
 import Home from "./Pages/Home/Home";
 import AllPermissions from "./Pages/Permissions/AllPermissions";
+import StoreTheme from "./Profile/Store/ThemStore";
+import StoreInformation from "./Profile/Store/StoreInformation";
+import Pricing from "./Profile/Store/PrincingPlan";
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -59,6 +62,9 @@ function App() {
           <Route path="MainInfo" element={<MainInfo />}>
             <Route index element={<PersonalInformation />} />
             <Route path="EditInfo" element={<EditInfo />} />
+            <Route path="StoreTheme" element={<StoreTheme/>}/>
+            <Route path="StoreInformation" element={<StoreInformation/>}/>
+            <Route path="Pricing" element={<Pricing/>}/>
           </Route>
           {/* shops */}
           <Route path="Shops" element={<Shops />} />

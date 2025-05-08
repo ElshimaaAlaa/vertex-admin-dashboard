@@ -1,10 +1,10 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
 const live_shop_domain = localStorage.getItem("live_shop_domain");
-export const getShops = async () => {
+export const getPermissions = async () => {
   try {
     const response = await axios({
-      url:`${API_BASE_URL}${live_shop_domain}/api/admin/shops?dashboard=1`,
+      url: `${API_BASE_URL}${live_shop_domain}api/admin/permissions`,
       method: "GET",
       headers: {
         "Accept-Language": "en",
@@ -16,7 +16,7 @@ export const getShops = async () => {
       return response.data.data;
     }
   } catch (error) {
-    console.error("Failed to fetch faqs: ", error);
+    console.error("Failed to fetch permissions: ", error);
     throw error;
   }
 };

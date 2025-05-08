@@ -8,21 +8,31 @@ function PersonalInformation() {
   const navigate = useNavigate();
   const [personalInfo, setPersonalInfo] = useState({});
   const [error, setError] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     const getInfo = async () => {
       try {
         const data = await GetPersonalInfo();
         setPersonalInfo(data);
+        
+        // Clean and set the image URL
+        if (data?.image) {
+          const cleanedUrl = data.image.replace(/\\\//g, '/');
+          setImageUrl(cleanedUrl);
+          localStorage.setItem('admin-image', cleanedUrl);
+        }
       } catch (error) {
         console.error("Failed to fetch personal info:", error);
-        setError(
-          "Failed to load personal information. Please try again later."
-        );
+        setError("Failed to load personal information. Please try again later.");
       }
     };
     getInfo();
   }, []);
+
+  const handleImageError = (e) => {
+    e.target.src = "/assets/images/user.png";
+  };
 
   return (
     <div>
@@ -38,61 +48,51 @@ function PersonalInformation() {
         />
       </Helmet>
       <section>
-        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-          <h1 className="font-bold text-[20px] mb-4 md:mb-0">
-            Personal Information
-          </h1>
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <h1 className="font-bold text-[18px]">Profile</h1>
           <button
             onClick={() => navigate("EditInfo", { state: personalInfo })}
-            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-3 w-24 rounded-md"
+            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md"
             aria-label="Edit personal information"
           >
             <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />
             Edit
           </button>
         </div>
-        {error && (
-          <div className="bg-red-100 text-red-600 p-3 rounded-md mb-6">
-            {error}
-          </div>
-        )}
-        <div className="flex flex-col md:flex-row items-center gap-5 my-5 border rounded-md p-5 w-full">
+        <div className="flex flex-col md:flex-row items-center gap-5 my-5 border rounded-md p-3 w-full">
           <img
-            src={personalInfo?.image || "/assets/images/default-profile.png"}
+            src={imageUrl || localStorage.getItem('admin-image') || "/assets/images/user.png"}
             alt="User profile"
-            className="rounded-xl w-32 h-24 md:w:24 md:h-24 object-cover"
-            onError={(e) => {
-              e.target.src = "/assets/images/default-profile.png";
-            }}
+            className="rounded-xl w-32 h-24 md:w-32 md:h-24 object-cover"
+            onError={handleImageError}
           />
           <div className="text-center md:text-left">
-            <h2 className="font-semibold mt-3">
+            <h2 className="font-semibold text-16">
               {personalInfo?.name || "N/A"}
             </h2>
-            <p className="text-gray-400 mt-2">
+            <p className="text-gray-400 text-14 mt-1">
               {personalInfo?.role || "Vertex CEO"}
             </p>
           </div>
         </div>
-        {/* Name, Phone, and Email Section */}
-        <div className="border rounded-md p-5 w-full">
+        <div className="border rounded-md p-3 w-full">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-96">
             <div>
               <p className="text-gray-400 text-15">Name</p>
-              <h3 className="text-14">
+              <h3 className="text-13">
                 {personalInfo?.name || "N/A"}
               </h3>
             </div>
             <div>
               <p className="text-gray-400 text-15">Email</p>
-              <h3 className="text-14">
+              <h3 className="text-13">
                 {personalInfo?.email || "N/A"}
               </h3>
             </div>
           </div>
           <div className="mt-5">
             <p className="text-gray-400 text-15">Phone</p>
-            <h3 className="text-14">
+            <h3 className="text-13">
               {personalInfo?.phone || "N/A"}
             </h3>
           </div>
@@ -102,4 +102,5 @@ function PersonalInformation() {
     </div>
   );
 }
+
 export default PersonalInformation;

@@ -8,6 +8,7 @@ import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
 import { FaCircleCheck } from "react-icons/fa6";
 import InputField from "../../Components/InputFields/InputField";
 import { AiOutlineDelete } from "react-icons/ai";
+import { LuUpload } from "react-icons/lu";
 
 function EditInfo() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +47,7 @@ function EditInfo() {
             Accept: "application/json",
             "Accept-Language": "ar",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
           },
         }
       );
@@ -66,7 +67,7 @@ function EditInfo() {
         <title>Edit Personal Information</title>
       </Helmet>
       <section>
-        <h1 className="font-bold text-[20px]">Edit Personal Information</h1>
+        <h1 className="font-bold text-[18px]">Edit Personal Information</h1>
         <Formik
           initialValues={initialValues}
           enableReinitialize
@@ -75,8 +76,8 @@ function EditInfo() {
           {({ setFieldValue }) => (
             <Form>
               <div className="my-5 gap-3">
-                {selectedImage || personalInfo?.image ? (
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4 border rounded-md p-5">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 border rounded-md p-3">
+                  {selectedImage || personalInfo?.image ? (
                     <img
                       src={
                         selectedImage
@@ -86,29 +87,31 @@ function EditInfo() {
                       alt="Profile"
                       className="w-32 h-24 rounded-md object-cover"
                     />
-                    <div className="flex items-center gap-5 font-bold">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        id="imageUpload"
-                        onChange={(e) => {
-                          setSelectedImage(e.target.files[0]);
-                          setFieldValue("image", e.target.files[0]);
-                        }}
-                        aria-label="Upload new image"
-                      />
-                      <label
-                        htmlFor="imageUpload"
-                        className="cursor-pointer flex items-center gap-3"
-                      >
-                        <img
-                          src="/assets/images/upload.png"
-                          alt="Upload new-image"
-                          className="w-5"
-                        />
-                        Upload Picture
-                      </label>
+                  ) : (
+                    <span className="text-gray-400 text-15">
+                      No image available
+                    </span>
+                  )}
+                  <div className="flex items-center gap-3 font-bold text-14">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="imageUpload"
+                      onChange={(e) => {
+                        setSelectedImage(e.target.files[0]);
+                        setFieldValue("image", e.target.files[0]);
+                      }}
+                      aria-label="Upload new image"
+                    />
+                    <label
+                      htmlFor="imageUpload"
+                      className="cursor-pointer flex items-center gap-2"
+                    >
+                      <LuUpload size={18} />
+                      Upload Picture
+                    </label>
+                    {(selectedImage || personalInfo?.image) && (
                       <button
                         type="button"
                         className="bg-red-50 p-2 rounded-md border border-red-400"
@@ -118,15 +121,13 @@ function EditInfo() {
                         }}
                         aria-label="Delete image"
                       >
-                        <AiOutlineDelete color="#DC2626" size={24} />
+                        <AiOutlineDelete color="#DC2626" size={22} height={25} />
                       </button>
-                    </div>
+                    )}
                   </div>
-                ) : (
-                  <p className="text-gray-500">No image available</p>
-                )}
+                </div>
               </div>
-              <div className="border p-5 rounded-md bg-gray-50 w-full">
+              <div className="border p-3 rounded-md bg-gray-50 w-full">
                 <div className="flex flex-col md:flex-row gap-4">
                   <InputField placeholder="Name" name="name" />
                   <InputField placeholder="Email" name="email" />
@@ -182,4 +183,5 @@ function EditInfo() {
     </div>
   );
 }
+
 export default EditInfo;

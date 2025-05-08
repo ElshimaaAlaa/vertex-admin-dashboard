@@ -16,7 +16,6 @@ function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   // Initialize with rememberMe from localStorage if credentials exist
   const [initialValues, setInitialValues] = useState({
     email: "",
@@ -58,7 +57,7 @@ function AdminLogin() {
         localStorage.removeItem("password");
       }
       setTimeout(() => {
-        navigate("/Dashboard");
+        navigate("/Dashboard/Home");
       }, 1500);
     } catch (error) {
       console.error(error);

@@ -15,7 +15,7 @@ export const GetPersonalInfo = async () => {
       localStorage.setItem("admin-Name", response.data.data.name);
       localStorage.setItem("admin-email", response.data.data.email);
       localStorage.setItem("admin-Phone", response.data.data.phone);
-      localStorage.setItem("admin-image", response.data.data.image);
+      localStorage.setItem("admin pic", response.data.data.image);
       return response.data.data;
     } else {
       console.error("Failed to fetch data");
