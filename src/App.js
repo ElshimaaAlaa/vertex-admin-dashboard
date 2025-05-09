@@ -20,6 +20,7 @@ import AllPermissions from "./Pages/Permissions/AllPermissions";
 import StoreTheme from "./Profile/Store/ThemStore";
 import StoreInformation from "./Profile/Store/StoreInformation";
 import Pricing from "./Profile/Store/PrincingPlan";
+import ViewUserDetails from "./Pages/Users/ViewUserDetails";
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -70,6 +71,7 @@ function App() {
           <Route path="Shops" element={<Shops />} />
           {/* users */}
           <Route path="Users" element={<Users />} />
+          <Route path="Users/:userId" element={<ViewUserDetails/>}/>
           <Route path="AddUser" element={<AddUser />} />
           {/* pages */}
           <Route path="Home" element={<Home />} />

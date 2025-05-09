@@ -19,7 +19,7 @@ export const settings = async () => {
       return response.data.data;
     }
   } catch (error) {
-    console.error("Failed to add FAQ", error);
+    console.error("Failed to get settings", error);
     throw error;
   }
 };

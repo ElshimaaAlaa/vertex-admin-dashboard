@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { ClipLoader } from "react-spinners";
-import { ChevronLeft, ChevronRight, Copy, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { RxCopy } from "react-icons/rx";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { getUsers } from "../../ApiServices/users";
@@ -141,7 +142,7 @@ function Users() {
                       key={user.id}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14" onClick={()=>navigate(`/Dashboard/Users/${user.id}`)}>
                         <p className="flex items-center gap-2">
                           <input
                             type="checkbox"
@@ -152,7 +153,7 @@ function Users() {
                         </p>
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-2">
                           {user.phone || "N/A"}
                           {user.phone && (
                             <button 
@@ -160,21 +161,20 @@ function Users() {
                                 e.stopPropagation();
                                 copyToClipboard(user.phone);
                               }}
-                              className="text-gray-400 hover:text-gray-600 ml-1"
+                              className="text-primary"
                               title="Copy phone number"
                               aria-label="Copy phone number"
                             >
-                              <Copy size={16} />
+                              <RxCopy size={15} />
                             </button>
                           )}
                         </div>
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {/* {user.role || "N/A"} */}
-                        N/A
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14" >
+                        {user.role?.name || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {user.product_count || "0"}
+                        {user.date || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r">
                         <div className="flex justify-center items-center gap-1">
@@ -231,5 +231,4 @@ function Users() {
     </div>
   );
 }
-
 export default Users;
