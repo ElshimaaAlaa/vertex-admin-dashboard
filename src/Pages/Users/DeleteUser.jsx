@@ -15,7 +15,7 @@ function DeleteUser({ id, onDelete }) {
         method: "GET",
         url: `${API_BASE_URL}${live_shop_domain}/api/admin/roles/delete/${id}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {

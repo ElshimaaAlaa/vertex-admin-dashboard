@@ -49,7 +49,6 @@ function ViewUserDetails() {
         console.error("Failed to copy:", err);
       });
   };
-
   if (error) {
     return (
       <div className="h-[89vh] pt-10 flex items-center justify-center">
@@ -57,7 +56,6 @@ function ViewUserDetails() {
       </div>
     );
   }
-
   return (
     <div className="h-[89vh] pt-10">
       <Helmet>

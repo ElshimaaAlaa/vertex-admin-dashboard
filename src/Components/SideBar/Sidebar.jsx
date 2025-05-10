@@ -64,12 +64,12 @@ const Sidebar = () => {
       padding: "4px",
       onclick: () => navigate("Users"),
     },
-    {
-      id: "Customers",
-      label: "Customers",
-      icon: <Clients />,
-      padding: "3px",
-    },
+    // {
+    //   id: "Customers",
+    //   label: "Customers",
+    //   icon: <Clients />,
+    //   padding: "3px",
+    // },
     {
       id: "Subscriptions",
       label: "Subscriptions",
