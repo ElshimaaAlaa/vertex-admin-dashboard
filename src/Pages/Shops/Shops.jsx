@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Search } from "lucide-react";
 import { ClipLoader } from "react-spinners";
@@ -61,7 +61,7 @@ function Shops() {
   };
 
   return (
-    <div className="h-[89vh] pt-3">
+    <div className="h-[89vh] pt-5">
       <Helmet>
         <title>Shops | Vertex</title>
       </Helmet>
@@ -80,7 +80,7 @@ function Shops() {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-10 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary"
+            className="w-full h-12 pl-10 pr-10 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary"
           />
           {searchQuery && (
             <button

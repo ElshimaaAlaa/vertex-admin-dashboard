@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import FailedModal from "../../Components/Modal/Failed Modal/FailedModal";
 import { ClipLoader } from "react-spinners";
@@ -15,7 +15,7 @@ function DeleteShop({ id, onDelete }) {
         method: "GET",
         url: `${API_BASE_URL}${live_shop_domain}/api/admin/shops/delete/${id}`,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {

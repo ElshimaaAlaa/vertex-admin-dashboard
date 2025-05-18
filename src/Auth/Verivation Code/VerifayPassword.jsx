@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import MainBtn from "../../Components/Main Button/MainBtn";
 import "./VerifayPassword.scss";

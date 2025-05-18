@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./getDomainStyle.scss";
 import { Helmet } from "react-helmet";
 import AuthInputField from "../../Components/AuthInput Field/AuthInputField";

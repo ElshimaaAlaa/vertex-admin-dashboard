@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import MainBtn from "../../Components/Main Button/MainBtn";
 import Email from "../../Svgs/Email";
 import "./forgotpassword.scss";
