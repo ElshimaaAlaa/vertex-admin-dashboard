@@ -5,73 +5,68 @@ import { Plus } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import ReactPaginate from "react-paginate";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-// import { fetchPaymentMethods } from "../../ApiServices/PaymentMethods";
 import { getPermissions } from "../../ApiServices/permissions";
-import { MdPayment } from "react-icons/md";
-// import DeletePayment from "./DletePayment";
-// import AddShippingProvider from "./AddPaymentMethods";
+import DeleteRole from "./DeleteRole";
 
-function PaymentMethods() {
+function Roles() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
-  const [permissionData, setPermissionData] = useState([]);
+  const [rolesData, setRolesData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(10);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getPermissions(searchQuery);
-      setPermissionData(response.data || []);
-    } catch (error) {
-      console.error("Error fetching permission date:", error);
-      setError(true);
-      setPermissionData([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await getPermissions(searchQuery);
+        setRolesData(response || []);
+      } catch (error) {
+        console.error("Error fetching permission data:", error);
+        setError(true);
+        setRolesData([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchData();
-  }, [searchQuery]);
+  }, [searchQuery]); // Added searchQuery as dependency to refresh when searching
 
-  const filteredPaymentData = useMemo(() => {
-    return permissionData.filter((payment) =>
-      payment.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredRolesData = useMemo(() => {
+    return rolesData.filter((role) =>
+      role.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [permissionData, searchQuery]);
+  }, [rolesData, searchQuery]);
 
   const indexOfLastItem = (currentPage + 1) * itemsPerPage;
   const indexOfFirstItem = currentPage * itemsPerPage;
   const currentItems = useMemo(() => {
-    return filteredPaymentData.slice(indexOfFirstItem, indexOfLastItem);
-  }, [filteredPaymentData, indexOfFirstItem, indexOfLastItem]);
+    return filteredRolesData.slice(indexOfFirstItem, indexOfLastItem);
+  }, [filteredRolesData, indexOfFirstItem, indexOfLastItem]);
 
-  const pageCount = Math.ceil(filteredPaymentData.length / itemsPerPage);
+  const pageCount = Math.ceil(filteredRolesData.length / itemsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
+
   const handleDeleteSuccess = (deletedId) => {
-    const updatedData = permissionData.filter((item) => item.id !== deletedId);
-    setPermissionData(updatedData);
+    const updatedData = rolesData.filter((item) => item.id !== deletedId);
+    setRolesData(updatedData);
 
     if (currentItems.length === 1 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
-    fetchData();
   };
 
-  // if (showModal) {
-  //   document.body.classList.add("no-scroll");
-  // } else {
-  //   document.body.classList.remove("no-scroll");
-  // }
+  // Check if role has specific permission
+  const hasPermission = (role, permissionName) => {
+    return role.permissions.some(perm => perm.name === permissionName);
+  };
+
   return (
-    <div className="bg-gray-100 flex flex-col h-[89vh] ">
+    <div className="bg-gray-100 flex flex-col h-[89vh]">
       <Helmet>
         <title>Roles | vertex</title>
       </Helmet>
@@ -88,7 +83,6 @@ function PaymentMethods() {
             />
           }
           text={"Add User Role"}
-          // onclick={() => setShowModal(true)}
           value={searchQuery}
           onchange={(e) => {
             setSearchQuery(e.target.value);
@@ -103,11 +97,9 @@ function PaymentMethods() {
           <div className="text-gray-400 text-center mt-10">
             <ClipLoader color="#E0A75E" />
           </div>
-        ) : filteredPaymentData.length === 0 ? (
+        ) : filteredRolesData.length === 0 ? (
           <div className="text-gray-400 text-center mt-10">
-            {searchQuery
-              ? "No payment methods match your search."
-              : "No payment methods found."}
+            {searchQuery ? "No data match your search." : "No data found."}
           </div>
         ) : (
           <>
@@ -122,17 +114,21 @@ function PaymentMethods() {
                           className="form-checkbox h-4 w-4"
                           aria-label="Select all categories"
                         />
-                        Payment Methods
+                        User Role
                       </p>
                     </th>
+                    <th className="px-6 py-3 border text-left">
+                      Access Admin Panel
+                    </th>
+                    <th className="px-6 py-3 border text-left">Permissions</th>
                     <th className="px-6 py-3 border text-center w-12">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {currentItems.map((item) => (
-                    <tr key={item.id} className="border-t hover:bg-gray-50">
+                  {currentItems.map((role) => (
+                    <tr key={role.id} className="border-t hover:bg-gray-50">
                       <td className="px-3 py-3 border-t text-14 border-r cursor-pointer">
                         <p className="flex items-center gap-3">
                           <input
@@ -140,15 +136,37 @@ function PaymentMethods() {
                             className="form-checkbox h-4 w-4"
                             aria-label="Select all categories"
                           />
-                          {item.name}
+                          {role.name}
                         </p>
                       </td>
-                      <td className="text-center px-3 py-3">
-                        <div className="flex justify-center items-center">
-                          {/* <DeletePayment
-                            id={item.id}
-                            onDelete={handleDeleteSuccess}
-                          /> */}
+                      <td className="text-left px-3 py-3">
+                        {hasPermission(role, 'admin_access') ? (
+                          <span className="text-green-500">Yes</span>
+                        ) : (
+                          <span className="text-red-500">No</span>
+                        )}
+                      </td>
+                      <td className="text-left px-3 py-3 border-r border-l">
+                        <div className="flex flex-wrap gap-2">
+                          {role.permissions.map(permission => (
+                            <span 
+                              key={permission.id}
+                              className="bg-gray-100 px-2 py-1 rounded text-xs"
+                            >
+                              {permission.name}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="text-left px-3 py-3">
+                        <div className="flex justify-center items-center gap-2">
+                          {/* Only show delete button if user has delete permission */}
+                          {hasPermission(role, 'roles_delete') && (
+                            <DeleteRole
+                              id={role.id}
+                              onDelete={handleDeleteSuccess}
+                            />
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -175,4 +193,4 @@ function PaymentMethods() {
   );
 }
 
-export default PaymentMethods;
+export default Roles;

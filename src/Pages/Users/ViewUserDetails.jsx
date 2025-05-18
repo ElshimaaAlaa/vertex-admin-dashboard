@@ -49,6 +49,7 @@ function ViewUserDetails() {
         console.error("Failed to copy:", err);
       });
   };
+
   if (error) {
     return (
       <div className="h-[89vh] pt-10 flex items-center justify-center">
@@ -56,13 +57,14 @@ function ViewUserDetails() {
       </div>
     );
   }
+
   return (
     <div className="h-[89vh] pt-10">
       <Helmet>
         <title>User Details</title>
-        <meta name="description" content="Edit user information" />
-        <meta property="og:title" content="Edit user Information" />
-        <meta property="og:description" content="Edit user information" />
+        <meta name="description" content="View user information" />
+        <meta property="og:title" content="User Information" />
+        <meta property="og:description" content="View user information" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -74,7 +76,7 @@ function ViewUserDetails() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <h1 className="font-bold text-[18px]">Profile</h1>
           <button
-            onClick={() => navigate("EditInfo", { state: userInfo })}
+            onClick={() => navigate(`/Dashboard/Users/EditUserInfo/${userId}`, { state: { userInfo } })}
             className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md"
             aria-label="Edit personal information"
           >
@@ -139,4 +141,5 @@ function ViewUserDetails() {
     </div>
   );
 }
+
 export default ViewUserDetails;

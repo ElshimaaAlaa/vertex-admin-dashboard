@@ -79,7 +79,7 @@ const Sidebar = () => {
         {
           id: "Plans",
           label: "Plans",
-          onclick: () => navigate(""),
+          onclick: () => navigate("Plans"),
         },
         {
           id: "Shop subscriptions",

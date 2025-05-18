@@ -16,7 +16,6 @@ function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  // Initialize with rememberMe from localStorage if credentials exist
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
@@ -30,7 +29,7 @@ function AdminLogin() {
       setInitialValues({
         email: savedEmail,
         password: savedPassword,
-        rememberMe: true // This will make the checkbox checked
+        rememberMe: true,
       });
     }
   }, []);
@@ -81,9 +80,9 @@ function AdminLogin() {
         <img
           src="/assets/svgs/vertex.svg"
           alt="logo"
-          className="w-48 h-11 mb-5"
+          className="w-48 h-10 mb-3"
         />
-        <div className="flex items-center gap-3 mt-3">
+        <div className="flex items-center gap-3 mt-2">
           <h1 className="font-bold text-[21px]">Welcome Back</h1>
           <img
             src="/assets/images/waving-hand_svgrepo.com.png"

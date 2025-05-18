@@ -21,6 +21,9 @@ import StoreTheme from "./Profile/Store/ThemStore";
 import StoreInformation from "./Profile/Store/StoreInformation";
 import Pricing from "./Profile/Store/PrincingPlan";
 import ViewUserDetails from "./Pages/Users/ViewUserDetails";
+import EditUserInfo from "./Pages/Users/EditUser";
+import Plans from "./Pages/SubScriptions/Plans";
+
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -43,6 +46,7 @@ function App() {
       </div>
     );
   }
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -63,21 +67,24 @@ function App() {
           <Route path="MainInfo" element={<MainInfo />}>
             <Route index element={<PersonalInformation />} />
             <Route path="EditInfo" element={<EditInfo />} />
-            <Route path="StoreTheme" element={<StoreTheme/>}/>
-            <Route path="StoreInformation" element={<StoreInformation/>}/>
-            <Route path="Pricing" element={<Pricing/>}/>
+            <Route path="StoreTheme" element={<StoreTheme />} />
+            <Route path="StoreInformation" element={<StoreInformation />} />
+            <Route path="Pricing" element={<Pricing />} />
           </Route>
           {/* shops */}
           <Route path="Shops" element={<Shops />} />
           {/* users */}
           <Route path="Users" element={<Users />} />
-          <Route path="Users/:userId" element={<ViewUserDetails/>}/>
+          <Route path="Users/:userId" element={<ViewUserDetails />} />
+          <Route path="Users/EditUserInfo/:userId" element={<EditUserInfo />} />
           <Route path="AddUser" element={<AddUser />} />
           {/* pages */}
           <Route path="Home" element={<Home />} />
           <Route path="Support" element={<Support />} />
           <Route path="Faqs" element={<Faqs />} />
+          <Route path="Plans" element={<Plans />} />
           <Route path="AllPermissions" element={<AllPermissions/>}/>
+
         </Route>
       </Routes>
     </BrowserRouter>

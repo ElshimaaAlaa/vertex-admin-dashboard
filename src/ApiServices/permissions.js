@@ -4,7 +4,7 @@ const live_shop_domain = localStorage.getItem("live_shop_domain");
 export const getPermissions = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live_shop_domain}api/admin/permissions`,
+      url: `${API_BASE_URL}${live_shop_domain}/api/admin/roles`,
       method: "GET",
       headers: {
         "Accept-Language": "en",
@@ -16,7 +16,7 @@ export const getPermissions = async () => {
       return response.data.data;
     }
   } catch (error) {
-    console.error("Failed to fetch permissions: ", error);
+    console.error("Failed to fetch roles: ", error);
     throw error;
   }
 };

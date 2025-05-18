@@ -114,7 +114,7 @@ function Home() {
           </button>
         </div>
         <ul className="flex flex-col gap-3 mt-3">
-          {statistics.activities?.slice(0, 3).map((activity) => {
+          {statistics.activities?.slice(0, 4).map((activity) => {
             const icon =
               activity.type === "subscription" ? (
                 <BsShop size={18} color="#E0A75E" />

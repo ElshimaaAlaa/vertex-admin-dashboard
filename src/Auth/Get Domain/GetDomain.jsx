@@ -41,7 +41,7 @@ function GetDomain() {
         <img
           src="/assets/svgs/vertex.svg"
           alt="logo"
-          className="w-48 h-11 mb-5"
+          className="w-48 h-10 mb-3"
         />
         <Formik
           initialValues={intialValues}

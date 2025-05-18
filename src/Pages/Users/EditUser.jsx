@@ -1,158 +1,300 @@
-import { Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useLocation, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import axios from "axios";
-import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
 import { FaCircleCheck } from "react-icons/fa6";
-import InputField from "../../Components/InputFields/InputField";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { LuUpload } from "react-icons/lu";
 import { AiOutlineDelete } from "react-icons/ai";
+import InputField from "../../Components/InputFields/InputField";
+import { handleUpdateUserData } from "../../ApiServices/EditUser";
 
 function EditUserInfo() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const { userId } = useParams();
   const { state } = useLocation();
-  const personalInfo = state || {};
-  const API_BASE_URL = "https://";
-  const live_shop_domain = localStorage.getItem("live_shop_domain");
-  const role = localStorage.getItem("role");
+  const userData = state?.userInfo || {};
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
 
   const initialValues = {
-    name: personalInfo?.name || "",
-    email: personalInfo?.email || "",
-    phone: personalInfo?.phone || "",
-    image: personalInfo?.image || null,
+    name: userData.name || "",
+    email: userData.email || "",
+    phone: userData.phone || "",
+    role_id: userData.role_id?.toString() || "1", // Default to "1" if null
+    image: userData.image || "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string().required("Phone is required"),
+    role_id: Yup.string().required("Role is required"),
+    image: Yup.mixed().test(
+      "is-valid-image",
+      "Image is required",
+      (value) => value || selectedImage
+    ),
+  });
+
+  const roleOptions = [
+    { id: "1", name: "Admin Role", description: "وصف الدور بالعربية" },
+    { id: "2", name: "User Role", description: "User role description" },
+    { id: "3", name: "Guest Role", description: "Guest role description" },
+  ];
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
+
+  const handleImageDelete = () => {
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleSubmit = async (values) => {
     setIsLoading(true);
     setError(null);
+
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    formData.append("role_id", values.role_id);
+    
+    // Handle image data
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    } else if (values.image) {
+      // If no new image selected but existing image exists
+      formData.append("image", values.image);
+    }
+
     try {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("phone", values.phone);
-      if (selectedImage) {
-        formData.append("image", selectedImage);
-      }
-      const response = await axios.post(
-        `${API_BASE_URL}${live_shop_domain}/api/${role}/update-profile`,
-        formData,
-        {
-          headers: {
-            Accept: "application/json",
-            "Accept-Language": "ar",
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log("Profile updated:", response.data);
-      setShowModal(true);
+      await handleUpdateUserData(userId, formData);
+      navigate(`/Dashboard/Users/ViewUserDetails/${userId}`, {
+        state: { updated: true },
+      });
     } catch (error) {
-      console.error("Failed to update profile:", error);
-      setError("Failed to update profile. Please try again.");
+      console.error("Update error:", error);
+      setError(error.response?.data?.message || "Failed to update user");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="h-[89vh] pt-10">
       <Helmet>
-        <title>Edit Personal Information</title>
+        <title>Edit User | Vertex</title>
       </Helmet>
-      <section>
-        <h1 className="font-bold text-[18px]">Edit Personal Information</h1>
+      <section className="bg-white mx-5 p-5 rounded-md">
+        <h1 className="font-bold text-[18px] mb-5">Edit User</h1>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
         <Formik
           initialValues={initialValues}
-          enableReinitialize
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
+          enableReinitialize
         >
-          {({ setFieldValue }) => (
-            <Form>
-              <div className="my-3 gap-3">
-                {selectedImage || personalInfo?.image ? (
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4 border rounded-md p-3">
+          {({ values, setFieldValue, errors, touched }) => (
+            <Form className="space-y-4">
+              {/* Image Upload Section */}
+              <div className="bg-gray-50 rounded-md p-3 border-1 border-gray-200">
+                {(values.image || selectedImage) && (
+                  <div className="mt-2 w-32 h-32">
                     <img
                       src={
                         selectedImage
                           ? URL.createObjectURL(selectedImage)
-                          : personalInfo.image
+                          : values.image
                       }
-                      alt="Profile"
-                      className="w-36 h-24 rounded-md object-cover"
+                      alt="Profile preview"
+                      className="w-full h-full object-cover rounded"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/assets/images/user.png";
+                      }}
                     />
-                    <div className="flex items-center gap-5 font-bold">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        id="imageUpload"
-                        onChange={(e) => {
-                          setSelectedImage(e.target.files[0]);
-                          setFieldValue("image", e.target.files[0]);
-                        }}
-                        aria-label="Upload new image"
-                      />
-                      <label
-                        htmlFor="imageUpload"
-                        className="cursor-pointer text-14 flex items-center gap-2"
-                      >
-                        <img
-                          src="/assets/images/upload.png"
-                          alt="Upload new-image"
-                          className="w-5"
-                        />
-                        Upload Picture
-                      </label>
-                      <button
-                        type="button"
-                        className="bg-red-50 p-2 rounded-md border border-red-400"
-                        onClick={() => {
-                          setSelectedImage(null);
-                          setFieldValue("image", null);
-                        }}
-                        aria-label="Delete image"
-                      >
-                        <AiOutlineDelete color="#DC2626" size={24} />
-                      </button>
-                    </div>
                   </div>
-                ) : (
-                  <p className="text-gray-500">No image available</p>
+                )}
+                <div className="flex items-center gap-3 font-bold text-14 mt-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id="imageUpload"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    aria-label="Upload new image"
+                  />
+                  <label
+                    htmlFor="imageUpload"
+                    className="cursor-pointer flex items-center gap-2"
+                  >
+                    <LuUpload size={18} />
+                    Upload Picture
+                  </label>
+                  {(selectedImage || values.image) && (
+                    <button
+                      type="button"
+                      className="bg-red-50 p-2 rounded-md border border-red-400"
+                      onClick={handleImageDelete}
+                      aria-label="Delete image"
+                    >
+                      <AiOutlineDelete color="#DC2626" size={22} height={25} />
+                    </button>
+                  )}
+                </div>
+                {touched.image && errors.image && (
+                  <div className="text-red-500 text-sm mt-2">
+                    {errors.image}
+                  </div>
                 )}
               </div>
-              <div className="border p-3 rounded-md bg-gray-50 w-full">
-                <div className="flex flex-col md:flex-row gap-4">
-                  <InputField placeholder="Name" name="name" />
-                  <InputField placeholder="Email" name="email" />
+
+              {/* Form Fields Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50 border-1 border-gray-200 rounded-md p-3">
+                <div>
+                  <InputField name="name" placeholder="Name" />
                 </div>
-                <div className="mt-4">
-                  <InputField placeholder="Phone" name="phone" />
+
+                <div>
+                  <InputField name="email" placeholder="Email" type="email" />
+                </div>
+
+                <div>
+                  <InputField name="phone" placeholder="Phone Number" />
+                </div>
+
+                {/* Role Dropdown */}
+                <div className="relative w-full">
+                  <Field name="role_id">
+                    {({ field, meta }) => (
+                      <div>
+                        <button
+                          type="button"
+                          className={`w-full text-14 h-14 p-3 text-left bg-white border ${
+                            meta.touched && meta.error
+                              ? "border-red-500"
+                              : "border-gray-200"
+                          } rounded-md shadow-sm focus:outline-none focus:border-primary ${
+                            values.role_id ? "text-black" : "text-gray-400"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const dropdown =
+                              document.getElementById("role-dropdown");
+                            dropdown.classList.toggle("hidden");
+                          }}
+                        >
+                          {values.role_id
+                            ? roleOptions.find(opt => opt.id === values.role_id)?.name || 
+                              `Role ID: ${values.role_id}`
+                            : "Select a role"}
+                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <svg
+                              className="w-5 h-5 text-gray-400"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+
+                        {meta.touched && meta.error && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {meta.error}
+                          </p>
+                        )}
+
+                        <div
+                          id="role-dropdown"
+                          className="hidden absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg"
+                        >
+                          <ul className="py-1 overflow-auto text-base rounded-md max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            {roleOptions.map((option) => (
+                              <li
+                                key={option.id}
+                                className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-50"
+                                onClick={() => {
+                                  setFieldValue("role_id", option.id);
+                                  document
+                                    .getElementById("role-dropdown")
+                                    .classList.add("hidden");
+                                }}
+                              >
+                                <div className="flex items-center">
+                                  <span className="ml-3 block font-normal truncate">
+                                    {option.name}
+                                  </span>
+                                </div>
+                                {values.role_id === option.id && (
+                                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+                                    <svg
+                                      className="w-5 h-5"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 20 20"
+                                      fill="currentColor"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </Field>
                 </div>
               </div>
-              <div className="mt-5 flex items-center justify-end gap-3">
+
+              {/* Form Actions */}
+              <div className="mt-4 flex items-center gap-3 justify-end">
                 <button
                   type="button"
-                  className="bg-gray-100 text-gray-400 font-bold p-3 w-32 rounded-md"
-                  onClick={() => navigate("/Dashboard/MainInfo")}
+                  onClick={() => navigate("/Dashboard/Users")}
+                  className="bg-gray-100 text-gray-400 p-3 w-32 rounded-md"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary font-bold text-white flex items-center justify-center gap-2 rounded-md p-3 w-32"
+                  disabled={isLoading}
+                  className="p-3 bg-primary text-white rounded-md w-32 flex items-center justify-center gap-2"
                 >
                   {isLoading ? (
-                    <ClipLoader color="#fff" size={22} />
+                    <ClipLoader size={22} color="#fff" />
                   ) : (
                     <>
-                      <FaCircleCheck /> Save
+                      <FaCircleCheck size={17} />
+                      Save
                     </>
                   )}
                 </button>
@@ -161,26 +303,8 @@ function EditUserInfo() {
           )}
         </Formik>
       </section>
-      {/* Success Modal */}
-      <SuccessModal isOpen={showModal}>
-        <div className="flex flex-col w-370 items-center">
-          <img
-            src="/assets/images/success.png"
-            alt="Success"
-            className="w-32 mt-6"
-          />
-          <p className="font-bold mt-5 text-center">
-            Profile updated successfully!
-          </p>
-          <button
-            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60 "
-            onClick={() => navigate("/Dashboard/MainInfo")}
-          >
-            Done ! Updated Successfully
-          </button>
-        </div>
-      </SuccessModal>
     </div>
   );
 }
+
 export default EditUserInfo;
