@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { ClipLoader } from "react-spinners";
@@ -119,7 +119,7 @@ function Faqs() {
           )}
         </section>
         {/* Add Question Section */}
-        <section className="bg-customOrange-mediumOrange rounded-md p-5 w-500 h-full mt-10">
+        <section className="bg-customOrange-mediumOrange rounded-md p-5 w-full h-full mt-10">
           <div className="flex justify-center">
             <img
               src="/assets/svgs/chat-round-dots_svgrepo.com.svg"

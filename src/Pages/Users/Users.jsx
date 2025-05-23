@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { ClipLoader } from "react-spinners";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
@@ -38,7 +38,7 @@ function Users() {
         setIsLoading(false);
       } catch (error) {
         console.error(error);
-        setError(error);
+        setError(error.message);
         setIsLoading(false);
       }
     };
@@ -61,15 +61,15 @@ function Users() {
 
   const pageCount = Math.ceil(filteredUser.length / itemsPerPage);
   const offset = currentPage * itemsPerPage;
-  const currentShops = filteredUser.slice(offset, offset + itemsPerPage);
+  const currentUsers = filteredUser.slice(offset, offset + itemsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const handleDeleteUser = (userId) => {
-    setUserData((prevUser) => prevUser.filter((shop) => shop.id !== userId));
-    if (currentShops.length === 1 && currentPage > 0) {
+    setUserData((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    if (currentUsers.length === 1 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
   };
@@ -106,7 +106,7 @@ function Users() {
           </div>
         ) : filteredUser.length === 0 ? (
           <div className="text-gray-400 text-center mt-10">
-            {searchQuery ? "No shops match your search." : "No shops found."}
+            {searchQuery ? "No users match your search." : "No users found."}
           </div>
         ) : (
           <>
@@ -119,7 +119,7 @@ function Users() {
                         <input
                           type="checkbox"
                           className="form-checkbox h-4 w-4"
-                          aria-label="Select all shops"
+                          aria-label="Select all users"
                         />
                         Name
                       </p>
@@ -137,12 +137,15 @@ function Users() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentShops.map((user) => (
+                  {currentUsers.map((user) => (
                     <tr
                       key={user.id}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14" onClick={()=>navigate(`/Dashboard/Users/${user.id}`)}>
+                      <td 
+                        className="px-3 py-3 border-t border-r text-gray-600 text-14" 
+                        onClick={() => navigate(`/Dashboard/Users/${user.id}`)}
+                      >
                         <p className="flex items-center gap-2">
                           <input
                             type="checkbox"
@@ -170,18 +173,18 @@ function Users() {
                           )}
                         </div>
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14" >
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
                         {user.role?.name || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {user.date || "N/A"}
+                        {new Date(user.created_at).toLocaleDateString() || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r">
                         <div className="flex justify-center items-center gap-1">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/Dashboard/EditProduct/${user.id}`, {
+                              navigate(`/Dashboard/Users/EditUserInfo/${user.id}`, {
                                 state: { user },
                               });
                             }}
@@ -208,8 +211,8 @@ function Users() {
               pageCount={pageCount}
               onPageChange={handlePageClick}
               forcePage={currentPage}
-              containerClassName="flex items-center justify-end mt-5 space-x-1"
-              pageClassName="px-3 py-1 text-14 text-gray-400 rounded hover:bg-gray-100"
+              containerClassName="flex items-center justify-end mt-5 "
+              pageClassName="px-3 py-1 text-14 text-gray-400 rounded "
               activeClassName="bg-customOrange-lightOrange text-primary"
               previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
               nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}
@@ -231,4 +234,5 @@ function Users() {
     </div>
   );
 }
+
 export default Users;

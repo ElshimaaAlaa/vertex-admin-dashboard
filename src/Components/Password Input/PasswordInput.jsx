@@ -1,4 +1,3 @@
-import React from "react";
 import { Field, ErrorMessage } from "formik";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 import clsx from "clsx";
@@ -14,7 +13,7 @@ function PasswordInput({ name, placeholder, showPassword, togglePasswordVisibili
               type={showPassword ? "text" : "password"}
               placeholder={placeholder}
               className={clsx(
-                "w-full p-3 border-2 rounded-md outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400",
+                "w-full p-3 h-12 border-2 rounded-md outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400",
                 {
                   "border-red-500": meta.touched && meta.error,
                   "border-[#28A513]": meta.touched && !meta.error,

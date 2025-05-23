@@ -1,9 +1,7 @@
-import React from "react";
 import { Search} from "lucide-react";
-
 function SearchBar({onclick , value ,onchange ,text , icon}) {
   return (
-    <div className="flex justify-between items-center gap-3 bg-white mb-5 rounded-md">
+    <div className="flex justify-between items-center gap-2 bg-white mb-5 rounded-md">
       <div className="relative w-full">
         <Search
           className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5"
@@ -14,11 +12,11 @@ function SearchBar({onclick , value ,onchange ,text , icon}) {
           placeholder="Search"
           value={value}
           onChange={onchange}
-          className="w-full pl-10 pr-4 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-lightgray placeholder:text-15 focus:border-primary"
+          className="w-full h-12 pl-10 pr-4 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary"
         />
       </div>
       <div
-        className="flex items-center gap-3 bg-primary text-white py-4 px-3 rounded-md w-72 cursor-pointer"
+        className="flex items-center gap-3 h-12 bg-primary text-white py-4 px-3 rounded-md w-72 cursor-pointer"
         onClick={onclick}
       >
         <div className="font-bold">

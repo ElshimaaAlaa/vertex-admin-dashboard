@@ -107,10 +107,13 @@ function AddUser() {
                   onImageChange={(e) => handleImageChange(e, setFieldValue)}
                   name="image"
                 />
-                <p className="font-bold flex items-center gap-2 text-14">
+                <label 
+                  htmlFor="image-upload-image"
+                  className="font-bold flex items-center gap-2 text-14 cursor-pointer hover:text-primary transition-colors"
+                >
                   <FiUpload size={18} />
                   Upload Picture
-                </p>
+                </label>
               </div>
 
               <div className="border-gray-200 border-1 bg-gray-50 rounded-md p-4 mt-3">
@@ -252,14 +255,14 @@ function AddUser() {
                   <button
                     onClick={() => navigate("/Dashboard/Users")}
                     type="button"
-                    className="bg-gray-100 text-gray-400 p-3 w-32 rounded-md "
+                    className="bg-gray-100 text-gray-400 p-3 w-32 rounded-md hover:bg-gray-200 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="p-3 bg-primary text-white rounded-md w-32 flex items-center justify-center gap-2"
+                    className="p-3 bg-primary text-white rounded-md w-32 flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors disabled:opacity-70"
                   >
                     {isLoading ? (
                       <ClipLoader size={22} color="#fff" />
@@ -276,9 +279,8 @@ function AddUser() {
           )}
         </Formik>
       </section>
-      {/* success modal */}
-
     </div>
   );
 }
+
 export default AddUser;

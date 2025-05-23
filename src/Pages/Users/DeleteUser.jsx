@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import FailedModal from "../../Components/Modal/Failed Modal/FailedModal";
 import { ClipLoader } from "react-spinners";
@@ -13,23 +13,23 @@ function DeleteUser({ id, onDelete }) {
     try {
       const response = await axios({
         method: "GET",
-        url: `${API_BASE_URL}${live_shop_domain}/api/admin/roles/delete/${id}`,
+        url: `${API_BASE_URL}${live_shop_domain}/api/admin/users/delete/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {
-        console.log("shop deleted successfully");
+        console.log("user deleted successfully");
         setShowModal(false);
         setIsLoading(false);
         onDelete(id);
       } else {
         setIsLoading(false);
-        console.error("Failed to delete shop");
+        console.error("Failed to delete user");
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Failed to delete shop", error);
+      console.error("Failed to delete user", error);
     }
   };
   if (showModal) {
@@ -48,7 +48,6 @@ function DeleteUser({ id, onDelete }) {
           />
         </button>
       </div>
-
       <FailedModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="p-5">
           <img

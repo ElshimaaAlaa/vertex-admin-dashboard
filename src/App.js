@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 import GetDomain from "./Auth/Get Domain/GetDomain";
@@ -34,35 +34,22 @@ function App() {
 
   if (loading) {
     return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div className="flex items-center justify-center h-screen">
         <PulseLoader color="#E0A75E" size={17} />
       </div>
     );
   }
-  
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<GetDomain />} />
-        {/* auth */}
+        <Route path="/" element={<GetDomain/>} />
+        <Route path="/Dashboard" element={<Navigate to="/Dashboard/Home" replace />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/AdminLogin/ForgotPassword" element={<ForgotPassword />} />
-        <Route
-          path="/AdminLogin/VerifayPassword"
-          element={<VerifayPassword />}
-        />
-        <Route
-          path="/AdminLogin/CreateNewPassword"
-          element={<CreateNewPassword />}
-        />
-        {/* dashboard routes */}
+        <Route path="/AdminLogin/VerifayPassword" element={<VerifayPassword />} />
+        <Route path="/AdminLogin/CreateNewPassword" element={<CreateNewPassword />} />
+        
         <Route path="/Dashboard" element={<Dashboard />}>
           <Route path="MainInfo" element={<MainInfo />}>
             <Route index element={<PersonalInformation />} />
@@ -71,23 +58,20 @@ function App() {
             <Route path="StoreInformation" element={<StoreInformation />} />
             <Route path="Pricing" element={<Pricing />} />
           </Route>
-          {/* shops */}
           <Route path="Shops" element={<Shops />} />
-          {/* users */}
           <Route path="Users" element={<Users />} />
-          <Route path="Users/:userId" element={<ViewUserDetails />} />
+          <Route path="Users/:id" element={<ViewUserDetails />} />
           <Route path="Users/EditUserInfo/:userId" element={<EditUserInfo />} />
           <Route path="AddUser" element={<AddUser />} />
-          {/* pages */}
           <Route path="Home" element={<Home />} />
           <Route path="Support" element={<Support />} />
           <Route path="Faqs" element={<Faqs />} />
           <Route path="Plans" element={<Plans />} />
-          <Route path="AllPermissions" element={<AllPermissions/>}/>
-
+          <Route path="AllPermissions" element={<AllPermissions />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
 export default App;

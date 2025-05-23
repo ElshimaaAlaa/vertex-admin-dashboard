@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getHome } from "../../ApiServices/Home";
 import { HiCurrencyDollar } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
@@ -40,7 +40,7 @@ function Home() {
             totalNumber={statistics?.overview?.total_revenue?.amount || 0}
             change_rate={`${
               statistics?.overview?.total_revenue?.change_rate || 0
-            }%`}
+            }`}
             duration={`Last month: ${
               statistics?.overview?.total_revenue?.last_month || 0
             }`}
@@ -51,7 +51,7 @@ function Home() {
             totalNumber={statistics?.overview?.total_users?.amount || 0}
             change_rate={`${
               statistics?.overview?.total_users?.change_rate || 0
-            }%`}
+            }`}
             duration={`Last month: ${
               statistics?.overview?.total_users?.last_month || 0
             }`}
@@ -62,7 +62,7 @@ function Home() {
             totalNumber={statistics?.overview?.total_shops?.amount || 0}
             change_rate={`${
               statistics?.overview?.total_shops?.change_rate || 0
-            }%`}
+            }`}
             duration={`Last month: ${
               statistics?.overview?.total_shops?.last_month || 0
             }`}

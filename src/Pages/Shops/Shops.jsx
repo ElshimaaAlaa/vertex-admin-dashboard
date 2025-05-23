@@ -109,7 +109,7 @@ function Shops() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left">
+                    <th className="px-3 py-3 text-16 border-t text-left">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
@@ -134,7 +134,7 @@ function Shops() {
                       key={shop.id}
                       className="hover:bg-gray-50"
                     >
-                      <td className="px-3 py-3 border-t border-r border-b text-gray-600 text-14">
+                      <td className="px-3 py-3 border-t border-r  text-gray-600 text-14">
                         <p className="flex items-center gap-2">
                           <input
                             type="checkbox"
@@ -163,7 +163,7 @@ function Shops() {
                 onPageChange={handlePageClick}
                 forcePage={currentPage}
                 containerClassName="flex items-center justify-end mt-5 space-x-1"
-                pageClassName="px-3 py-1 text-14 text-gray-400 rounded hover:bg-gray-100"
+                pageClassName="px-3 py-1 text-14 text-gray-400 rounded-md"
                 activeClassName="bg-customOrange-lightOrange text-primary"
                 previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
                 nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}

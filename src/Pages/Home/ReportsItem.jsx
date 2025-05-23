@@ -19,11 +19,10 @@ const ReportsItem = ({
             : "text-[#34B41E] bg-[#E7F6E5]"
         }`}
       >
-        {change_rate?.slice(0, 4)}
+        {change_rate}
       </p>
     </div>
     <p className="text-xs text-gray-400 mt-3 mb-3 ps-4">{duration}</p>
   </div>
 );
-
 export default ReportsItem;

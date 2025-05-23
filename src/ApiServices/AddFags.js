@@ -8,9 +8,9 @@ export const addFaqs = async (question, answer) => {
       url: `${API_BASE_URL}${live_shop_domain}/api/${role}/faqs/add-question`,
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Accept-Language": "ar",
+        // "Content-Type": "application/json",
+        // Accept: "application/json",
+        // "Accept-Language": "en",
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: { question, answer },
