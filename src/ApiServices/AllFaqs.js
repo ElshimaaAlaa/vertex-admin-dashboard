@@ -11,7 +11,7 @@ export const getFaqs = async () => {
         "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     if (response.status === 200) {

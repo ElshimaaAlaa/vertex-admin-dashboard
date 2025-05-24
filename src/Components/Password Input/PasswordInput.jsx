@@ -33,7 +33,7 @@ function PasswordInput({ name, placeholder, showPassword, togglePasswordVisibili
           </div>
         )}
       </Field>
-      <ErrorMessage name={name} component="p" className="text-red-500 text-sm mt-1" />
+      <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
     </div>
   );
 }

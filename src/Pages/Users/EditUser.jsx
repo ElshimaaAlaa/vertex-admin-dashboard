@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { ClipLoader } from "react-spinners";
-import { FaCircleCheck } from "react-icons/fa6";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { LuUpload } from "react-icons/lu";
 import { AiOutlineDelete } from "react-icons/ai";
 import InputField from "../../Components/InputFields/InputField";
 import { handleUpdateUserData } from "../../ApiServices/EditUser";
+import EndButtons from "../../Components/End Buttons/EndButtons";
 
 function EditUserInfo() {
   const { userId } = useParams();
@@ -69,7 +68,7 @@ function EditUserInfo() {
     formData.append("email", values.email);
     formData.append("phone", values.phone);
     formData.append("role_id", values.role_id);
-    
+
     // Handle image data
     if (selectedImage) {
       formData.append("image", selectedImage);
@@ -187,7 +186,7 @@ function EditUserInfo() {
                       <div>
                         <button
                           type="button"
-                          className={`w-full text-14 h-14 p-3 text-left bg-white border ${
+                          className={`w-full text-14 h-12 p-3 text-left bg-white border ${
                             meta.touched && meta.error
                               ? "border-red-500"
                               : "border-gray-200"
@@ -202,8 +201,9 @@ function EditUserInfo() {
                           }}
                         >
                           {values.role_id
-                            ? roleOptions.find(opt => opt.id === values.role_id)?.name || 
-                              `Role ID: ${values.role_id}`
+                            ? roleOptions.find(
+                                (opt) => opt.id === values.role_id
+                              )?.name || `Role ID: ${values.role_id}`
                             : "Select a role"}
                           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <svg
@@ -274,31 +274,7 @@ function EditUserInfo() {
                   </Field>
                 </div>
               </div>
-
-              {/* Form Actions */}
-              <div className="mt-4 flex items-center gap-3 justify-end">
-                <button
-                  type="button"
-                  onClick={() => navigate("/Dashboard/Users")}
-                  className="bg-gray-100 text-gray-400 p-3 w-32 rounded-md"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="p-3 bg-primary text-white rounded-md w-32 flex items-center justify-center gap-2"
-                >
-                  {isLoading ? (
-                    <ClipLoader size={22} color="#fff" />
-                  ) : (
-                    <>
-                      <FaCircleCheck size={17} />
-                      Save
-                    </>
-                  )}
-                </button>
-              </div>
+              <EndButtons onclick={() => navigate("/DashBoard/Users")} />
             </Form>
           )}
         </Formik>
@@ -306,5 +282,4 @@ function EditUserInfo() {
     </div>
   );
 }
-
 export default EditUserInfo;

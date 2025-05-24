@@ -12,7 +12,7 @@ export const sendSupport = async (email, name, phone, message) => {
         "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     if (response.status === 200) {

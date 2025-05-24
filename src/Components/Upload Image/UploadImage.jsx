@@ -1,7 +1,7 @@
 import { RiUploadCloud2Line } from "react-icons/ri";
 
 export const ImageUpload = ({ previewImage, onImageChange, name, error }) => {
-  const inputId = `image-upload-${name}`; // Generate consistent ID
+  const inputId = `image-upload-${name}`;
   
   return (
     <div className="relative border-2 w-28 h-24 border-dashed bg-customOrange-lightOrange border-primary rounded-md p-1 flex items-center justify-center overflow-hidden">
@@ -22,7 +22,7 @@ export const ImageUpload = ({ previewImage, onImageChange, name, error }) => {
           <img
             src={previewImage}
             alt="Preview"
-            className="w-full h-full object-cover rounded-md"
+            className="w-full h-full object-cover rounded-md p-1"
           />
         ) : (
           <div className="flex flex-col items-center gap-1 text-gray-500">

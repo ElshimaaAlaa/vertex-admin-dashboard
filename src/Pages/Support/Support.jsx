@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AuthInputField from "../../Components/AuthInput Field/AuthInputField";
 import * as Yup from "yup";
 import { ClipLoader } from "react-spinners";
@@ -113,7 +113,7 @@ function Support() {
         Send us Your Problem and we are <br /> contact with you
       </h1>
       <div className="flex justify-center gap-5 mx-20">
-        <section className="bg-white rounded-md drop-shadow-lg p-5 w-500px h-72 mt-10">
+        <section className="bg-white rounded-md drop-shadow-lg p-5 w-450 h-72 mt-10">
           <h2 className="font-bold text-17 mb-3 mt-2 relative pb-1 gradient-border-bottom">
             Contact information
           </h2>
@@ -151,7 +151,7 @@ function Support() {
             validationSchema={validationSchema}
           >
             {({ errors, touched }) => (
-              <Form className="flex flex-col gap-3">
+              <Form className="flex flex-col gap-2">
                 <InputField name="name" placeholder="Name" />
                 <AuthInputField name="email" placeholder="Email" />
                 <InputField name="phone" placeholder="Phone Number" />
@@ -199,7 +199,7 @@ function Support() {
           />
           <p className="font-bold mt-5">Message sent successfully!</p>
           <button
-            className="bg-primary text-white p-2 w-40 mt-4 rounded-md"
+            className="bg-primary text-white font-bold p-2 w-40 mt-4 rounded-md"
             type="button"
             onClick={() => setShowModal(false)}
           >

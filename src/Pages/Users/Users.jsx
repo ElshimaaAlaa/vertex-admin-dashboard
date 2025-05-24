@@ -177,7 +177,7 @@ function Users() {
                         {user.role?.name || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {new Date(user.created_at).toLocaleDateString() || "N/A"}
+                        {user.created_at || "N/A"}
                       </td>
                       <td className="px-3 py-3 border-t border-r">
                         <div className="flex justify-center items-center gap-1">
