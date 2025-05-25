@@ -4,7 +4,6 @@ import {
   ChevronRight,
   Eye,
   PenLine,
-  Plus,
   Bell,
   ChevronUp,
 } from "lucide-react";
@@ -143,14 +142,6 @@ export default function ProfileMenu() {
               />
             </button>
           </div>
-          <button className="w-full flex items-center gap-3 p-2 hover:bg-gray-50">
-            <Plus className="w-5 h-5" />
-            <span className="flex-grow text-left text-gray-600 text-15">
-              Add Account
-            </span>
-            <ChevronRight className="w-5 h-5 text-black" />
-          </button>
-
           <div className="border-t-1  border-black py-2 mt-2">
             <LogOut />
           </div>

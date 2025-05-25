@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -7,7 +7,8 @@ import { ClipLoader } from "react-spinners";
 import { handleUpdatePassword } from "../../ApiServices/UpdatePassword";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "../../Components/Password Input/PasswordInput";
-import { FaCircleCheck } from "react-icons/fa6";
+import MainBtn from "../../Components/Main Button/MainBtn";
+import { IoClose } from "react-icons/io5";
 
 function UpdatePassword() {
   const [showModal, setShowModal] = useState(false);
@@ -73,8 +74,14 @@ function UpdatePassword() {
         Update Password
       </button>
       <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <div className="w-370">
-          <h1 className="text-primary text-[17px] font-bold ps-4 pt-5">
+        <button
+          className="absolute rounded-md top-1 right-1 bg-red-600 text-white w-10 p-2 text-center"
+          onClick={() => setShowModal(false)}
+        >
+          <IoClose size={23} />
+        </button>
+        <div className="w-300 ">
+          <h1 className="text-primary text-[17px] font-bold ps-4 pb-4 pt-5">
             Update Password
           </h1>
           <Formik
@@ -82,7 +89,7 @@ function UpdatePassword() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="px-4 pb-3">
+            <Form className="ps-3 pb-3">
               <PasswordInput
                 name="password"
                 placeholder="New Password"
@@ -102,27 +109,12 @@ function UpdatePassword() {
               {error && (
                 <div className="text-red-600 text-sm mt-3">{error}</div>
               )}
-              <div className="mt-5 flex gap-3">
-                <button
-                  type="button"
-                  className="bg-gray-100 text-gray-400 p-3 rounded-md font-bold w-full"
-                  onClick={() => setShowModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="flex items-center justify-center gap-2 w-full bg-primary text-white rounded-md font-bold"
-                  type="submit"
-                >
-                  {isLoading ? (
-                    <ClipLoader color="#fff" size={22} />
-                  ) : (
-                    <>
-                      <FaCircleCheck />
-                      Save
-                    </>
-                  )}
-                </button>
+              <div className="mt-3">
+                <MainBtn
+                  text={
+                    isLoading ? <ClipLoader color="#fff" size={22} /> : "Save"
+                  }
+                />
               </div>
             </Form>
           </Formik>

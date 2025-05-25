@@ -1,14 +1,13 @@
 import { Form, Formik } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
-import { FaCircleCheck } from "react-icons/fa6";
 import InputField from "../../Components/InputFields/InputField";
 import { AiOutlineDelete } from "react-icons/ai";
 import { LuUpload } from "react-icons/lu";
+import EndButtons from "../../Components/End Buttons/EndButtons";
 
 function EditInfo() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +18,7 @@ function EditInfo() {
   const { state } = useLocation();
   const personalInfo = state || {};
   const API_BASE_URL = "https://";
-  const live_shop_domain = localStorage.getItem("live_shop_domain");
+  const live_customer_domain = localStorage.getItem("live_customer_domain");
 
   const initialValues = {
     name: personalInfo?.name || "",
@@ -40,7 +39,7 @@ function EditInfo() {
         formData.append("image", selectedImage);
       }
       const response = await axios.post(
-        `${API_BASE_URL}${live_shop_domain}/api/admin/update-profile`,
+        `${API_BASE_URL}${live_customer_domain}/api/admin/update-profile`,
         formData,
         {
           headers: {
@@ -75,7 +74,7 @@ function EditInfo() {
         >
           {({ setFieldValue }) => (
             <Form>
-              <div className="my-5 gap-3">
+              <div className="my-3 gap-3">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 border rounded-md p-3">
                   {selectedImage || personalInfo?.image ? (
                     <img
@@ -121,42 +120,26 @@ function EditInfo() {
                         }}
                         aria-label="Delete image"
                       >
-                        <AiOutlineDelete color="#DC2626" size={22} height={25} />
+                        <AiOutlineDelete
+                          color="#DC2626"
+                          size={22}
+                          height={25}
+                        />
                       </button>
                     )}
                   </div>
                 </div>
               </div>
               <div className="border p-3 rounded-md bg-gray-50 w-full">
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex flex-col md:flex-row gap-2">
                   <InputField placeholder="Name" name="name" />
                   <InputField placeholder="Email" name="email" />
                 </div>
-                <div className="mt-4">
+                <div className="mt-2">
                   <InputField placeholder="Phone" name="phone" />
                 </div>
               </div>
-              <div className="mt-5 flex items-center justify-end gap-3">
-                <button
-                  type="button"
-                  className="bg-gray-100 text-gray-400 font-bold p-3 w-32 rounded-md"
-                  onClick={() => navigate("/Dashboard/MainInfo")}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-primary font-bold text-white flex items-center justify-center gap-2 rounded-md p-3 w-32"
-                >
-                  {isLoading ? (
-                    <ClipLoader color="#fff" size={22} />
-                  ) : (
-                    <>
-                      <FaCircleCheck /> Save
-                    </>
-                  )}
-                </button>
-              </div>
+              <EndButtons onclick={() => navigate("/Dashboard/MainInfo")} isLoading={isLoading} />
             </Form>
           )}
         </Formik>
@@ -173,7 +156,7 @@ function EditInfo() {
             Profile updated successfully!
           </p>
           <button
-            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60 "
+            className="bg-primary font-bold text-white rounded-md p-2 text-14 mt-4 w-60 "
             onClick={() => navigate("/Dashboard/MainInfo")}
           >
             Done ! Updated Successfully
@@ -183,5 +166,4 @@ function EditInfo() {
     </div>
   );
 }
-
 export default EditInfo;

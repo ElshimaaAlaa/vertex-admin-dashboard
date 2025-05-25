@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { GetPersonalInfo } from "../../ApiServices/GetPersonalInfo";
@@ -8,20 +8,12 @@ function PersonalInformation() {
   const navigate = useNavigate();
   const [personalInfo, setPersonalInfo] = useState({});
   const [error, setError] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     const getInfo = async () => {
       try {
         const data = await GetPersonalInfo();
         setPersonalInfo(data);
-        
-        // Clean and set the image URL
-        if (data?.image) {
-          const cleanedUrl = data.image.replace(/\\\//g, '/');
-          setImageUrl(cleanedUrl);
-          localStorage.setItem('admin-image', cleanedUrl);
-        }
       } catch (error) {
         console.error("Failed to fetch personal info:", error);
         setError("Failed to load personal information. Please try again later.");
@@ -29,11 +21,6 @@ function PersonalInformation() {
     };
     getInfo();
   }, []);
-
-  const handleImageError = (e) => {
-    e.target.src = "/assets/images/user.png";
-  };
-
   return (
     <div>
       <Helmet>
@@ -61,10 +48,12 @@ function PersonalInformation() {
         </div>
         <div className="flex flex-col md:flex-row items-center gap-5 my-5 border rounded-md p-3 w-full">
           <img
-            src={imageUrl || localStorage.getItem('admin-image') || "/assets/images/user.png"}
+            src={personalInfo?.image || "/assets/images/user.png"}
             alt="User profile"
-            className="rounded-xl w-32 h-24 md:w-32 md:h-24 object-cover"
-            onError={handleImageError}
+            className="rounded-lg w-32 h-24 md:w:24 md:h-24 object-cover"
+            onError={(e) => {
+              e.target.src = "/assets/images/user.png";
+            }}
           />
           <div className="text-center md:text-left">
             <h2 className="font-semibold text-16">
@@ -102,5 +91,4 @@ function PersonalInformation() {
     </div>
   );
 }
-
 export default PersonalInformation;

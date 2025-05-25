@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaRegEye } from "react-icons/fa";
 import { IoDownloadOutline } from "react-icons/io5";
@@ -66,13 +66,13 @@ function StoreTheme() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[335px]">
+          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[350px]">
             <div>
-              <p className="text-17 font-bold mb-3 mt-7">Logo</p>
+              <p className="text-16 font-bold mb-2 mt-7">Logo</p>
               {imageUrl ? (
                 <img src={imageUrl} alt="theme logo" className="w-52" />
               ) : (
-                <p className="text-gray-400 text-15">No image available</p>
+                <p className="text-gray-400 text-14">No image available</p>
               )}
             </div>
 

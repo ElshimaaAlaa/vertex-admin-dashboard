@@ -1,49 +1,80 @@
-import React from "react";
-import { Bell, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../../Profile/Profile";
-import LanguageSelector from "../../Profile/UpdateLanguage";
+import { CiSearch } from "react-icons/ci";
+import { IoArrowBackCircle } from "react-icons/io5";
+// import { useSearch } from "../Search Context/SearchContext";
 
 function Navbar() {
+  // Correct usage with object destructuring
+  // const { searchQuery, setSearchQuery } = useSearch();
+  const navigate = useNavigate();
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    // setSearchQuery(value.toLowerCase());
+  };
+
+  const clearSearch = () => {
+    // setSearchQuery("");
+  };
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <div className="">
-      <nav className="flex items-center justify-between px-4 py-2 bg-white border-b-2 border-gray-200">
-        {/* Left section */}
-        <div className="flex items-center gap-4">
-          <button variant="ghost" className="p-2">
-            <img
-              src="/assets/images/arrow-multi-line-right_svgrepo.com.png"
-              alt="Logo"
-              className="w-9 h-9"
-            />
+    <div className="bg-white shadow-sm">
+      <nav className="flex items-center justify-between px-5 py-2 border-b border-gray-200">
+        <div className="flex items-center gap-2">
+          {/* Back button */}
+          <button
+            onClick={goBack}
+            aria-label="Go back"
+            className=""
+          >
+            <IoArrowBackCircle size={44} color="#E0A75E"/>
           </button>
-          <div className="relative">
-            <Search
-              color="#E0A75E"
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5"
-            />
+          {/* Search Input */}
+          <div className="relative w-400">
             <input
               type="text"
-              placeholder="Search Something Here"
-              className="w-[400px] pl-10 pr-4 py-3 bg-muted/50 rounded-md text-sm focus:outline-none border border-gray-200 bg-lightgray"
+              placeholder="Search"
+              className="w-full p-2.5 border-1 border-gray-200 rounded-lg focus:outline-none focus:border-primary pl-10 pr-8 placeholder:text-14"
+              // value={searchQuery || ""}
+              onChange={handleSearchChange}
             />
+            <div className="absolute left-3 top-3 text-gray-400">
+              <CiSearch size={22} color="#E0A75E" />
+            </div>
+            {/* {searchQuery && (
+              <button
+                onClick={clearSearch}
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-primary"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            )} */}
           </div>
         </div>
-        {/* Right section */}
         <div className="flex items-center gap-5">
-          <LanguageSelector />
-          {/* Notifications */}
-          <button
-            variant="ghost"
-            size="icon"
-            className="relative bg-gray-100 rounded-md p-3"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2 right-3 w-2 h-2 bg-red-600 text-white text-11 rounded-full flex items-center justify-center"></span>
-          </button>
           <ProfileMenu />
         </div>
       </nav>
     </div>
   );
 }
+
 export default Navbar;

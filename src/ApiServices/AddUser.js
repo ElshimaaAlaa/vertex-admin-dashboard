@@ -1,12 +1,11 @@
 import axios from "axios";
-
-const API_BASE_URL = "https://demo.vrtex.duckdns.org";
-const live_shop_domain = localStorage.getItem("live_shop_domain");
+const API_BASE_URL = "https://";
+const live_customer_domain = localStorage.getItem("live_customer_domain");
 
 export const addUser = async (formData) => {
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/api/admin/users/store`,
+      `${API_BASE_URL}${live_customer_domain}/api/admin/users/store`,
       formData,
       {
         headers: {
@@ -15,7 +14,6 @@ export const addUser = async (formData) => {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
         transformRequest: (data) => {
-          // Convert role object to JSON string if it exists
           if (data instanceof FormData) {
             const role = data.get("role");
             if (role && typeof role === "object") {

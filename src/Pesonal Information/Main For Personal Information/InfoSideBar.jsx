@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import StoreTheme from "../../Svgs/StoreTheme";
 import StoreInformation from "../../Svgs/StoreInformation";
@@ -49,7 +49,7 @@ function InfoSideBar() {
 
   return (
     <aside className="w-full">
-      <div className="flex flex-col gap-7  md:gap-10 border-l p-4 md:p-10">
+      <div className="flex flex-col gap-7  md:gap-16 border-l p-4 md:pt-10">
         {menuItems.map(({ IconComponent, alt, label, path }, index) => (
           <button
             key={index}
