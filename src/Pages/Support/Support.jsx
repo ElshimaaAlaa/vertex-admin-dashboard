@@ -53,7 +53,7 @@ function Support() {
       .required("Message is required"),
   });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -63,6 +63,7 @@ function Support() {
         values.phone,
         values.message
       );
+      resetForm();
       setShowModal(true);
     } catch (error) {
       setError("Failed to send the message. Please try again.");
@@ -157,9 +158,9 @@ function Support() {
                 <InputField name="phone" placeholder="Phone Number" />
                 <Field
                   as="textarea"
-                  placeholder="Description"
+                  placeholder="Message"
                   name="message"
-                  className={`w-full bg-white outline-none border-2 rounded-md p-2 h-24 block placeholder:text-14 
+                  className={`w-full bg-white outline-none border-2 rounded-lg p-2 h-24 block placeholder:text-14 
                   ${
                     errors.message && touched.message
                       ? "border-red-500 focus:border-red-500"

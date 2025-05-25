@@ -53,7 +53,7 @@ function Faqs() {
         {/* FAQ Section */}
        <AllFaqs/>
         {/* Add Question Section */}
-        <section className="bg-customOrange-mediumOrange rounded-md p-5 w-750 h-full mt-10">
+        <section className="bg-customOrange-mediumOrange rounded-md p-5 w-700 h-full mt-10">
           <div className="flex justify-center">
             <img
               src="/assets/svgs/chat-round-dots_svgrepo.com.svg"

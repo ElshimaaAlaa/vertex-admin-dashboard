@@ -74,14 +74,15 @@ function ViewUserDetails() {
       <section className="bg-white mx-5 p-5 rounded-md">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <h1 className="font-bold text-[18px]">View User</h1>
-          <button
-            onClick={() => navigate(`/Dashboard/Users/EditUserInfo/${id}`)}
-            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md"
-            aria-label="Edit personal information"
-          >
-            <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />
-            Edit
-          </button>
+<button
+  onClick={() => navigate(`/Dashboard/Users/EditUserInfo/${id}`, {
+    state: { userInfo } // Pass the entire userInfo object
+  })}
+  className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md"
+>
+  <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />
+  Edit
+</button>
         </div>
         <div className="flex flex-col md:flex-row items-center gap-5 my-3 border rounded-md p-3 w-full">
           <div className="w-32 h-24 flex items-center justify-center overflow-hidden rounded-xl bg-gray-100">
