@@ -28,5 +28,4 @@ function EndButtons({ isLoading , onclick}) {
     </div>
   );
 }
-
 export default EndButtons;

@@ -1,8 +1,8 @@
-const Logo = (props) => (
+const SidebarLogo = (props) => (
   <svg
-    width={40}
-    height={50}
-    viewBox="0 0 52 60"  
+    width={52}
+    height={60}
+    viewBox="0 0 52 60"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
@@ -21,4 +21,4 @@ const Logo = (props) => (
     />
   </svg>
 );
-export default Logo;
+export default SidebarLogo;

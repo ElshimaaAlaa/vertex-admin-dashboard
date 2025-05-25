@@ -7,8 +7,8 @@ function Footer({
   cancelOnClick,
   saveOnClick,
   isLoading,
-  // saveBtnType,
-  // cancelBtnType,
+  saveBtnType,
+  cancelBtnType,
 }) {
   return (
     <div className="flex gap-5 items-center border-t justify-end bg-white rounded p-5 w-full mt-5 absolute bottom-0">
