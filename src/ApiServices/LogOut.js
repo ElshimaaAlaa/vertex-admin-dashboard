@@ -1,10 +1,10 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
-const live_customer_domain = localStorage.getItem("live_customer_domain");
+const live = localStorage.getItem("live");
 export const logOut = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live_customer_domain}/api/admin/logout`,
+      url: `${API_BASE_URL}${live}/api/admin/logout`,
       method: "POST",
     });
     if (response.status === 200) {

@@ -1,10 +1,10 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
-const live_customer_domain = localStorage.getItem("live_customer_domain");
+const live = localStorage.getItem("live");
 export const loginService = async (email, password) => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live_customer_domain}/api/admin/login`,
+      url: `${API_BASE_URL}${live}/api/admin/login`,
       method: "POST",
       data: {
         email,

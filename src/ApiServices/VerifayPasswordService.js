@@ -1,11 +1,11 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
-const live_customer_domain = localStorage.getItem("live_customer_domain");
+const live = localStorage.getItem("live");
 export const VerifayPasswordService = async (otp, email) => {
   try {
     const response = await axios({
       method: "post",
-      url: `${API_BASE_URL}${live_customer_domain}/api/admin/verify-otp`,
+      url: `${API_BASE_URL}${live}/api/admin/verify-otp`,
       data: { otp, email },
       headers: {
         "Accept": "application/json",

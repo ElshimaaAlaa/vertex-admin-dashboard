@@ -1,4 +1,3 @@
-// src/Pages/AddUser/AddUser.js
 import { Form, Formik } from "formik";
 import { useState, useCallback, useEffect } from "react";
 import * as Yup from "yup";
@@ -6,11 +5,8 @@ import { addUser } from "../../ApiServices/AddUser";
 import { useNavigate } from "react-router-dom";
 import { getRoles } from "../../ApiServices/UserRoles";
 import EndButtons from "../../Components/End Buttons/EndButtons";
-// import UserFormFields from "../../Components/UserFormFields/UserFormFields";
-// import ImageUploadSection from "../../Components/ImageUploadSection/ImageUploadSection";
 import ImageUploadSection from "./ImageUploadSection";
 import UserFormFields from "./UserFormFields";
-// import { ImageUpload } from "../../Components/Upload Image/UploadImage";
 function AddUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);

@@ -51,7 +51,7 @@ function AllFaqs({ refreshTrigger }) {
 
   if (isLoading) {
     return (
-      <section className="mt-5 w-[600px] flex justify-center items-center h-40">
+      <section className="mt-5 w-full flex justify-center items-center h-40">
         <ClipLoader color="#E0A75E" size={40} />
       </section>
     );

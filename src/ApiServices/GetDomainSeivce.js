@@ -11,8 +11,8 @@ export const getDomain = async (email) => {
     });
     if (response.status === 200) {
       console.log("Domain fetched successfully", response.data.data);
-      localStorage.setItem("live_customer_domain", response.data.data.domain);
-      localStorage.setItem("live_customer_email", response.data.data.email);
+      localStorage.setItem("live", response.data.data.domain);
+      localStorage.setItem("live_email", response.data.data.email);
       localStorage.setItem("role", response.data.data.role);
       return response.data.data;
     }

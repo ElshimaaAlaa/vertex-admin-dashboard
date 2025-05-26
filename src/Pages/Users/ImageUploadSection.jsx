@@ -1,6 +1,4 @@
-// src/Components/ImageUploadSection/ImageUploadSection.js
 import { FiUpload } from "react-icons/fi";
-// import { ImageUpload } from "../Upload Image/UploadImage";
 import { ImageUpload } from "../../Components/Upload Image/UploadImage";
 const ImageUploadSection = ({
   previewImage,
