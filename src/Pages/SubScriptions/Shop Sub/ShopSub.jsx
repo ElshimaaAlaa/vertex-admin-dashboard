@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Search } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPaginate from "react-paginate";
-import { getShops } from "../../ApiServices/Shop";
-import DeleteShop from "./DeleteShops";
-import { useSearch } from "../../Context/SearchContext";
-
-function Shops() {
-  const { searchQuery, setSearchQuery } = useSearch();
+import { useNavigate } from "react-router-dom";
+import { getSubscriptions } from "../../../ApiServices/Sub";
+import { Search } from "lucide-react";
+function ShopSub() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [shopData, setShopData] = useState([]);
-  const [filteredShops, setFilteredShops] = useState([]);
+  const [subscriptionData, setSubscriptionData] = useState([]);
+  const [filteredSubscription, setFilteredSubscription] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
   const [itemsPerPage] = useState(5);
 
   useEffect(() => {
-    const fetchShops = async () => {
+    const fetchSubscriptions = async () => {
       setIsLoading(true);
       try {
-        const response = await getShops();
-        setShopData(response.data || response);
+        const response = await getSubscriptions();
+        setSubscriptionData(response.data || response);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -30,60 +29,43 @@ function Shops() {
         setIsLoading(false);
       }
     };
-    fetchShops();
+    fetchSubscriptions();
   }, []);
 
   useEffect(() => {
-    if (shopData.length > 0) {
-      const filtered = shopData.filter((shop) => {
+    if (subscriptionData.length > 0) {
+      const filtered = subscriptionData.filter((subscription) => {
         if (!searchQuery) return true;
         const searchTerm = searchQuery.toLowerCase();
         return (
-          shop.store_name?.toLowerCase().includes(searchTerm) ||
-          shop.name?.toLowerCase().includes(searchTerm) ||
-          shop.email?.toLowerCase().includes(searchTerm) ||
-          (shop.id?.toString().includes(searchTerm)
-        ));
+          subscription.user_name?.toLowerCase().includes(searchTerm) ||
+          subscription.payment_method?.toLowerCase().includes(searchTerm)
+        );
       });
-      setFilteredShops(filtered);
-      setCurrentPage(0); // Reset to first page when search changes
+      setFilteredSubscription(filtered);
     }
-  }, [searchQuery, shopData]);
+  }, [searchQuery, subscriptionData]);
 
-  const pageCount = Math.ceil(filteredShops.length / itemsPerPage);
+  const pageCount = Math.ceil(filteredSubscription.length / itemsPerPage);
   const offset = currentPage * itemsPerPage;
-  const currentShops = filteredShops.slice(offset, offset + itemsPerPage);
+  const currentSub = filteredSubscription.slice(offset, offset + itemsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-  const handleDeleteShop = (shopId) => {
-    setShopData(prevShops => prevShops.filter(shop => shop.id !== shopId));
-    if (currentShops.length === 1 && currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const clearSearch = () => {
-    setSearchQuery("");
-  };
-
   return (
-    <div className="h-[89vh] pt-5">
+    <div className="h-[89vh] pt-3">
       <Helmet>
-        <title>Shops | Vertex</title>
+        <title>Shop Subscriptions | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">Menu / Shops</p>
-        <h3 className="font-bold mt-2 text-16">Shops</h3>
+        <p className="text-gray-400 text-13">
+          Subscriptions / Shops Subscriptions
+        </p>
+        <h3 className="font-bold mt-2 text-16">Shops Subscriptions</h3>
       </div>
-      <div className="bg-white rounded-md p-3 mt-3 mx-5">
-        {/* Local search input (optional - can be removed if using only navbar search) */}
+      <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <div className="relative w-full mt-3">
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5"
@@ -91,21 +73,12 @@ function Shops() {
           />
           <input
             type="text"
-            placeholder="Search shops..."
+            placeholder="Search "
             value={searchQuery}
-            onChange={handleSearchChange}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-12 pl-10 pr-10 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary"
           />
-          {searchQuery && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              ×
-            </button>
-          )}
         </div>
-
         {error ? (
           <div className="text-red-500 text-center mt-10">
             Failed to fetch data. Please try again.
@@ -114,9 +87,9 @@ function Shops() {
           <div className="text-gray-400 text-center mt-10">
             <ClipLoader color="#E0A75E" />
           </div>
-        ) : filteredShops.length === 0 ? (
+        ) : filteredSubscription.length === 0 ? (
           <div className="text-gray-400 text-center mt-10">
-            {searchQuery ? "No shops match your search." : "No shops found."}
+            {searchQuery ? "No plans match your search." : "No plans found."}
           </div>
         ) : (
           <>
@@ -124,49 +97,71 @@ function Shops() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t text-left">
+                    <th className="px-3 py-3 text-16 border-t border-b text-left cursor-pointer">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           className="form-checkbox h-4 w-4"
                           aria-label="Select all shops"
                         />
-                        Shop Name
+                        User Name
                       </p>
                     </th>
                     <th className="px-3 py-3 text-16 text-left border">
-                      Owner
+                      Transaction ID
+                    </th>
+                    <th className="px-3 py-3 text-16 text-left border">Plan</th>
+                    <th className="px-3 py-3 text-16 text-left border">
+                      Duration
                     </th>
                     <th className="px-3 py-3 text-16 text-left border">
-                      Total Product
+                      Payment Methods
                     </th>
-                    <th className="px-3 py-3 text-left border w-24">Actions</th>
+                    <th className="px-3 py-3 text-left border w-24">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {currentShops.map((shop) => (
-                    <tr
-                      key={shop.id}
-                      className="hover:bg-gray-50"
-                    >
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
+                  {currentSub.map((sub) => (
+                    <tr key={sub.id} className="hover:bg-gray-50">
+                      <td
+                        className="px-3 py-3 border-t border-r text-gray-600 text-14 cursor-pointer"
+                        onClick={() => navigate(`/Dashboard/ShopSub/${sub.id}`)}
+                      >
                         <p className="flex items-center gap-2">
                           <input
                             type="checkbox"
                             className="form-checkbox h-4 w-4"
-                            aria-label="Select shop"
+                            aria-label="Select user"
                           />
-                          {shop.store_name || "N/A"}
+                          {sub.user_name || "unavailable"}
                         </p>
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {shop.name || "N/A"}
+                        <div className="flex items-center gap-2">
+                          {sub.transaction_id || 0}
+                        </div>
                       </td>
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        {shop.product_count || "0"}
+                        {sub.plan || "unavailable"}
                       </td>
-                      <td className="px-3 py-3 border-t border-r">
-                        <DeleteShop id={shop.id} onDelete={() => handleDeleteShop(shop.id)} />
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-180 ">
+                        <p className="bg-customOrange-lightOrange text-primary rounded-md py-1 ps-2  w-28">
+                          {sub.duration || "unavailable"}
+                        </p>
+                      </td>
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-180 ">
+                        {sub.payment_method || "unavailable"}
+                      </td>
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-32 ">
+                        <span
+                          className={
+                            sub.status === "active"
+                              ? "bg-[#E7F6E5] text-[#28A513] rounded-md p-2 font-bold"
+                              : "bg-red-50 text-red-600 rounded-md p-2 font-bold"
+                          }
+                        >
+                          {sub.status}
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -178,15 +173,17 @@ function Shops() {
               onPageChange={handlePageClick}
               forcePage={currentPage}
               containerClassName="flex items-center justify-end mt-5 space-x-1"
-              pageClassName="px-3 py-1 text-14 text-gray-400 rounded-md"
+              pageClassName="px-3 py-1 text-14 text-gray-400 rounded "
               activeClassName="bg-customOrange-lightOrange text-primary"
               previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
               nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}
               previousClassName={`px-3 py-1 rounded ${
-                currentPage === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-100"
+                currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               nextClassName={`px-3 py-1 rounded ${
-                currentPage === pageCount - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-100"
+                currentPage === pageCount - 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
               }`}
               disabledClassName="opacity-50 cursor-not-allowed"
             />
@@ -196,5 +193,4 @@ function Shops() {
     </div>
   );
 }
-
-export default Shops;
+export default ShopSub;

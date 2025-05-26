@@ -1,10 +1,10 @@
 import axios from "axios";
 const API_BASE_URL = "https://";
 const live = localStorage.getItem("live");
-export const getShops = async () => {
+export const getSubscriptions = async () => {
   try {
     const response = await axios({
-      url:`${API_BASE_URL}${live}/api/admin/shops?dashboard=1`,
+      url: `${API_BASE_URL}${live}/api/admin/subscriptions`,
       method: "GET",
       headers: {
         "Accept-Language": "en",
@@ -16,7 +16,7 @@ export const getShops = async () => {
       return response.data.data;
     }
   } catch (error) {
-    console.error("Failed to fetch shops: ", error);
+    console.error("Failed to fetch subscriptions: ", error);
     throw error;
   }
 };

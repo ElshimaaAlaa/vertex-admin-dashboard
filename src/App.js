@@ -22,7 +22,11 @@ import StoreInformation from "./Profile/Store/StoreInformation";
 import Pricing from "./Profile/Store/PrincingPlan";
 import ViewUserDetails from "./Pages/Users/ViewUserDetails";
 import EditUserInfo from "./Pages/Users/EditUser";
-import Plans from "./Pages/SubScriptions/Plans";
+import { SearchProvider } from "./Context/SearchContext";
+import Plans from "./Pages/SubScriptions/Plans/Plans";
+import ShopSub from "./Pages/SubScriptions/Shop Sub/ShopSub";
+import ViewSubscription from "./Pages/SubScriptions/Shop Sub/ViewSubscription";
+import AddPlan from "./Pages/SubScriptions/Plans/AddPlan";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -41,47 +45,55 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<GetDomain />} />
-        <Route
-          path="/Dashboard"
-          element={<Navigate to="/Dashboard/Home" replace />}
-        />
-        <Route path="/AdminLogin" element={<AdminLogin />} />
-        <Route path="/AdminLogin/ForgotPassword" element={<ForgotPassword />} />
-        <Route
-          path="/AdminLogin/VerifayPassword"
-          element={<VerifayPassword />}
-        />
-        <Route
-          path="/AdminLogin/CreateNewPassword"
-          element={<CreateNewPassword />}
-        />
+    <SearchProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<GetDomain />} />
+          <Route
+            path="/Dashboard"
+            element={<Navigate to="/Dashboard/Home" replace />}
+          />
+          <Route path="/AdminLogin" element={<AdminLogin />} />
+          <Route
+            path="/AdminLogin/ForgotPassword"
+            element={<ForgotPassword />}
+          />
+          <Route
+            path="/AdminLogin/VerifayPassword"
+            element={<VerifayPassword />}
+          />
+          <Route
+            path="/AdminLogin/CreateNewPassword"
+            element={<CreateNewPassword />}
+          />
 
-        <Route path="/Dashboard" element={<Dashboard />}>
-          <Route path="MainInfo" element={<MainInfo />}>
-            <Route index element={<PersonalInformation />} />
-            <Route path="EditInfo" element={<EditInfo />} />
-            <Route path="StoreTheme" element={<StoreTheme />} />
-            <Route path="StoreInformation" element={<StoreInformation />} />
-            <Route path="Pricing" element={<Pricing />} />
+          <Route path="/Dashboard" element={<Dashboard />}>
+            <Route path="MainInfo" element={<MainInfo />}>
+              <Route index element={<PersonalInformation />} />
+              <Route path="EditInfo" element={<EditInfo />} />
+              <Route path="StoreTheme" element={<StoreTheme />} />
+              <Route path="StoreInformation" element={<StoreInformation />} />
+              <Route path="Pricing" element={<Pricing />} />
+            </Route>
+            <Route path="Shops" element={<Shops />} />
+            <Route path="Users" element={<Users />} />
+            <Route path="Users" element={<Users />} />
+            <Route path="Users/AddUser" element={<AddUser />} />
+            <Route path="Users/View/:id" element={<ViewUserDetails />} />
+            <Route path="Users/Edit/:id" element={<EditUserInfo />} />
+            <Route path="AddUser" element={<AddUser />} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Support" element={<Support />} />
+            <Route path="Faqs" element={<Faqs />} />
+            <Route path="Plans" element={<Plans />} />
+            <Route path="AddPlan" element={<AddPlan/>} />
+            <Route path="ShopSub" element={<ShopSub />} />
+            <Route path="ShopSub/:id" element={<ViewSubscription />} />
+            <Route path="AllPermissions" element={<AllPermissions />} />
           </Route>
-          <Route path="Shops" element={<Shops />} />
-          <Route path="Users" element={<Users />} />
-          <Route path="Users" element={<Users />} />
-          <Route path="Users/AddUser" element={<AddUser />} />
-          <Route path="Users/View/:id" element={<ViewUserDetails />} />
-          <Route path="Users/Edit/:id" element={<EditUserInfo />} />
-          <Route path="AddUser" element={<AddUser />} />
-          <Route path="Home" element={<Home />} />
-          <Route path="Support" element={<Support />} />
-          <Route path="Faqs" element={<Faqs />} />
-          <Route path="Plans" element={<Plans />} />
-          <Route path="AllPermissions" element={<AllPermissions />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </SearchProvider>
   );
 }
 

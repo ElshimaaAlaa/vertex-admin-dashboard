@@ -24,7 +24,6 @@ const Sidebar = () => {
     localStorage.getItem("sidebarPinned") === "true"
   );
 
-  // Sync selected item with current route
   useEffect(() => {
     const path = location.pathname;
     if (path.includes("/Dashboard/Home")) setSelectedItem("dashboard");
@@ -94,7 +93,7 @@ const Sidebar = () => {
         {
           id: "Shop subscriptions",
           label: "Shop subscriptions",
-          onclick: () => navigate("/Dashboard/ShopSubscriptions"),
+          onclick: () => navigate("/Dashboard/ShopSub"),
         },
       ],
     },
@@ -123,7 +122,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar ${expanded ? "expanded" : ""} ${
+      className={`sidebar min-h-screen ${expanded ? "expanded" : ""} ${
         isPinned ? "pinned" : ""
       }`}
       onMouseEnter={() => !isPinned && setExpanded(true)}
