@@ -1,15 +1,15 @@
 import axios from "axios";
+
 const API_BASE_URL = "https://";
 const live_customer_domain = localStorage.getItem("live_customer_domain");
 
-export const addUser = async (formData) => {
+export const getRoles = async () => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}${live_customer_domain}/api/admin/users/store`,
-      formData,
+    const response = await axios.get(
+      `${API_BASE_URL}${live_customer_domain}/api/admin/roles`,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           Accept: "application/json",
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },

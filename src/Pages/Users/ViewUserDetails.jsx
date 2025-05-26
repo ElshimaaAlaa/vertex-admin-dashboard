@@ -35,7 +35,7 @@ function ViewUserDetails() {
       } catch (error) {
         console.error(error);
         toast.error(error.message || "Failed to load user details");
-      } 
+      }
     };
     fetchUserDetails();
   }, [id, live_shop_domain]);
@@ -45,14 +45,15 @@ function ViewUserDetails() {
       toast.warning("No phone number to copy");
       return;
     }
-    
-    navigator.clipboard.writeText(text)
+
+    navigator.clipboard
+      .writeText(text)
       .then(() => {
-        toast.success('Phone number copied to clipboard!');
+        toast.success("Phone number copied to clipboard!");
       })
-      .catch(err => {
-        console.error('Failed to copy:', err);
-        toast.error('Failed to copy phone number');
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        toast.error("Failed to copy phone number");
       });
   };
 
@@ -87,11 +88,12 @@ function ViewUserDetails() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <h1 className="font-bold text-[18px]">View User</h1>
           <button
-            onClick={() =>
-              navigate(`/Dashboard/Users/EditUserInfo/${id}`, {
-                state: { userInfo },
-              })
-            }
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/Dashboard/Users/Edit/${userInfo.id}`, {
+                state: { userInfo: userInfo },
+              });
+            }}
             className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md hover:bg-primary-dark transition-colors"
           >
             <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />

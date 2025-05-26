@@ -26,14 +26,15 @@ function Users() {
       toast.warning("No phone number to copy");
       return;
     }
-    
-    navigator.clipboard.writeText(text)
+
+    navigator.clipboard
+      .writeText(text)
       .then(() => {
-        toast.success('Phone number copied to clipboard!');
+        toast.success("Phone number copied to clipboard!");
       })
-      .catch(err => {
-        console.error('Failed to copy:', err);
-        toast.error('Failed to copy phone number');
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+        toast.error("Failed to copy phone number");
       });
   };
 
@@ -48,7 +49,7 @@ function Users() {
         console.error(error);
         setError(error.message);
         setIsLoading(false);
-        toast.error('Failed to load users');
+        toast.error("Failed to load users");
       }
     };
     fetchUsers();
@@ -81,12 +82,11 @@ function Users() {
     if (currentUsers.length === 1 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
-    toast.success('User deleted successfully');
+    toast.success("User deleted successfully");
   };
 
   return (
     <div className="h-[89vh] pt-3">
-      {/* Toast Container must be included somewhere in your component tree */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -99,19 +99,19 @@ function Users() {
         pauseOnHover
         theme="colored"
       />
-      
+
       <Helmet>
         <title>Users | Vertex</title>
       </Helmet>
-      
+
       <div className="bg-white p-5 mx-5 rounded-md">
         <p className="text-gray-400 text-13">Menu / Users</p>
         <h3 className="font-bold mt-2 text-16">Users</h3>
       </div>
-      
+
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
-          onclick={() => navigate("/Dashboard/AddUser")}
+          onclick={() => navigate("/Dashboard/Users/AddUser")}
           value={searchQuery}
           onchange={(e) => setSearchQuery(e.target.value)}
           text={"Add New User"}
@@ -122,7 +122,7 @@ function Users() {
             />
           }
         />
-        
+
         {error ? (
           <div className="text-red-500 text-center mt-10">
             Failed to fetch data. Please try again.
@@ -169,9 +169,9 @@ function Users() {
                       key={user.id}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
-                      <td 
-                        className="px-3 py-3 border-t border-r text-gray-600 text-14" 
-                        onClick={() => navigate(`/Dashboard/Users/${user.id}`)}
+                      <td
+                        className="px-3 py-3 border-t border-r text-gray-600 text-14"
+                        onClick={() => navigate(`/Dashboard/Users/View/${user.id}`)}
                       >
                         <p className="flex items-center gap-2">
                           <input
@@ -186,7 +186,7 @@ function Users() {
                         <div className="flex items-center gap-2">
                           {user.phone || "N/A"}
                           {user.phone && (
-                            <button 
+                            <button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 copyToClipboard(user.phone);
@@ -211,8 +211,8 @@ function Users() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/Dashboard/Users/EditUserInfo/${user.id}`, {
-                                state: { user },
+                              navigate(`/Dashboard/Users/Edit/${user.id}`, {
+                                state: { userInfo: user }
                               });
                             }}
                             className="text-primary hover:text-primary-dark"
@@ -234,7 +234,7 @@ function Users() {
                 </tbody>
               </table>
             </div>
-            
+
             <ReactPaginate
               pageCount={pageCount}
               onPageChange={handlePageClick}
@@ -262,4 +262,5 @@ function Users() {
     </div>
   );
 }
+
 export default Users;

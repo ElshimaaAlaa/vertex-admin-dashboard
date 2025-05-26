@@ -22,7 +22,7 @@ export const ImageUpload = ({ previewImage, onImageChange, name, error }) => {
           <img
             src={previewImage}
             alt="Preview"
-            className="w-full h-full object-cover rounded-md p-1"
+            className="w-full h-full object-cover rounded-md p-0.5"
           />
         ) : (
           <div className="flex flex-col items-center gap-1 text-gray-500">

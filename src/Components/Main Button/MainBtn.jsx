@@ -2,7 +2,7 @@ function MainBtn({ text, onclick, btnType, ...props }) {
   return (
     <div>
       <button
-        className="mainButton h-12 bg-primary rounded-md text-18 text-white font-bold outline-none w-full"
+        className="mainButton h-14 bg-primary rounded-md text-18 text-white font-bold outline-none w-full"
         onClick={onclick}
         type={btnType}
       >

@@ -43,13 +43,22 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<GetDomain/>} />
-        <Route path="/Dashboard" element={<Navigate to="/Dashboard/Home" replace />} />
+        <Route path="/" element={<GetDomain />} />
+        <Route
+          path="/Dashboard"
+          element={<Navigate to="/Dashboard/Home" replace />}
+        />
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/AdminLogin/ForgotPassword" element={<ForgotPassword />} />
-        <Route path="/AdminLogin/VerifayPassword" element={<VerifayPassword />} />
-        <Route path="/AdminLogin/CreateNewPassword" element={<CreateNewPassword />} />
-        
+        <Route
+          path="/AdminLogin/VerifayPassword"
+          element={<VerifayPassword />}
+        />
+        <Route
+          path="/AdminLogin/CreateNewPassword"
+          element={<CreateNewPassword />}
+        />
+
         <Route path="/Dashboard" element={<Dashboard />}>
           <Route path="MainInfo" element={<MainInfo />}>
             <Route index element={<PersonalInformation />} />
@@ -60,8 +69,10 @@ function App() {
           </Route>
           <Route path="Shops" element={<Shops />} />
           <Route path="Users" element={<Users />} />
-          <Route path="Users/:id" element={<ViewUserDetails />} />
-          <Route path="Users/EditUserInfo/:userId" element={<EditUserInfo />} />
+          <Route path="Users" element={<Users />} />
+          <Route path="Users/AddUser" element={<AddUser />} />
+          <Route path="Users/View/:id" element={<ViewUserDetails />} />
+          <Route path="Users/Edit/:id" element={<EditUserInfo />} />
           <Route path="AddUser" element={<AddUser />} />
           <Route path="Home" element={<Home />} />
           <Route path="Support" element={<Support />} />
