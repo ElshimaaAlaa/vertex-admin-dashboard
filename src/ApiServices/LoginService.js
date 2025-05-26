@@ -1,10 +1,9 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+const live = "https://vrtex.duckdns.org/api/";
 export const loginService = async (email, password) => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/login`,
+      url: `${live}admin/login`,
       method: "POST",
       data: {
         email,

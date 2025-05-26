@@ -1,6 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+const live = "https://vrtex.duckdns.org/api/";
 export const CreateNewPasswordService = async (
   password,
   password_confirmation,
@@ -8,7 +7,7 @@ export const CreateNewPasswordService = async (
 ) => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/reset-password`,
+      url: `${live}admin/reset-password`,
       method: "POST",
       data: {
         password,

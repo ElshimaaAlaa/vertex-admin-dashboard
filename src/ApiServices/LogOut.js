@@ -1,10 +1,9 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+const live = "https://vrtex.duckdns.org/api/";
 export const logOut = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/logout`,
+      url: `${live}admin/logout`,
       method: "POST",
     });
     if (response.status === 200) {

@@ -1,12 +1,11 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+const live = "https://vrtex.duckdns.org/api/";
 
 export const ForgotPasswordService = async (email) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `${API_BASE_URL}${live}/api/admin/send-otp`,
+      url: `${live}admin/send-otp`,
       data: { email },
       headers: {
         "Content-Type": "application/json",

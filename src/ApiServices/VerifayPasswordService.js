@@ -1,11 +1,10 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+const live = "https://vrtex.duckdns.org/api/";
 export const VerifayPasswordService = async (otp, email) => {
   try {
     const response = await axios({
       method: "post",
-      url: `${API_BASE_URL}${live}/api/admin/verify-otp`,
+      url: `${live}admin/verify-otp`,
       data: { otp, email },
       headers: {
         "Accept": "application/json",

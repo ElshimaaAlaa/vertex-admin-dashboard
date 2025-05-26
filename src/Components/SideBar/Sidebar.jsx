@@ -1,48 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./sidebar.scss";
+import { ChevronDown, ChevronUp, Pin, PinOff } from "lucide-react";
 import Home from "../../Svgs/Home";
 import Support from "../../Svgs/Support";
 import Help from "../../Svgs/Help";
 import Logo from "../../Svgs/logo";
 import Text from "../../Svgs/text";
-import { ChevronDown, ChevronUp, Pin, PinOff } from "lucide-react";
 import Invoices from "../../Svgs/Invoives";
 import ShopIcon from "../../Svgs/ShopIcon";
 import Subscriptions from "../../Svgs/Subscriptions";
 import Permisions from "../../Svgs/Permissions";
+import "./sidebar.scss";
 
 const Sidebar = () => {
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("dashboard");
+  const [selectedItem, setSelectedItem] = useState("");
   const [openSubmenu, setOpenSubmenu] = useState(null);
-  const [isPinned, setIsPinned] = useState(false);
+  const [isPinned, setIsPinned] = useState(
+    localStorage.getItem("sidebarPinned") === "true"
+  );
+  const [expanded, setExpanded] = useState(
+    localStorage.getItem("sidebarPinned") === "true"
+  );
 
   // Sync selected item with current route
-  // useEffect(() => {
-  //   const path = location.pathname;
-  //   if (path.includes("/Dashboard/Home")) setSelectedItem("dashboard");
-  //   else if (path.includes("/Dashboard/Shops")) setSelectedItem("Shops");
-  //   else if (path.includes("/Dashboard/Users")) setSelectedItem("Users");
-  //   else if (path.includes("/Dashboard/Plans")) {
-  //     setSelectedItem("Plans");
-  //     setOpenSubmenu("Subscriptions");
-  //   }
-  //   else if (path.includes("/Dashboard/AllPermissions")) setSelectedItem("Permisions");
-  //   else if (path.includes("/Dashboard/Support")) setSelectedItem("support");
-  //   else if (path.includes("/Dashboard/Faqs")) setSelectedItem("help");
-  // }, [location]);
-
-  const toggleSidebar = () => {
-    if (!isPinned) setExpanded(!expanded);
-  };
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes("/Dashboard/Home")) setSelectedItem("dashboard");
+    else if (path.includes("/Dashboard/Shops")) setSelectedItem("Shops");
+    else if (path.includes("/Dashboard/Users")) setSelectedItem("Users");
+    else if (path.includes("/Dashboard/Plans")) {
+      setSelectedItem("Plans");
+      setOpenSubmenu("Subscriptions");
+    } else if (path.includes("/Dashboard/AllPermissions"))
+      setSelectedItem("Permisions");
+    else if (path.includes("/Dashboard/Support")) setSelectedItem("support");
+    else if (path.includes("/Dashboard/Faqs")) setSelectedItem("help");
+  }, [location]);
 
   const togglePin = (e) => {
     e.stopPropagation();
-    setIsPinned(!isPinned);
-    if (!isPinned) setExpanded(true);
+    const newPinnedState = !isPinned;
+    setIsPinned(newPinnedState);
+    setExpanded(newPinnedState);
+    localStorage.setItem("sidebarPinned", newPinnedState.toString());
   };
 
   const handleItemClick = (item) => {
@@ -71,21 +73,18 @@ const Sidebar = () => {
       id: "Shops",
       label: "Shops",
       icon: <ShopIcon />,
-      padding: "3px",
       onclick: () => navigate("/Dashboard/Shops"),
     },
     {
       id: "Users",
       label: "Users",
       icon: <Invoices />,
-      padding: "4px",
       onclick: () => navigate("/Dashboard/Users"),
     },
     {
       id: "Subscriptions",
       label: "Subscriptions",
       icon: <Subscriptions />,
-      padding: "2px",
       subItems: [
         {
           id: "Plans",
@@ -95,15 +94,14 @@ const Sidebar = () => {
         {
           id: "Shop subscriptions",
           label: "Shop subscriptions",
-          onclick: () => navigate(""),
+          onclick: () => navigate("/Dashboard/ShopSubscriptions"),
         },
       ],
     },
     {
       id: "Permisions",
-      label: "Permisions",
+      label: "Permissions",
       icon: <Permisions />,
-      padding: "2px",
       onclick: () => navigate("/Dashboard/AllPermissions"),
     },
   ];
@@ -119,122 +117,118 @@ const Sidebar = () => {
       id: "help",
       label: "Help",
       icon: <Help />,
-      padding: "5px",
       onclick: () => navigate("/Dashboard/Faqs"),
     },
   ];
 
   return (
     <div
-      className={`sidebar px-6 bg-black min-h-screen flex flex-col justify-between ${
-        expanded ? "expanded w-[250px]" : "w-20"
-      } ${isPinned ? "pinned" : ""}`}
-      onMouseEnter={toggleSidebar}
-      onMouseLeave={toggleSidebar}
+      className={`sidebar ${expanded ? "expanded" : ""} ${
+        isPinned ? "pinned" : ""
+      }`}
+      onMouseEnter={() => !isPinned && setExpanded(true)}
+      onMouseLeave={() => !isPinned && setExpanded(false)}
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-center items-center relative h-16">
-          {!expanded && (
-            <div className="logo absolute">
-              <Logo />
-            </div>
-          )}
-          {expanded && (
-            <div className="flex justify-between gap-8 items-center text">
-              <div>
-                <Text />
-              </div>
-              <div>
-                <button
-                  onClick={togglePin}
-                  className="pin-button mt-4"
-                  title={isPinned ? "Unpin sidebar" : "Pin sidebar"}
-                >
-                  {isPinned ? (
-                    <PinOff size={18} className="text-white" />
-                  ) : (
-                    <Pin size={18} className="text-white" />
-                  )}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {menuItems.map((item) => (
-          <div key={item.id}>
-            <div
-              className={`flex items-center gap-2 cursor-pointer rounded-md hover:bg-primatyOpacity hover:p-2 ${
-                expanded ? "hover:w-[215px]" : "hover:w-20"
-              } ${selectedItem === item.id ? "active-menu-item" : ""}`}
-              onClick={() => handleItemClick(item)}
+      <div className="sidebar-header">
+        {expanded ? (
+          <div className="header-expanded">
+            <Text />
+            <button
+              onClick={togglePin}
+              className="pin-button"
+              title={isPinned ? "Unpin sidebar" : "Pin sidebar"}
+              aria-label={isPinned ? "Unpin sidebar" : "Pin sidebar"}
             >
-              <span className="icon">
-                {React.cloneElement(item.icon, {
-                  style: { padding: item.padding },
-                  className: `${selectedItem === item.id ? "selectedImg" : ""}`,
-                })}
-              </span>
-              {expanded && (
-                <>
-                  <span className={`text-white text-14 item ${selectedItem === item.id ? "selected" : ""}`}>
-                    {item.label}
-                  </span>
-                  {item.subItems && (
-                    <span className="ml-auto">
-                      {openSubmenu === item.id ? (
-                        <ChevronUp size={16} className="text-white" />
-                      ) : (
-                        <ChevronDown size={16} className="text-white" />
-                      )}
-                    </span>
-                  )}
-                </>
+              {isPinned ? (
+                <PinOff size={18} className="text-white" />
+              ) : (
+                <Pin size={18} className="text-white" />
               )}
-            </div>
-
-            {item.subItems && openSubmenu === item.id && expanded && (
-              <div className="submenu pl-8 mt-1 flex flex-col">
-                {item.subItems.map((subItem) => (
-                  <div
-                    key={subItem.id}
-                    className={`flex gap-2 cursor-pointer rounded-md ${
-                      selectedItem === subItem.id ? "selected-submenu-item" : ""
-                    }`}
-                    onClick={() => handleSubItemClick(item, subItem)}
-                  >
-                    <span className={`text-white text-14 ${selectedItem === subItem.id ? "selected" : ""}`}>
-                      {subItem.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
+            </button>
           </div>
-        ))}
+        ) : (
+          <div className="header-collapsed">
+            <Logo />
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col gap-4 pb-4">
-        {bottomMenuItems.map((item) => (
-          <div
-            key={item.id}
-            className={`flex items-center gap-2 cursor-pointer rounded-md hover:bg-primatyOpacity hover:p-2 ${
-              expanded ? "hover:w-[215px]" : "hover:w-20"
-            } ${selectedItem === item.id ? "active-menu-item" : ""}`}
-            onClick={() => handleItemClick(item)}
-          >
-            <span className="icon">
-              {React.cloneElement(item.icon, {
-                className: `${selectedItem === item.id ? "selectedImg" : ""}`,
-              })}
-            </span>
-            {expanded && (
-              <span className={`text-white text-14 ${selectedItem === item.id ? "selected" : ""}`}>
-                {item.label}
-              </span>
-            )}
-          </div>
-        ))}
+      <div className="sidebar-content">
+        <div className="main-menu">
+          {menuItems.map((item) => (
+            <div key={item.id} className="menu-item-container">
+              <div
+                className={`menu-item ${
+                  selectedItem === item.id ? "active" : ""
+                }`}
+                onClick={() => handleItemClick(item)}
+                data-id={item.id}
+              >
+                <div className="menu-icon">
+                  {React.cloneElement(item.icon, {
+                    className: `${
+                      selectedItem === item.id ? "icon-active" : ""
+                    }`,
+                  })}
+                </div>
+                {expanded && (
+                  <div className="menu-content">
+                    <span className="menu-label">{item.label}</span>
+                    {item.subItems && (
+                      <span className="menu-chevron">
+                        {openSubmenu === item.id ? (
+                          <ChevronUp size={16} />
+                        ) : (
+                          <ChevronDown size={16} />
+                        )}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {item.subItems && openSubmenu === item.id && expanded && (
+                <div className="submenu">
+                  {item.subItems.map((subItem) => (
+                    <div
+                      key={subItem.id}
+                      className={`submenu-item ${
+                        selectedItem === subItem.id ? "active" : ""
+                      }`}
+                      onClick={() => handleSubItemClick(item, subItem)}
+                    >
+                      <span className="submenu-label">{subItem.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="bottom-menu">
+          {bottomMenuItems.map((item) => (
+            <div
+              key={item.id}
+              className={`menu-item ${
+                selectedItem === item.id ? "active" : ""
+              }`}
+              onClick={() => handleItemClick(item)}
+              data-id={item.id}
+            >
+              <div className="menu-icon">
+                {React.cloneElement(item.icon, {
+                  className: `${selectedItem === item.id ? "icon-active" : ""}`,
+                })}
+              </div>
+              {expanded && (
+                <div className="menu-content">
+                  <span className="menu-label">{item.label}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
