@@ -7,13 +7,13 @@ function DeletePlan({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const API_BASE_URL = "https://";
-  const live_shop_domain = localStorage.getItem("live_shop_domain");
+  const live = localStorage.getItem("live");
   const handleDeletePlan = async () => {
     setIsLoading(true);
     try {
       const response = await axios({
         method: "GET",
-        url: `${API_BASE_URL}${live_shop_domain}/api/admin/plans/delete/${id}`,
+        url: `${API_BASE_URL}${live}/api/admin/plans/delete/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
@@ -25,11 +25,11 @@ function DeletePlan({ id, onDelete }) {
         onDelete(id);
       } else {
         setIsLoading(false);
-        console.error("Failed to delete shop");
+        console.error("Failed to delete plan");
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Failed to delete shop", error);
+      console.error("Failed to delete plan", error);
     }
   };
   if (showModal) {

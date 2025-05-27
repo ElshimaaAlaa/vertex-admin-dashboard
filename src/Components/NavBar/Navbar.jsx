@@ -43,7 +43,7 @@ function Navbar() {
           <form onSubmit={handleSearchSubmit} className="relative w-[400px]">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search something here..."
               className="w-full p-2.5 border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary pl-10 pr-8 placeholder:text-sm"
               value={searchQuery}
               onChange={handleSearchChange}

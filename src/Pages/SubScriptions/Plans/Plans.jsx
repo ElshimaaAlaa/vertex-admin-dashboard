@@ -91,7 +91,7 @@ function Plans() {
   };
 
   return (
-    <div className="h-[89vh] pt-3">
+    <div className="h-[89vh] pt-5">
       <Helmet>
         <title>Plans | Vertex</title>
       </Helmet>

@@ -22,12 +22,12 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
           <div>
             <button
               type="button"
-              className={`w-full text-14 h-12 p-3 text-left bg-white border ${
+              className={`w-full text-14 h-14 p-3 text-left bg-white border ${
                 meta.touched && meta.error
                   ? "border-red-500"
                   : "border-gray-200"
               } rounded-md shadow-sm focus:outline-none focus:border-primary ${
-                values.features?.length > 0 ? "text-black" : "text-gray-400"
+                values.features?.length > 0 ? "text-black " : "text-gray-400"
               }`}
               onClick={(e) => {
                 e.preventDefault();
@@ -59,16 +59,16 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
             )}
 
             {/* Selected features chips */}
-            <div className="flex flex-wrap gap-2 ">
+            <div className="flex flex-wrap gap-2 mt-3 ">
               {values.features?.map((feature) => (
                 <span
                   key={feature}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary"
+                  className="inline-flex items-center p-2 rounded-md text-xs font-medium bg-primary/10 text-primary"
                 >
                   {feature}
                   <button
                     type="button"
-                    className="ml-1.5 inline-flex text-primary rounded-full focus:outline-none"
+                    className="ml-1.5 inline-flex text-red-600 text-lg rounded-full focus:outline-none"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFeature(feature);
@@ -98,7 +98,7 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
                   {features.map((feature) => (
                     <li
                       key={feature}
-                      className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-50"
+                      className="cursor-pointer select-none relative text-13 py-2 pl-3 pr-9 hover:bg-blue-50"
                       onClick={() => toggleFeature(feature)}
                     >
                       <div className="flex items-center">

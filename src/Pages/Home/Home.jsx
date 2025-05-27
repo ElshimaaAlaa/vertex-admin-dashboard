@@ -6,7 +6,6 @@ import { BsShop } from "react-icons/bs";
 import ReportsItem from "./ReportsItem";
 import RevenueChart from "./RevenueChart";
 import SalesChart from "./SalesChart";
-import CompletionRate from "./CompletionRate";
 import { IoArrowForward } from "react-icons/io5";
 import { TbUsers } from "react-icons/tb";
 import ActivitieCard from "./ActivitiesCard";
@@ -37,7 +36,7 @@ function Home() {
           <ReportsItem
             icon={HiCurrencyDollar}
             title="Total Revenue"
-            totalNumber={statistics?.overview?.total_revenue?.amount || 0}
+            totalNumber={statistics?.overview?.total_revenue?.amount.toFixed(3) || 0}
             change_rate={`${
               statistics?.overview?.total_revenue?.change_rate || 0
             }`}
@@ -92,17 +91,6 @@ function Home() {
             </div>
           </div>
           <SalesChart data={statistics.monthly_income} />
-        </section>
-        {/* Completion Rate */}
-        <section className="bg-white border-1 border-gray-200 p-5 rounded-md relative overflow-hidden">
-          <div className="bg-gray-50 absolute inset-0 z-0">
-            <div className="grid grid-cols-6 h-full">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="border-r border-white"></div>
-              ))}
-            </div>
-          </div>
-          <CompletionRate />
         </section>
       </div>
       {/* Recent Activity */}

@@ -108,7 +108,7 @@ function Permisions() {
       </div>
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
-          onclick={() => navigate("/Dashboard/AddPlan")}
+          onclick={() => navigate("/Dashboard/AddRole")}
           value={searchQuery}
           onchange={(e) => setSearchQuery(e.target.value)}
           text={"Add New Role"}

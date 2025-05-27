@@ -13,7 +13,6 @@ function AddPlan() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Available features for selection
   const AVAILABLE_FEATURES = [
     "24/7 Support",
     "Advanced Analytics",
@@ -39,6 +38,7 @@ function AddPlan() {
   };
 
   const handleSubmit = async (values, { resetForm }) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("sale_price", values.sale_price);
@@ -48,7 +48,6 @@ function AddPlan() {
     formData.append("is_most_popular", values.is_most_popular);
     formData.append("published", values.published);
 
-    // Append each feature separately
     values.features.forEach((feature) => {
       formData.append("features[]", feature);
     });
@@ -57,13 +56,19 @@ function AddPlan() {
       await addPlan(formData);
       resetForm();
       setShowModal(true);
-      setIsLoading(true);
     } catch (error) {
       console.error(error);
       setShowModal(false);
+    } finally {
       setIsLoading(false);
     }
   };
+
+  if (showModal) {
+    document.body.classList.add("no-scroll");
+  } else {
+    document.body.classList.remove("no-scroll");
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen pt-5 py-28 relative">
@@ -78,25 +83,24 @@ function AddPlan() {
         <h3 className="font-bold mt-2 text-16">Add Plan</h3>
       </section>
 
-      {/* Form to add new plan */}
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik 
+        initialValues={initialValues} 
+        onSubmit={handleSubmit}
+        enableReinitialize
+      >
         {({ values, setFieldValue }) => (
-          <Form className="flex flex-col h-full ">
-            <div className="mx-5 mt-3">
+          <Form className="flex flex-col h-full">
+            <div className="mx-5 mt-3 bg-white p-5 rounded-md border-1 border-gray-200">
               <div className="flex items-center gap-2 rounded-md border-1 border-gray-200 bg-gray-50 p-5">
                 <InputField name={"name"} placeholder={"Title"} required />
-                <InputField
-                  name={"duration"}
-                  placeholder={"Duration"}
-                  required
-                />
+                <InputField name={"duration"} placeholder={"Duration"} required />
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
                 <h3 className="font-bold text-16 mb-3">Pricing</h3>
                 <div className="flex gap-2 items-center">
-                  <InputField name={"price"} placeholder={"Price"} />
-                  <InputField name={"sale_price"} placeholder={"Sale Price"} />
+                  <InputField name={"price"} placeholder={"Price"} type="number" required />
+                  <InputField name={"sale_price"} placeholder={"Sale Price"} type="number" />
                 </div>
                 <div className="flex w-full gap-4 items-center mt-2">
                   <Field
@@ -106,10 +110,9 @@ function AddPlan() {
                     className={`w-full h-14 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400`}
                   />
                   <div className="w-full"></div>
-                </div>
+                </div> 
               </div>
 
-              {/* Features Dropdown */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
                 <h3 className="font-bold text-15 mb-3">Features</h3>
                 <FeaturesDropdown
@@ -119,16 +122,15 @@ function AddPlan() {
                 />
               </div>
 
-              {/* Most Popular Plan Toggle */}
+              {/* Most Popular Plan Toggle - Fixed */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3">
-                  Is Most Popular Plan?
-                </h3>
+                <h3 className="font-bold text-15 mb-3">Is Most Popular Plan?</h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
-                    <Field
+                    <input
                       type="checkbox"
-                      name="is_most_popular"
+                      checked={values.is_most_popular}
+                      onChange={(e) => setFieldValue("is_most_popular", e.target.checked)}
                       className="hidden"
                     />
                     <span
@@ -137,6 +139,7 @@ function AddPlan() {
                           ? "bg-primary border-primary"
                           : "border-gray-300"
                       }`}
+                      onClick={() => setFieldValue("is_most_popular", !values.is_most_popular)}
                     >
                       {values.is_most_popular && (
                         <svg
@@ -159,14 +162,15 @@ function AddPlan() {
                 </div>
               </div>
 
-              {/* Publish Status Toggle */}
+              {/* Publish Status Toggle - Fixed */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
                 <h3 className="font-bold text-15 mb-3">Status</h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
-                    <Field
+                    <input
                       type="checkbox"
-                      name="published"
+                      checked={values.published}
+                      onChange={(e) => setFieldValue("published", e.target.checked)}
                       className="hidden"
                     />
                     <span
@@ -175,6 +179,7 @@ function AddPlan() {
                           ? "bg-primary border-primary"
                           : "border-gray-300"
                       }`}
+                      onClick={() => setFieldValue("published", !values.published)}
                     >
                       {values.published && (
                         <svg
@@ -215,7 +220,7 @@ function AddPlan() {
             alt="Success"
             className="w-32 mt-6"
           />
-          <p className="font-bold mt-5 text-center">
+          <p className="font-bold text-16 mt-5 text-center">
             Plan Data Added successfully!
           </p>
           <button
@@ -229,4 +234,5 @@ function AddPlan() {
     </div>
   );
 }
+
 export default AddPlan;
