@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-// import { addPlan } from "../../ApiServices/AddPlan";
 import { Field, Form, Formik } from "formik";
 import InputField from "../../Components/InputFields/InputField";
-import axios from "axios"; // or your preferred HTTP client
-import { getPermissions } from "../../ApiServices/permissions";
 import { getAdminPermissions } from "../../ApiServices/AdminPermissions";
 import Footer from "../../Components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
@@ -123,12 +120,6 @@ function AddRole() {
               </section>
 
               <section className="bg-gray-50 border-1 mt-3 border-gray-200 p-5 rounded-md flex items-center gap-2">
-                {/* <Field
-                  name={"can_access_panel"}
-                  type="checkbox"
-                  className="w-5 h-5 border-1 border-gray-200 rounded-md appearance-none text-white checked:bg-primary checked:border-primary relative"
-                />
-                <p className="text-15 font-bold">Can Access Admin Panel ?</p> */}
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
                     <input

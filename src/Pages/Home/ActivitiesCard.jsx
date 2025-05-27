@@ -1,4 +1,3 @@
-import React from "react";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 
 const ActivitieCard = ({ icon, description, date }) => (
