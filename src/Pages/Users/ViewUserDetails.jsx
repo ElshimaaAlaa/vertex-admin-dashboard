@@ -9,15 +9,15 @@ import "react-toastify/dist/ReactToastify.css";
 function ViewUserDetails() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
-  const API_BASE_URL = "https://";
-  const live_shop_domain = localStorage.getItem("live_shop_domain");
+  // const API_BASE_URL = "https://";
+  const live = "https://vrtex.duckdns.org/api/";
   const { id } = useParams();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios({
-          url: `${API_BASE_URL}${live_shop_domain}/api/admin/users/${id}`,
+          url: `${live}admin/users/${id}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ function ViewUserDetails() {
       }
     };
     fetchUserDetails();
-  }, [id, live_shop_domain]);
+  }, [id, live]);
 
   const copyToClipboard = (text) => {
     if (!text) {

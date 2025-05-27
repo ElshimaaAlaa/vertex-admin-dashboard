@@ -1,12 +1,12 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
-const role = localStorage.getItem("role");
+// const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
+// const role = localStorage.getItem("role");
 export const sendSupport = async (email, name, phone, message) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `${API_BASE_URL}${live}/api/${role}/send-contact`,
+      url: `${live}shop/send-contact`,
       data: { email, name, phone, message },
       headers: {
         "Content-Type": "application/json",

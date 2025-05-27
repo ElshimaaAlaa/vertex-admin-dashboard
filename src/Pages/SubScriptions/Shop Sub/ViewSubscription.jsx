@@ -5,14 +5,14 @@ import { useParams } from "react-router-dom";
 function ViewSubscription() {
   const [data, setData] = useState([]);
   const [plandata, setPlanData] = useState([]);
-  const API_BASE_URL = "https://";
-  const live = localStorage.getItem("live");
+  // const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
   const { id } = useParams();
   useEffect(() => {
     const fetchSubscriptionsData = async () => {
       try {
         const response = await axios({
-          url: `${API_BASE_URL}${live}/api/admin/subscriptions/${id}`,
+          url: `${live}admin/subscriptions/${id}`,
           method: "GET",
           headers: {
             "Accept-Language": "en",

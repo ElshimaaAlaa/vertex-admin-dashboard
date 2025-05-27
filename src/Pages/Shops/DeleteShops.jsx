@@ -6,14 +6,14 @@ import "./shopStyle.scss";
 function DeleteShop({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const API_BASE_URL = "https://";
-  const live_shop_domain = localStorage.getItem("live_shop_domain");
+  // const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
   const handleDeleteShop = async () => {
     setIsLoading(true);
     try {
       const response = await axios({
         method: "GET",
-        url: `${API_BASE_URL}${live_shop_domain}/api/admin/shops/delete/${id}`,
+        url: `${live}admin/shops/delete/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },

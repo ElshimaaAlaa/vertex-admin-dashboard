@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+// const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
 export const handleUpdatePassword = async (password, password_confirmation) => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/update-password`,
+      url: `${live}admin/update-password`,
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,

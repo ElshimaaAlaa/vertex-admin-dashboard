@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+// const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
 export const GetPersonalInfo = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/profile`,
+      url: `${live}admin/profile`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,

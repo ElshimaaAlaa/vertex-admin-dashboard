@@ -17,8 +17,8 @@ function EditInfo() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const personalInfo = state || {};
-  const API_BASE_URL = "https://";
-  const live_customer_domain = localStorage.getItem("live_customer_domain");
+  // const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
 
   const initialValues = {
     name: personalInfo?.name || "",
@@ -39,7 +39,7 @@ function EditInfo() {
         formData.append("image", selectedImage);
       }
       const response = await axios.post(
-        `${API_BASE_URL}${live_customer_domain}/api/admin/update-profile`,
+        `${live}admin/update-profile`,
         formData,
         {
           headers: {

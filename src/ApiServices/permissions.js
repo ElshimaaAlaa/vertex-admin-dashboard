@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+// const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
 export const getPermissions = async () => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/roles`,
+      url: `${live}/api/admin/roles`,
       method: "GET",
       headers: {
         "Accept-Language": "en",

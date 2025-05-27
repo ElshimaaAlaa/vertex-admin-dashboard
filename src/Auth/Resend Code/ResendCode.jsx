@@ -1,11 +1,11 @@
 import axios from "axios";
-const API_BASE_URL = "https://";
-const live = localStorage.getItem("live");
+// const API_BASE_URL = "https://";
+const live = "https://vrtex.duckdns.org/api/";
 function ResendCode() {
   const resndCode = async () => {
     const email = localStorage.getItem("Email Admin");
     const response = await axios({
-      url: `${API_BASE_URL}${live}/api/admin/send-otp`,
+      url: `${live}admin/send-otp`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",

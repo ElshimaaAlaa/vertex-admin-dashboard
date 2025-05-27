@@ -6,14 +6,14 @@ import "./style.scss";
 function DeleteRole({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const API_BASE_URL = "https://";
-  const live = localStorage.getItem("live");
+  // const API_BASE_URL = "https://";
+  const live = "https://vrtex.duckdns.org/api/";
   const handleDeleteRole = async () => {
     setIsLoading(true);
     try {
       const response = await axios({
         method: "GET",
-        url: `${API_BASE_URL}${live}/api/admin/roles/delete/${id}`,
+        url: `${live}admin/roles/delete/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
