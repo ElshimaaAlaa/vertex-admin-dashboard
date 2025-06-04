@@ -49,7 +49,6 @@ function Users() {
         console.error(error);
         setError(error.message);
         setIsLoading(false);
-        toast.error("Failed to load users");
       }
     };
     fetchUsers();
@@ -82,7 +81,6 @@ function Users() {
     if (currentUsers.length === 1 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
-    toast.success("User deleted successfully");
   };
 
   return (

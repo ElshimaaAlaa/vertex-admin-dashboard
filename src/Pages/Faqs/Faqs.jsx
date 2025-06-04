@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { ClipLoader } from "react-spinners";
 import { Formik, Form, Field } from "formik";
@@ -8,10 +8,11 @@ import { addFaqs } from "../../ApiServices/AddFags";
 import InputField from "../../Components/InputFields/InputField";
 import MainBtn from "../../Components/Main Button/MainBtn";
 import AllFaqs from "./AllFaqs";
+import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
 function Faqs() {
   const [isLoading, setIsLoading] = useState(false);
   const [faqsData, setFaqsData] = useState([]);
-
+  const [showModal, setShowModal] = useState(false);
   const initialValues = {
     question: "",
     answer: "",
@@ -26,10 +27,12 @@ function Faqs() {
     setIsLoading(true);
     try {
       const questionData = await addFaqs(values.question, values.answer);
+
       if (questionData && questionData.data) {
         setFaqsData((prevFaqs) => [questionData.data, ...prevFaqs]);
-        resetForm();
       }
+      resetForm();
+      setShowModal(true);
     } catch (error) {
       console.error("Failed to add FAQ:", error);
     } finally {
@@ -51,7 +54,7 @@ function Faqs() {
       </p>
       <div className="flex justify-center gap-5 mx-20">
         {/* FAQ Section */}
-       <AllFaqs/>
+        <AllFaqs />
         {/* Add Question Section */}
         <section className="bg-customOrange-mediumOrange rounded-md p-5 w-700 h-full mt-10">
           <div className="flex justify-center">
@@ -98,6 +101,24 @@ function Faqs() {
           </Formik>
         </section>
       </div>
+      <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <div className="flex flex-col w-370 items-center">
+          <img
+            src="/assets/images/success.png"
+            alt="Success"
+            className="w-32 mt-6"
+          />
+          <p className="font-bold text-16 mt-5 text-center">
+            message send successfully!
+          </p>
+          <button
+            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-24 font-bold"
+            onClick={() => setShowModal(false)}
+          >
+            Done!
+          </button>
+        </div>
+      </SuccessModal>
     </div>
   );
 }

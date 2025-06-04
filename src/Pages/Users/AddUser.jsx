@@ -44,14 +44,17 @@ function AddUser() {
 
   useEffect(() => {
     const fetchRoles = async () => {
+      // setIsLoading(true);
       try {
         const response = await getRoles();
+        // setIsLoading(false);
         setRoleOptions(response.data);
         setRolesLoading(false);
       } catch (error) {
         console.error("Error fetching roles:", error);
         setRolesError(error.message || "Failed to load roles");
         setRolesLoading(false);
+        // setIsLoading(false);
       }
     };
 
@@ -86,6 +89,7 @@ function AddUser() {
       const response = await addUser(formData);
 
       if (response.status) {
+        setIsLoading(false);
         resetForm();
         setPreviewImage(null);
         setTimeout(() => {
@@ -94,6 +98,7 @@ function AddUser() {
       }
     } catch (error) {
       console.error("Error adding user:", error);
+      setIsLoading(false);
       setApiError(error.message || "Failed to add user");
     } finally {
       setIsLoading(false);
@@ -150,12 +155,13 @@ function AddUser() {
                 showPassword={showPassword}
                 showConfirmPassword={showConfirmPassword}
                 togglePasswordVisibility={togglePasswordVisibility}
-                toggleConfirmPasswordVisibility={toggleConfirmPasswordVisibility}
+                toggleConfirmPasswordVisibility={
+                  toggleConfirmPasswordVisibility
+                }
               />
-
               <EndButtons
                 onclick={() => navigate("/Dashboard/Users")}
-                isLoading={isLoading || rolesLoading}
+                isLoading={isLoading}
               />
             </Form>
           )}
@@ -164,5 +170,4 @@ function AddUser() {
     </div>
   );
 }
-
 export default AddUser;

@@ -15,6 +15,7 @@ function AddRole() {
   const [permissions, setPermissions] = useState([]);
   const [isFetchingPermissions, setIsFetchingPermissions] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
   const initialValues = {
     name: "",
     description: "",
@@ -43,19 +44,20 @@ function AddRole() {
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(true);
 
-    const requestData = {
-      name: values.name,
-      description: {
-        ar: values.description,
-        en: values.description,
-      },
-      can_access_panel: values.can_access_panel,
-      publish: values.publish,
-      permissions: values.permissions.map((id) => parseInt(id)),
-    };
+   const formData = new FormData();
+
+formData.append('name', values.name);
+formData.append("description[ar]",values.description)
+formData.append("description[en]",values.description)
+formData.append('can_access_panel', values.can_access_panel ? 1 : 0);
+formData.append('publish', values.publish ? 1 : 0);
+values.permissions.forEach((id) => {
+  formData.append('permissions[]', parseInt(id));
+});
+
 
     try {
-      await addRole(requestData);
+      await addRole(formData);
       resetForm();
       setIsLoading(false);
       setShowModal(true);
@@ -88,11 +90,13 @@ function AddRole() {
     groups[prefix].push(permission);
     return groups;
   }, {});
+
   if (showModal) {
     document.body.classList.add("no-scroll");
   } else {
     document.body.classList.remove("no-scroll");
   }
+
   return (
     <div className="min-h-screen pt-5 relative pb-32">
       <Helmet>
@@ -120,135 +124,129 @@ function AddRole() {
               </section>
 
               <section className="bg-gray-50 border-1 mt-3 border-gray-200 p-5 rounded-md flex items-center gap-2">
-                <div className="flex items-center gap-2">
-                  <label className="inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="can_access_panel"
-                      checked={values.can_access_panel}
-                      onChange={(e) =>
-                        setFieldValue("can_access_panel", e.target.checked)
-                      }
-                      className="hidden"
-                    />
-                    <span
-                      className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
-                        values.can_access_panel
-                          ? "bg-primary border-primary"
-                          : "border-gray-300"
-                      }`}
-                      onClick={() =>
-                        setFieldValue(
-                          "can_access_panel",
-                          !values.can_access_panel
-                        )
-                      }
-                    >
-                      {values.can_access_panel && (
-                        <svg
-                          className="w-3 h-3 text-white"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                        >
-                          <path
-                            d="M16.6667 5L7.50004 14.1667L3.33337 10"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      )}
-                    </span>
-                    <p className="text-15 font-bold ml-2">
-                      Can Access Admin Panel ?
-                    </p>
-                  </label>
-                </div>
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="can_access_panel"
+                    checked={values.can_access_panel}
+                    onChange={(e) =>
+                      setFieldValue("can_access_panel", e.target.checked)
+                    }
+                    className="hidden"
+                  />
+                  <span
+                    className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
+                      values.can_access_panel
+                        ? "bg-primary border-primary"
+                        : "border-gray-300"
+                    }`}
+                    onClick={() =>
+                      setFieldValue(
+                        "can_access_panel",
+                        !values.can_access_panel 
+                      )
+                    }
+                  >
+                    {values.can_access_panel && (
+                      <svg
+                        className="w-3 h-3 text-white"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M16.6667 5L7.50004 14.1667L3.33337 10"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                  <p className="text-15 font-bold ml-2">
+                    Can Access Admin Panel ?
+                  </p>
+                </label>
               </section>
 
               <section className="bg-gray-50 border-1 border-gray-200 p-5 rounded-md mt-3">
                 <h3 className="font-bold text-15 mb-3">Status</h3>
-                <div className="flex items-center gap-2">
-                  <label className="inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="publish"
-                      checked={values.publish}
-                      onChange={(e) =>
-                        setFieldValue("publish", e.target.checked)
-                      }
-                      className="hidden"
-                    />
-                    <span
-                      className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
-                        values.publish
-                          ? "bg-primary border-primary"
-                          : "border-gray-300"
-                      }`}
-                      onClick={() => setFieldValue("publish", !values.publish)}
-                    >
-                      {values.publish && (
-                        <svg
-                          className="w-3 h-3 text-white"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                        >
-                          <path
-                            d="M16.6667 5L7.50004 14.1667L3.33337 10"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      )}
-                    </span>
-                    <p className="text-15 text-gray-500 ml-2">Publish</p>
-                  </label>
-                </div>
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="publish"
+                    checked={values.publish}
+                    onChange={(e) => setFieldValue("publish", e.target.checked)}
+                    className="hidden"
+                  />
+                  <span
+                    className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
+                      values.publish
+                        ? "bg-primary border-primary"
+                        : "border-gray-300"
+                    }`}
+                    onClick={() =>
+                      setFieldValue("publish", !values.publish )
+                    }
+                  >
+                    {values.publish && (
+                      <svg
+                        className="w-3 h-3 text-white"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M16.6667 5L7.50004 14.1667L3.33337 10"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                  <p className="text-15 text-gray-500 ml-2">Publish</p>
+                </label>
               </section>
 
               <section className="border-1 border-gray-200 rounded-md mt-3">
                 <div className="flex justify-between bg-customOrange-lightOrange p-5 rounded-t-md">
                   <h3 className="text-16 font-bold text-black">Permissions</h3>
-                  <div className="flex items-center gap-2">
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectAll}
-                        onChange={() => handleSelectAll(setFieldValue)}
-                        className="hidden"
-                      />
-                      <span
-                        className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
-                          selectAll
-                            ? "bg-primary border-prbg-primary"
-                            : "border-gray-300 bg-white"
-                        }`}
-                        onClick={() => handleSelectAll(setFieldValue)}
-                      >
-                        {selectAll && (
-                          <svg
-                            className="w-3 h-3 text-white"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                          >
-                            <path
-                              d="M16.6667 5L7.50004 14.1667L3.33337 10"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        )}
-                      </span>
-                      <p className="text-14 font-bold text-primary ml-2">
-                        Select All
-                      </p>
-                    </label>
-                  </div>
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={() => handleSelectAll(setFieldValue)}
+                      className="hidden"
+                    />
+                    <span
+                      className={`relative w-5 h-5 border-2 rounded-md transition-all duration-200 flex items-center justify-center ${
+                        selectAll
+                          ? "bg-primary border-primary"
+                          : "border-gray-300 bg-white"
+                      }`}
+                      onClick={() => handleSelectAll(setFieldValue)}
+                    >
+                      {selectAll && (
+                        <svg
+                          className="w-3 h-3 text-white"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M16.6667 5L7.50004 14.1667L3.33337 10"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      )}
+                    </span>
+                    <p className="text-14 font-bold text-primary ml-2">
+                      Select All
+                    </p>
+                  </label>
                 </div>
 
                 <div className="bg-white p-5">
@@ -271,25 +269,21 @@ function AddRole() {
                                   type="checkbox"
                                   name="permissions"
                                   value={permission.id.toString()}
-                                  id={`perm-${permission.id}`}
                                   checked={values.permissions.includes(
                                     permission.id.toString()
                                   )}
                                   onChange={(e) => {
-                                    if (e.target.checked) {
-                                      setFieldValue("permissions", [
-                                        ...values.permissions,
-                                        e.target.value,
-                                      ]);
-                                    } else {
-                                      setFieldValue(
-                                        "permissions",
-                                        values.permissions.filter(
+                                    const newPermissions = e.target.checked
+                                      ? [...values.permissions, e.target.value]
+                                      : values.permissions.filter(
                                           (id) => id !== e.target.value
-                                        )
-                                      );
+                                        );
+                                    setFieldValue(
+                                      "permissions",
+                                      newPermissions
+                                    );
+                                    if (!newPermissions.length)
                                       setSelectAll(false);
-                                    }
                                   }}
                                   className="hidden"
                                 />
@@ -302,24 +296,20 @@ function AddRole() {
                                       : "border-gray-300"
                                   }`}
                                   onClick={() => {
-                                    const newPermissions =
-                                      values.permissions.includes(
-                                        permission.id.toString()
-                                      )
-                                        ? values.permissions.filter(
-                                            (id) =>
-                                              id !== permission.id.toString()
-                                          )
-                                        : [
-                                            ...values.permissions,
-                                            permission.id.toString(),
-                                          ];
-                                    setFieldValue(
-                                      "permissions",
-                                      newPermissions
+                                    const exists = values.permissions.includes(
+                                      permission.id.toString()
                                     );
-                                    if (!newPermissions.length)
-                                      setSelectAll(false);
+                                    const updated = exists
+                                      ? values.permissions.filter(
+                                          (id) =>
+                                            id !== permission.id.toString()
+                                        )
+                                      : [
+                                          ...values.permissions,
+                                          permission.id.toString(),
+                                        ];
+                                    setFieldValue("permissions", updated);
+                                    if (!updated.length) setSelectAll(false);
                                   }}
                                 >
                                   {values.permissions.includes(
@@ -340,9 +330,9 @@ function AddRole() {
                                     </svg>
                                   )}
                                 </span>
-                                <span className="text-13 text-gray-600 capitalize ml-2">
-                                  {permission.name.replace(/_/g, " ")}
-                                </span>
+                                <p className="text-14 text-gray-600 ml-2">
+                                  {permission.name}
+                                </p>
                               </label>
                             </div>
                           ))}
@@ -352,18 +342,29 @@ function AddRole() {
                   )}
                 </div>
               </section>
+
+              {/* <div className="flex justify-end mt-6">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-6 py-2 rounded-md bg-primary text-white text-15 font-semibold hover:opacity-90 transition-all duration-200"
+                >
+                  {isLoading ? "Saving..." : "Save"}
+                </button>
+              </div> */}
             </div>
             <Footer
               saveText={"Save"}
               cancelText={"Cancel"}
               cancelBtnType={"button"}
               saveBtnType={"submit"}
-              cancelOnClick={() => navigate("/Dashboard/Roles")}
+              cancelOnClick={() => navigate("/Dashboard/AllPermissions")}
               isLoading={isLoading}
             />
           </Form>
         )}
       </Formik>
+
       <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="flex flex-col w-370 items-center">
           <img
@@ -376,7 +377,7 @@ function AddRole() {
           </p>
           <button
             className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60"
-            onClick={() => navigate("/Dashboard/Roles")}
+            onClick={() => navigate("/Dashboard/AllPermissions")}
           >
             Done! Role Added Successfully
           </button>
@@ -385,4 +386,5 @@ function AddRole() {
     </div>
   );
 }
+
 export default AddRole;

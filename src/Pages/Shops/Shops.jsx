@@ -83,7 +83,6 @@ function Shops() {
         <h3 className="font-bold mt-2 text-16">Shops</h3>
       </div>
       <div className="bg-white rounded-md p-3 mt-3 mx-5">
-        {/* Local search input (optional - can be removed if using only navbar search) */}
         <div className="relative w-full mt-3">
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5"
@@ -91,7 +90,7 @@ function Shops() {
           />
           <input
             type="text"
-            placeholder="Search shops..."
+            placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
             className="w-full h-12 pl-10 pr-10 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary"

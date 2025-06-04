@@ -45,8 +45,8 @@ function AddPlan() {
     formData.append("price", values.price);
     formData.append("duration", values.duration);
     formData.append("discount_end_date", values.discount_end_date);
-    formData.append("is_most_popular", values.is_most_popular);
-    formData.append("published", values.published);
+    formData.append("is_most_popular", values.is_most_popular ? 1 : 0);
+    formData.append("published", values.published ? 1 : 0);
 
     values.features.forEach((feature) => {
       formData.append("features[]", feature);
@@ -83,8 +83,8 @@ function AddPlan() {
         <h3 className="font-bold mt-2 text-16">Add Plan</h3>
       </section>
 
-      <Formik 
-        initialValues={initialValues} 
+      <Formik
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         enableReinitialize
       >
@@ -93,24 +93,37 @@ function AddPlan() {
             <div className="mx-5 mt-3 bg-white p-5 rounded-md border-1 border-gray-200">
               <div className="flex items-center gap-2 rounded-md border-1 border-gray-200 bg-gray-50 p-5">
                 <InputField name={"name"} placeholder={"Title"} required />
-                <InputField name={"duration"} placeholder={"Duration"} required />
+                <InputField
+                  name={"duration"}
+                  placeholder={"Duration"}
+                  required
+                />
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
                 <h3 className="font-bold text-16 mb-3">Pricing</h3>
                 <div className="flex gap-2 items-center">
-                  <InputField name={"price"} placeholder={"Price"} type="number" required />
-                  <InputField name={"sale_price"} placeholder={"Sale Price"} type="number" />
+                  <InputField
+                    name={"price"}
+                    placeholder={"Price"}
+                    type="number"
+                    required
+                  />
+                  <InputField
+                    name={"sale_price"}
+                    placeholder={"Sale Price"}
+                    type="number"
+                  />
                 </div>
                 <div className="flex w-full gap-4 items-center mt-2">
                   <Field
                     name="discount_end_date"
                     placeholder="Discount End Date"
                     type="date"
-                    className={`w-full h-14 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400`}
+                    className={`w-full h-12 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400`}
                   />
                   <div className="w-full"></div>
-                </div> 
+                </div>
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
@@ -122,15 +135,19 @@ function AddPlan() {
                 />
               </div>
 
-              {/* Most Popular Plan Toggle - Fixed */}
+              {/* Most Popular Plan Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3">Is Most Popular Plan?</h3>
+                <h3 className="font-bold text-15 mb-3">
+                  Is Most Popular Plan?
+                </h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={values.is_most_popular}
-                      onChange={(e) => setFieldValue("is_most_popular", e.target.checked)}
+                      onChange={(e) =>
+                        setFieldValue("is_most_popular", e.target.checked)
+                      }
                       className="hidden"
                     />
                     <span
@@ -139,7 +156,12 @@ function AddPlan() {
                           ? "bg-primary border-primary"
                           : "border-gray-300"
                       }`}
-                      onClick={() => setFieldValue("is_most_popular", !values.is_most_popular)}
+                      onClick={() =>
+                        setFieldValue(
+                          "is_most_popular",
+                          !values.is_most_popular
+                        )
+                      }
                     >
                       {values.is_most_popular && (
                         <svg
@@ -162,7 +184,7 @@ function AddPlan() {
                 </div>
               </div>
 
-              {/* Publish Status Toggle - Fixed */}
+              {/* Publish Status Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
                 <h3 className="font-bold text-15 mb-3">Status</h3>
                 <div className="flex items-center gap-2">
@@ -170,7 +192,9 @@ function AddPlan() {
                     <input
                       type="checkbox"
                       checked={values.published}
-                      onChange={(e) => setFieldValue("published", e.target.checked)}
+                      onChange={(e) =>
+                        setFieldValue("published", e.target.checked)
+                      }
                       className="hidden"
                     />
                     <span
@@ -179,7 +203,9 @@ function AddPlan() {
                           ? "bg-primary border-primary"
                           : "border-gray-300"
                       }`}
-                      onClick={() => setFieldValue("published", !values.published)}
+                      onClick={() =>
+                        setFieldValue("published", !values.published)
+                      }
                     >
                       {values.published && (
                         <svg
@@ -213,6 +239,7 @@ function AddPlan() {
           </Form>
         )}
       </Formik>
+
       <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="flex flex-col w-370 items-center">
           <img

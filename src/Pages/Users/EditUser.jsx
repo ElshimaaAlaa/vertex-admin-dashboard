@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Field, Form, Formik } from "formik";
 import { LuUpload } from "react-icons/lu";
@@ -9,10 +9,8 @@ import { handleUpdateUserData } from "../../ApiServices/EditUser";
 import { getRoles } from "../../ApiServices/UserRoles";
 import EndButtons from "../../Components/End Buttons/EndButtons";
 import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
-import * as Yup from "yup";
 
 function EditUserInfo() {
-  const { userId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -21,24 +19,16 @@ function EditUserInfo() {
   const [roleOptions, setRoleOptions] = useState([]);
   const [rolesLoading, setRolesLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
+  
+  const userData = state?.userInfo || {};
+  
   const initialValues = {
-    name: state?.userInfo?.name || "",
-    email: state?.userInfo?.email || "",
-    phone: state?.userInfo?.phone || "",
-    role_id: state?.userInfo?.role?.id || state?.userInfo?.role_id || "",
-    image: state?.userInfo?.image || null, 
+    name: userData?.name || "",
+    email: userData?.email || "",
+    phone: userData?.phone || "",
+    role_id: userData?.role?.id || userData?.role_id || "",
+    image: userData?.image || null,
   };
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string(),
-    email: Yup.string().email("Invalid email"),
-    phone: Yup.string(),
-    role_id: Yup.number(),
-    image: Yup.mixed()
-      .nullable()
-      
-  });
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -82,16 +72,17 @@ function EditUserInfo() {
     if (selectedImage) {
       formData.append("image", selectedImage);
     }
+
     try {
-      const response = await handleUpdateUserData(userId, formData);
-      if (response && response.status) {
+      const response = await handleUpdateUserData(userData.id, formData);
+      if (response) {
         setShowModal(true);
       } else {
         throw new Error("Failed to update user");
       }
     } catch (error) {
       console.error("Update error:", error);
-      setError(error.response?.data?.message || "Failed to update user");
+      setError(error.response?.data?.message || error.message || "Failed to update user");
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +90,7 @@ function EditUserInfo() {
 
   const handleModalClose = () => {
     setShowModal(false);
-    navigate(`/Dashboard/Users/${userId}`, {
+    navigate(`/Dashboard/Users`, {
       state: { updated: true },
     });
   };
@@ -119,7 +110,6 @@ function EditUserInfo() {
 
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
           onSubmit={handleSubmit}
           enableReinitialize
         >
@@ -183,13 +173,10 @@ function EditUserInfo() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <InputField
                     name="name"
-                    label="Full Name"
-                    placeholder="Enter full name"
+                    placeholder="Name"
                   />
                   <InputField
                     name="email"
-                    label="Email Address"
-                    type="email"
                     placeholder="Enter email"
                   />
                   <InputField
@@ -204,7 +191,7 @@ function EditUserInfo() {
                         <div>
                           <button
                             type="button"
-                            className={`w-full text-14 h-14 p-3 text-left bg-white border-2 ${
+                            className={`w-full text-14 h-12 p-3 text-left bg-white border-2 ${
                               meta.touched && meta.error
                                 ? "border-red-500"
                                 : "border-gray-200"
@@ -329,4 +316,5 @@ function EditUserInfo() {
     </div>
   );
 }
+
 export default EditUserInfo;

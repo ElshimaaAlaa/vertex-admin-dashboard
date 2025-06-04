@@ -66,7 +66,7 @@ function StoreTheme() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[350px]">
+          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[355px]">
             <div>
               <p className="text-16 font-bold mb-2 mt-7">Logo</p>
               {imageUrl ? (
