@@ -16,6 +16,7 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState("");
+  const [selectedSubItem, setSelectedSubItem] = useState("");
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [isPinned, setIsPinned] = useState(
     localStorage.getItem("sidebarPinned") === "true"
@@ -26,16 +27,33 @@ const Sidebar = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    if (path.includes("/Dashboard/Home")) setSelectedItem("dashboard");
-    else if (path.includes("/Dashboard/Shops")) setSelectedItem("Shops");
-    else if (path.includes("/Dashboard/Users")) setSelectedItem("Users");
-    else if (path.includes("/Dashboard/Plans")) {
-      setSelectedItem("Plans");
+    if (path.includes("/Dashboard/Home")) {
+      setSelectedItem("dashboard");
+      setSelectedSubItem("");
+    } else if (path.includes("/Dashboard/Shops")) {
+      setSelectedItem("Shops");
+      setSelectedSubItem("");
+    } else if (path.includes("/Dashboard/Users")) {
+      setSelectedItem("Users");
+      setSelectedSubItem("");
+    } else if (path.includes("/Dashboard/Plans")) {
+      setSelectedItem("Subscriptions");
+      setSelectedSubItem("Plans");
       setOpenSubmenu("Subscriptions");
-    } else if (path.includes("/Dashboard/AllPermissions"))
+    } else if (path.includes("/Dashboard/ShopSub")) {
+      setSelectedItem("Subscriptions");
+      setSelectedSubItem("Shop subscriptions");
+      setOpenSubmenu("Subscriptions");
+    } else if (path.includes("/Dashboard/AllPermissions")) {
       setSelectedItem("Permisions");
-    else if (path.includes("/Dashboard/Support")) setSelectedItem("support");
-    else if (path.includes("/Dashboard/Faqs")) setSelectedItem("help");
+      setSelectedSubItem("");
+    } else if (path.includes("/Dashboard/Support")) {
+      setSelectedItem("support");
+      setSelectedSubItem("");
+    } else if (path.includes("/Dashboard/Faqs")) {
+      setSelectedItem("help");
+      setSelectedSubItem("");
+    }
   }, [location]);
 
   const togglePin = (e) => {
@@ -47,17 +65,22 @@ const Sidebar = () => {
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item.id);
     if (item.subItems) {
       setOpenSubmenu(openSubmenu === item.id ? null : item.id);
+      if (!openSubmenu || openSubmenu !== item.id) {
+        setSelectedItem(item.id);
+      }
     } else {
+      setSelectedItem(item.id);
+      setSelectedSubItem("");
       setOpenSubmenu(null);
       if (item.onclick) item.onclick();
     }
   };
 
   const handleSubItemClick = (mainItem, subItem) => {
-    setSelectedItem(subItem.id);
+    setSelectedItem(mainItem.id);
+    setSelectedSubItem(subItem.id);
     if (subItem.onclick) subItem.onclick();
   };
 
@@ -192,7 +215,7 @@ const Sidebar = () => {
                     <div
                       key={subItem.id}
                       className={`submenu-item ${
-                        selectedItem === subItem.id ? "active" : ""
+                        selectedSubItem === subItem.id ? "active" : ""
                       }`}
                       onClick={() => handleSubItemClick(item, subItem)}
                     >

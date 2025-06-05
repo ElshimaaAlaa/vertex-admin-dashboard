@@ -142,8 +142,24 @@
       }
 
       &.active {
-        background-color: #e0a75e;
-        color: #fff;
+        .menu-icon {
+          background-color: #e0a75e;
+          border-radius: 50%;
+          padding: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 34px;
+          height: 34px;
+          margin-left: -8px;
+          margin-right: 12px;
+
+          svg {
+            width: 18px;
+            height: 18px;
+            color: #fff;
+          }
+        }
       }
 
       .menu-icon {
@@ -152,6 +168,7 @@
         align-items: center;
         margin-right: 16px;
         flex-shrink: 0;
+        transition: all 0.2s;
       }
 
       .menu-content {
