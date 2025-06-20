@@ -1,11 +1,11 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live");
 
 export const ForgotPasswordService = async (email) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `${live}admin/send-otp`,
+      url: `https://${live}/api/admin/send-otp`,
       headers: {
         "Content-Type": "application/json",
         "Accept-Language": "en",
@@ -13,7 +13,7 @@ export const ForgotPasswordService = async (email) => {
       data: { email },
     });
     if (response.status === 200) {
-      localStorage.setItem("Admin Email", email);
+      sessionStorage.setItem("Admin Email", email);
       return response.data;
     }
   } catch (error) {

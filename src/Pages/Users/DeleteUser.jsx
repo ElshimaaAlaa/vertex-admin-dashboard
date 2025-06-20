@@ -6,17 +6,17 @@ import "./userStyle.scss";
 function DeleteUser({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
   const handleDeleteUser = async () => {
     setIsLoading(true);
     try {
       const response = await axios({
         method: "GET",
-        url: `${live}admin/users/delete/${id}`,
+        url: `https://${live}/api/admin/users/delete/${id}`,
         headers: {
           Accept: "application/json",
           "Accept-Language": "ar",
-          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {

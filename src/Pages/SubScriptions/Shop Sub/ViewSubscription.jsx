@@ -5,17 +5,17 @@ import { useParams } from "react-router-dom";
 function ViewSubscription() {
   const [data, setData] = useState([]);
   const [plandata, setPlanData] = useState([]);
-const live = "https://vrtex.duckdns.org/api/";
+  const live = sessionStorage.getItem("live");
   const { id } = useParams();
   useEffect(() => {
     const fetchSubscriptionsData = async () => {
       try {
         const response = await axios({
-          url: `${live}admin/subscriptions/${id}`,
+          url: `https://${live}/api/admin/subscriptions/${id}`,
           method: "GET",
           headers: {
             "Accept-Language": "en",
-            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
           },
         });
         if (response.status === 200) {
@@ -70,11 +70,15 @@ const live = "https://vrtex.duckdns.org/api/";
             <div className="flex gap-72">
               <div>
                 <p className="text-gray-400 text-14">Transaction ID</p>
-                <span className="text-14">{data.transaction_id || "unavailable"}</span>
+                <span className="text-14">
+                  {data.transaction_id || "unavailable"}
+                </span>
               </div>
               <div>
                 <p className="text-gray-400 text-14 ">User Name</p>
-                <span className="text-14">{data.user_name || "unavailable"}</span>
+                <span className="text-14">
+                  {data.user_name || "unavailable"}
+                </span>
               </div>
             </div>
             <div className="flex gap-80 mt-3">
@@ -84,17 +88,23 @@ const live = "https://vrtex.duckdns.org/api/";
               </div>
               <div>
                 <p className="text-gray-400 text-14">Payment Method</p>
-                <span className="text-14">{data.payment_method || "unavailable"}</span>
+                <span className="text-14">
+                  {data.payment_method || "unavailable"}
+                </span>
               </div>
             </div>
             <div className="flex gap-72 mt-3">
               <div>
                 <p className="text-gray-400 text-14">Purchased Date</p>
-                <span className="text-14">{data.start_date || "unavailable"}</span>
+                <span className="text-14">
+                  {data.start_date || "unavailable"}
+                </span>
               </div>
               <div>
                 <p className="text-gray-400 text-14">Expired Date</p>
-                <span className="text-14">{data.end_date || "unavailable"}</span>
+                <span className="text-14">
+                  {data.end_date || "unavailable"}
+                </span>
               </div>
             </div>
           </div>

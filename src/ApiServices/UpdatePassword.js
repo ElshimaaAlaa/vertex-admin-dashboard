@@ -1,14 +1,14 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
 export const handleUpdatePassword = async (password, password_confirmation) => {
   try {
     const response = await axios({
-      url: `${live}admin/update-password`,
+      url: `https://${live}/api/admin/update-password`,
       method: "POST",
       headers: {
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
       },
       data: {
         password,

@@ -23,8 +23,8 @@ function AdminLogin() {
   });
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem("Email");
-    const savedPassword = localStorage.getItem("password");
+    const savedEmail = sessionStorage.getItem("Email");
+    const savedPassword = sessionStorage.getItem("password");
     if (savedEmail && savedPassword) {
       setInitialValues({
         email: savedEmail,
@@ -49,11 +49,11 @@ function AdminLogin() {
     try {
       await loginService(values.email, values.password);
       if (values.rememberMe) {
-        localStorage.setItem("Email", values.email);
-        localStorage.setItem("password", values.password);
+        sessionStorage.setItem("Email", values.email);
+        sessionStorage.setItem("password", values.password);
       } else {
-        localStorage.removeItem("Email");
-        localStorage.removeItem("password");
+        sessionStorage.removeItem("Email");
+        sessionStorage.removeItem("password");
       }
       setTimeout(() => {
         navigate("/Dashboard/Home");

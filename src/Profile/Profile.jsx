@@ -15,8 +15,8 @@ export default function ProfileMenu() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(false);
-  const userImage = localStorage.getItem("admin pic");
-  const userName = localStorage.getItem("User Name");
+  const userImage = sessionStorage.getItem("admin pic");
+  const userName = sessionStorage.getItem("admin name");
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
   const [personalInfo, setPersonalInfo] = useState({});
@@ -94,7 +94,7 @@ export default function ProfileMenu() {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <span className="font-bold text-17 mt-2">{userName}</span>
+              <span className="font-bold text-14 mt-2">{userName}</span>
               <span className="text-14 text-gray-500">Vertex CEO</span>
             </div>
             <ChevronDown className="w-5 h-5 font-bold text-black ml-auto" />

@@ -1,22 +1,22 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
 export const GetPersonalInfo = async () => {
   try {
     const response = await axios({
-      url: `${live}admin/profile`,
+      url: `https://${live}/api/admin/profile`,
       method: "GET",
       headers: {
         Accept: "application/json",
         "Accept-Language": "en",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {
       console.log(response.data.data);
-      localStorage.setItem("admin-Name", response.data.data.name);
-      localStorage.setItem("admin-email", response.data.data.email);
-      localStorage.setItem("admin-Phone", response.data.data.phone);
-      localStorage.setItem("admin pic", response.data.data.image);
+      sessionStorage.setItem("admin-Name", response.data.data.name);
+      sessionStorage.setItem("admin-email", response.data.data.email);
+      sessionStorage.setItem("admin-Phone", response.data.data.phone);
+      sessionStorage.setItem("admin pic", response.data.data.image);
       return response.data.data;
     } else {
       console.error("Failed to fetch data");

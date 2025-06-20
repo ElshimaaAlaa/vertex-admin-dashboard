@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
 
 export const handleUpdateUserData = async (userId, formData) => {
   try {
     const response = await axios({
-      url: `${API_BASE_URL}admin/users/update/${userId}`,
+      url: `https://${live}/api/admin/users/update/${userId}`,
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
       },
       data: formData,
     });

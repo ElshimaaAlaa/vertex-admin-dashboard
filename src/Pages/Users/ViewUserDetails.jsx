@@ -9,21 +9,20 @@ import "react-toastify/dist/ReactToastify.css";
 function ViewUserDetails() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
-  // const API_BASE_URL = "https://";
-  const live = "https://vrtex.duckdns.org/api/";
+  const live = sessionStorage.getItem("live");
   const { id } = useParams();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios({
-          url: `${live}admin/users/${id}`,
+          url: `https://${live}/api/admin/users/${id}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             "Accept-Language": "ar",
-            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
           },
         });
 

@@ -6,17 +6,17 @@ import "./style.scss";
 function DeletePlan({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
   const handleDeletePlan = async () => {
     setIsLoading(true);
     try {
       const response = await axios({
         method: "GET",
-        url: `${live}admin/plans/delete/${id}`,
+        url: `https://${live}/api/admin/plans/delete/${id}`,
         headers: {
           "Content-Type": "application/json",
           "Accept-Language": "en",
-          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {

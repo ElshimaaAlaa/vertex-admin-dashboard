@@ -1,9 +1,9 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live");
 export const logOut = async () => {
   try {
     const response = await axios({
-      url: `${live}admin/logout`,
+      url: `https://${live}/api/admin/logout`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",

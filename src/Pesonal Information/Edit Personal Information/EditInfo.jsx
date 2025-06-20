@@ -17,7 +17,7 @@ function EditInfo() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const personalInfo = state || {};
-const live = "https://vrtex.duckdns.org/api/";
+  const live = sessionStorage.getItem("live");
 
   const initialValues = {
     name: personalInfo?.name || "",
@@ -38,14 +38,14 @@ const live = "https://vrtex.duckdns.org/api/";
         formData.append("image", selectedImage);
       }
       const response = await axios.post(
-        `${live}admin/update-profile`,
+        `https://${live}/api/admin/update-profile`,
         formData,
         {
           headers: {
             Accept: "application/json",
             "Accept-Language": "ar",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
           },
         }
       );
@@ -138,7 +138,10 @@ const live = "https://vrtex.duckdns.org/api/";
                   <InputField placeholder="Phone" name="phone" />
                 </div>
               </div>
-              <EndButtons onclick={() => navigate("/Dashboard/MainInfo")} isLoading={isLoading} />
+              <EndButtons
+                onclick={() => navigate("/Dashboard/MainInfo")}
+                isLoading={isLoading}
+              />
             </Form>
           )}
         </Formik>

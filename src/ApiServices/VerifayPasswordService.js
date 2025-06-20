@@ -1,10 +1,10 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live");
 export const VerifayPasswordService = async (otp, email) => {
   try {
     const response = await axios({
       method: "post",
-      url: `${live}admin/verify-otp`,
+      url: `https://${live}/api/admin/verify-otp`,
       data: { otp, email },
       headers: {
         "Accept": "application/json",

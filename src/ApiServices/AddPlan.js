@@ -1,14 +1,14 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
 
 export const addPlan = async (formData) => {
   try {
-    const response = await axios.post(`${live}admin/plans/store`, formData, {
+    const response = await axios.post(`https://${live}/api/admin/plans/store`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept": "application/json",
         "Accept-Language": "en",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
       },
     });
     return response.data;

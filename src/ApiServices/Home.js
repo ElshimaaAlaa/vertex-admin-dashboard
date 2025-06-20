@@ -1,13 +1,13 @@
 import axios from "axios";
-const live = "https://vrtex.duckdns.org/api/";
+const live = sessionStorage.getItem("live")
 export const getHome = async () => {
   try {
     const response = await axios({
-      url: `${live}admin/dashboard`,
+      url: `https://${live}/api/admin/dashboard`,
       method: "GET",
       headers: {
         "Accept-Language": "ar",
-        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {

@@ -32,8 +32,8 @@ function CreateNewPassword() {
   const handleSubmit = async (values) => {
     setLoading(true);
     setError(null);
-    const email = localStorage.getItem("Email Admin");
-    const token = localStorage.getItem("access token");
+    const email = sessionStorage.getItem("Email Admin");
+    const token = sessionStorage.getItem("access token");
     try {
       await CreateNewPasswordService(
         values.password,
