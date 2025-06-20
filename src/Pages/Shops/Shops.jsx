@@ -22,7 +22,7 @@ function Shops() {
       setIsLoading(true);
       try {
         const response = await getShops();
-        setShopData(response.data || response);
+        setShopData(response);
         setIsLoading(false);
       } catch (error) {
         console.error(error);

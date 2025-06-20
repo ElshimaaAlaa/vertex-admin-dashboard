@@ -5,6 +5,11 @@ export const logOut = async () => {
     const response = await axios({
       url: `${live}admin/logout`,
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Accept-Language": "ar",
+      },
     });
     if (response.status === 200) {
       console.log("Logged out successfully");

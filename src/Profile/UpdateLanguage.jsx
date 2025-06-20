@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 
 export default function LanguageSelector() {
@@ -11,7 +9,6 @@ export default function LanguageSelector() {
     setLanguage(lang)
     setIsOpen(false)
 
-    // Map the language to the corresponding API value
     const langCode = lang === "Arabic" ? "ar" : "en"
 
     try {

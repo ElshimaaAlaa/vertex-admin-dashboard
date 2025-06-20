@@ -80,7 +80,7 @@ function UpdatePassword() {
         >
           <IoClose size={23} />
         </button>
-        <div className="w-300 ">
+        <div className="w-350">
           <h1 className="text-primary text-[17px] font-bold ps-4 pb-4 pt-5">
             Update Password
           </h1>

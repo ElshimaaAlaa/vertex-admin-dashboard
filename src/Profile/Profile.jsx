@@ -85,8 +85,8 @@ export default function ProfileMenu() {
               <img
                 src={userImage || defaultImage}
                 alt="Profile"
-                width={50}
-                height={50}
+                width={60}
+                height={60}
                 className="object-cover"
                 onError={(e) => {
                   e.target.src = defaultImage;

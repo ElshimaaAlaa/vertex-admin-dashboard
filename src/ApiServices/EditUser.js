@@ -9,6 +9,7 @@ export const handleUpdateUserData = async (userId, formData) => {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
+        "Accept-Language": "ar",
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: formData,

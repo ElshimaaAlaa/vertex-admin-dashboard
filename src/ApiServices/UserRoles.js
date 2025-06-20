@@ -1,20 +1,17 @@
 import axios from "axios";
 
-// const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
 
 export const getRoles = async () => {
   try {
-    const response = await axios.get(
-      `${live}admin/roles`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
-        },
-      }
-    );
+    const response = await axios.get(`${live}admin/roles`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Accept-Language": "ar",
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+      },
+    });
     return response.data;
   } catch (error) {
     if (error.response) {

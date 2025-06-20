@@ -7,6 +7,7 @@ import { getRoles } from "../../ApiServices/UserRoles";
 import EndButtons from "../../Components/End Buttons/EndButtons";
 import ImageUploadSection from "./ImageUploadSection";
 import UserFormFields from "./UserFormFields";
+import { Helmet } from "react-helmet";
 function AddUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
@@ -44,20 +45,16 @@ function AddUser() {
 
   useEffect(() => {
     const fetchRoles = async () => {
-      // setIsLoading(true);
       try {
         const response = await getRoles();
-        // setIsLoading(false);
         setRoleOptions(response.data);
         setRolesLoading(false);
       } catch (error) {
         console.error("Error fetching roles:", error);
         setRolesError(error.message || "Failed to load roles");
         setRolesLoading(false);
-        // setIsLoading(false);
       }
     };
-
     fetchRoles();
   }, []);
 
@@ -115,6 +112,9 @@ function AddUser() {
 
   return (
     <div className="h-[89vh] mx-5 py-10">
+      <Helmet>
+        <title>Add New User | Vertex</title>
+      </Helmet>
       <section className="bg-white rounded-md p-5">
         <h3 className="font-bold text-17 mb-5">Add Users</h3>
 

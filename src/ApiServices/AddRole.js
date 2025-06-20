@@ -3,17 +3,14 @@ const live = "https://vrtex.duckdns.org/api/";
 
 export const addRole = async (formData) => {
   try {
-    const response = await axios.post(
-      `${live}admin/roles/store`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
-        },
-      }
-    );
+    const response = await axios.post(`${live}admin/roles/store`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        "Accept-Language": "en",
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+      },
+    });
     return response.data;
   } catch (error) {
     if (error.response) {

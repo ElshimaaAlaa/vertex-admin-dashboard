@@ -6,7 +6,6 @@ import "./userStyle.scss";
 function DeleteUser({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const API_BASE_URL = "https://";
   const live = "https://vrtex.duckdns.org/api/";
   const handleDeleteUser = async () => {
     setIsLoading(true);
@@ -15,6 +14,8 @@ function DeleteUser({ id, onDelete }) {
         method: "GET",
         url: `${live}admin/users/delete/${id}`,
         headers: {
+          Accept: "application/json",
+          "Accept-Language": "ar",
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });

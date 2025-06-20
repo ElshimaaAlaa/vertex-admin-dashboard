@@ -16,7 +16,7 @@ function SearchBar({onclick , value ,onchange ,text , icon}) {
         />
       </div>
       <div
-        className="flex items-center gap-3 h-12 bg-primary text-white py-4 px-3 rounded-md w-72 cursor-pointer"
+        className="flex items-center justify-center gap-3 h-12 bg-primary text-white py-4 px-3 rounded-md w-72 cursor-pointer"
         onClick={onclick}
       >
         <div className="font-bold">

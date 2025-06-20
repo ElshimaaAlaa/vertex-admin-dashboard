@@ -5,7 +5,6 @@ export const getFaqs = async () => {
       url: `https://demo.vrtex.duckdns.org/api/faqs`,
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
       },

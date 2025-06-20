@@ -1,5 +1,4 @@
 import axios from "axios";
-// const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
 export const handleUpdatePassword = async (password, password_confirmation) => {
   try {
@@ -7,6 +6,8 @@ export const handleUpdatePassword = async (password, password_confirmation) => {
       url: `${live}admin/update-password`,
       method: "POST",
       headers: {
+        Accept: "application/json",
+        "Accept-Language": "ar",
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: {

@@ -5,6 +5,10 @@ export const loginService = async (email, password) => {
     const response = await axios({
       url: `${live}admin/login`,
       method: "POST",
+      headers:{
+        "Accept":"application/json",
+        "Accept-Language":"en"
+      },
       data: {
         email,
         password,

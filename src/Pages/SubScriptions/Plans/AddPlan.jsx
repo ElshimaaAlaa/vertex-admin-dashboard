@@ -106,13 +106,11 @@ function AddPlan() {
                   <InputField
                     name={"price"}
                     placeholder={"Price"}
-                    type="number"
                     required
                   />
                   <InputField
                     name={"sale_price"}
                     placeholder={"Sale Price"}
-                    type="number"
                   />
                 </div>
                 <div className="flex w-full gap-4 items-center mt-2">

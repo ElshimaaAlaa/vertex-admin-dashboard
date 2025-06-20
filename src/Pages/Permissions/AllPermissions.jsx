@@ -169,34 +169,34 @@ function Permisions() {
                           {role.name || "unavailable"}
                         </p>
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-400">
+                      <td className="px-2 py-2 border-t border-r text-gray-600 text-14 w-400">
                         <button
                           onClick={() => togglePopularStatus(role.id)}
                           className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 focus:outline-none ${
-                            role.is_most_popular ? "bg-primary" : "bg-gray-300"
+                            role.can_access_panel ? "bg-primary" : "bg-gray-300"
                           }`}
                           aria-label={`Toggle popular status for ${role.name}`}
                         >
                           <div
                             className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
-                              role.is_most_popular
+                              role.can_access_panel
                                 ? "translate-x-6"
                                 : "translate-x-0"
                             }`}
                           />
                         </button>
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-400">
+                      <td className="px-2 py-2 border-t border-r text-gray-600 text-14 w-400">
                         <button
                           onClick={() => togglePublishedStatus(role.id)}
                           className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 focus:outline-none ${
-                            role.published ? "bg-primary" : "bg-gray-300"
+                            role.publish ? "bg-primary" : "bg-gray-300"
                           }`}
                           aria-label={`Toggle publish status for ${role.name}`}
                         >
                           <div
                             className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
-                              role.published ? "translate-x-6" : "translate-x-0"
+                              role.publish ? "translate-x-6" : "translate-x-0"
                             }`}
                           />
                         </button>

@@ -4,6 +4,10 @@ export const addFaqs = async (question, answer) => {
     const response = await axios({
       url: `https://demo.vrtex.duckdns.org/api/ask-question`,
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-Language": "ar",
+      },
       data: { question, answer },
     });
     if (response.status === 200) {

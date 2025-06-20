@@ -26,7 +26,7 @@ function Users() {
       toast.warning("No phone number to copy");
       return;
     }
-
+    //to copy phone number 
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -43,7 +43,7 @@ function Users() {
       setIsLoading(true);
       try {
         const response = await getUsers();
-        setUserData(response.data || response);
+        setUserData(response);
         setIsLoading(false);
       } catch (error) {
         console.error(error);

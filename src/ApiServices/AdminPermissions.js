@@ -1,5 +1,4 @@
 import axios from "axios";
-// const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
 export const getAdminPermissions = async () => {
   try {

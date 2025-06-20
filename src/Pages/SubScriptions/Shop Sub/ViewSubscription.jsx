@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 function ViewSubscription() {
   const [data, setData] = useState([]);
   const [plandata, setPlanData] = useState([]);
-  // const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
   const { id } = useParams();
   useEffect(() => {
@@ -41,7 +40,7 @@ const live = "https://vrtex.duckdns.org/api/";
         </p>
         <h3 className="font-bold mt-2 text-16">View Shops Subscriptions</h3>
       </section>
-      <section className="bg-white p-5 rounded-md mx-5 mt-3 flex gap-10">
+      <section className="bg-white p-5 rounded-md mx-5 mt-3 flex gap-8">
         <div>
           <h3 className="font-bold my-3">Shop Subscription</h3>
           <div className="rounded-md border-1 border-gray-200 py-4 px-5 w-330">

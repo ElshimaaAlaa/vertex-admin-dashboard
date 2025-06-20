@@ -28,6 +28,7 @@ import ShopSub from "./Pages/SubScriptions/Shop Sub/ShopSub";
 import ViewSubscription from "./Pages/SubScriptions/Shop Sub/ViewSubscription";
 import AddPlan from "./Pages/SubScriptions/Plans/AddPlan";
 import AddRole from "./Pages/Permissions/AddRole";
+import ViewAllActivties from "./Pages/Home/ViewAllActivties";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -92,6 +93,7 @@ function App() {
             <Route path="ShopSub/:id" element={<ViewSubscription />} />
             <Route path="AllPermissions" element={<AllPermissions />} />
             <Route path="AddRole" element={<AddRole/>}/>
+            <Route path="ViewAllActivties" element={<ViewAllActivties/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

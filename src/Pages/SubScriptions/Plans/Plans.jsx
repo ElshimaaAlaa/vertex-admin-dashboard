@@ -171,8 +171,8 @@ function Plans() {
                           {plan.name || "N/A"}
                         </p>
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14">
-                        <p className="bg-customOrange-lightOrange text-primary rounded-md py-1 ps-2  w-28">
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-40">
+                        <p className="bg-customOrange-lightOrange text-primary rounded-md py-2 ps-2 w-full ">
                           {plan.duration || 0}
                         </p>
                       </td>
@@ -250,5 +250,4 @@ function Plans() {
     </div>
   );
 }
-
 export default Plans;

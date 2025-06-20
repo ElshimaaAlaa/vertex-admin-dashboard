@@ -1,5 +1,4 @@
 import axios from "axios";
-// const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
 export const getHome = async () => {
   try {
@@ -7,7 +6,7 @@ export const getHome = async () => {
       url: `${live}admin/dashboard`,
       method: "GET",
       headers: {
-        "Accept-Language": "en",
+        "Accept-Language": "ar",
         Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });

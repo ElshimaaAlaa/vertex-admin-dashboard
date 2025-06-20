@@ -6,7 +6,6 @@ import "./style.scss";
 function DeletePlan({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const API_BASE_URL = "https://";
   const live = "https://vrtex.duckdns.org/api/";
   const handleDeletePlan = async () => {
     setIsLoading(true);
@@ -15,6 +14,8 @@ function DeletePlan({ id, onDelete }) {
         method: "GET",
         url: `${live}admin/plans/delete/${id}`,
         headers: {
+          "Content-Type": "application/json",
+          "Accept-Language": "en",
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });

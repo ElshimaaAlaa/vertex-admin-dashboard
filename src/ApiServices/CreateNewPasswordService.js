@@ -9,6 +9,10 @@ export const CreateNewPasswordService = async (
     const response = await axios({
       url: `${live}admin/reset-password`,
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept-Language": "en",
+      },
       data: {
         password,
         password_confirmation,

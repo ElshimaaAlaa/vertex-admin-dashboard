@@ -6,10 +6,11 @@ export const ForgotPasswordService = async (email) => {
     const response = await axios({
       method: "POST",
       url: `${live}admin/send-otp`,
-      data: { email },
       headers: {
         "Content-Type": "application/json",
+        "Accept-Language": "en",
       },
+      data: { email },
     });
     if (response.status === 200) {
       localStorage.setItem("Admin Email", email);

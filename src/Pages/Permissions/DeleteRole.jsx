@@ -6,7 +6,6 @@ import "./style.scss";
 function DeleteRole({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const API_BASE_URL = "https://";
   const live = "https://vrtex.duckdns.org/api/";
   const handleDeleteRole = async () => {
     setIsLoading(true);
@@ -15,6 +14,7 @@ function DeleteRole({ id, onDelete }) {
         method: "GET",
         url: `${live}admin/roles/delete/${id}`,
         headers: {
+          "Accept-Language": "en",
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });

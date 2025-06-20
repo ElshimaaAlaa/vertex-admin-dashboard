@@ -6,8 +6,7 @@ import "./shopStyle.scss";
 function DeleteShop({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  // const API_BASE_URL = "https://";
-const live = "https://vrtex.duckdns.org/api/";
+  const live = "https://vrtex.duckdns.org/api/";
   const handleDeleteShop = async () => {
     setIsLoading(true);
     try {
@@ -16,6 +15,8 @@ const live = "https://vrtex.duckdns.org/api/";
         url: `${live}admin/shops/delete/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+          Accept: "application/json",
+          "Accept-Language": "ar",
         },
       });
       if (response.status === 200) {

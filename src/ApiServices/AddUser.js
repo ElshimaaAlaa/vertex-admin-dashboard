@@ -1,20 +1,16 @@
 import axios from "axios";
-// const API_BASE_URL = "https://";
 const live = "https://vrtex.duckdns.org/api/";
 
 export const addUser = async (formData) => {
   try {
-    const response = await axios.post(
-      `${live}admin/users/store`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
-        },
-      }
-    );
+    const response = await axios.post(`${live}admin/users/store`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        "Accept-Language": "ar",
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+      },
+    });
     return response.data;
   } catch (error) {
     if (error.response) {

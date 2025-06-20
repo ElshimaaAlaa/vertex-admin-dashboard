@@ -14,7 +14,7 @@ const ReportsItem = ({
       <h1 className="text-2xl font-bold">{totalNumber}</h1>
       <p
         className={`font-bold rounded-md py-1 px-3 text-12 ${
-          change_rate?.includes("-") || change_rate?.includes("نقص")
+          change_rate?.includes("-") || change_rate?.includes("نقص") 
             ? "text-red-600 bg-red-50"
             : "text-[#34B41E] bg-[#E7F6E5]"
         }`}
