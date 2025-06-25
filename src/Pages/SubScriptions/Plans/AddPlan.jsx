@@ -118,7 +118,7 @@ function AddPlan() {
                     name="discount_end_date"
                     placeholder="Discount End Date"
                     type="date"
-                    className={`w-full h-12 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400`}
+                    className={`w-full h-14 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400`}
                   />
                   <div className="w-full"></div>
                 </div>

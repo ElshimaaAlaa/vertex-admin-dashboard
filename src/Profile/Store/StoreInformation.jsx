@@ -34,7 +34,7 @@ function StoreInformation() {
           </div>
           <h2 className="text-15 mt-5 text-gray-400">Bio</h2>
           <p className="mt-2 text-14">{storeInformation.bio || "N/A"}</p>
-          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[385px]">
+          <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[360px]">
             <div>
               <p className="text-17 font-bold mb-3 mt-7">Banners</p>
               <div className="flex flex-wrap gap-4">

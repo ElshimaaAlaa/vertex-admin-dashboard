@@ -191,7 +191,7 @@ function EditUserInfo() {
                         <div>
                           <button
                             type="button"
-                            className={`w-full text-14 h-12 p-3 text-left bg-white border-2 ${
+                            className={`w-full text-14 h-14 p-3 text-left rounded-lg bg-white border-2 border-gray-200 ${
                               meta.touched && meta.error
                                 ? "border-red-500"
                                 : "border-gray-200"

@@ -82,7 +82,7 @@ function Faqs() {
                   as="textarea"
                   name="answer"
                   placeholder="Your Answer"
-                  className="w-full mt-2 mb-1 outline-none border-2 border-gray-200 rounded-md p-2 h-24 placeholder:text-14 focus:border-primary"
+                  className="w-full mt-2 mb-1 outline-none border-2 border-gray-200 rounded-md p-2 h-32 placeholder:text-14 focus:border-primary"
                 />
                 <MainBtn
                   btnType={"submit"}

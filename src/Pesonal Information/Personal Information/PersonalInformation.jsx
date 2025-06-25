@@ -36,10 +36,10 @@ function PersonalInformation() {
       </Helmet>
       <section>
         <div className="flex flex-col md:flex-row items-center justify-between">
-          <h1 className="font-bold text-[18px]">Profile</h1>
+          <h1 className="font-bold text-xl">Profile</h1>
           <button
             onClick={() => navigate("EditInfo", { state: personalInfo })}
-            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md"
+            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-3 w-24 rounded-md"
             aria-label="Edit personal information"
           >
             <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />
@@ -60,7 +60,7 @@ function PersonalInformation() {
               {personalInfo?.name || "N/A"}
             </h2>
             <p className="text-gray-400 text-14 mt-1">
-              {personalInfo?.role || "Vertex CEO"}
+              {personalInfo?.role || "Admin"}
             </p>
           </div>
         </div>
@@ -68,20 +68,20 @@ function PersonalInformation() {
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-96">
             <div>
               <p className="text-gray-400 text-15">Name</p>
-              <h3 className="text-13">
+              <h3 className="text-15">
                 {personalInfo?.name || "N/A"}
               </h3>
             </div>
             <div>
               <p className="text-gray-400 text-15">Email</p>
-              <h3 className="text-13">
+              <h3 className="text-15">
                 {personalInfo?.email || "N/A"}
               </h3>
             </div>
           </div>
           <div className="mt-5">
             <p className="text-gray-400 text-15">Phone</p>
-            <h3 className="text-13">
+            <h3 className="text-15">
               {personalInfo?.phone || "N/A"}
             </h3>
           </div>
