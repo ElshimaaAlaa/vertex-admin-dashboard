@@ -11,13 +11,15 @@ import ShopIcon from "../../Svgs/ShopIcon";
 import Subscriptions from "../../Svgs/Subscriptions";
 import Permisions from "../../Svgs/Permissions";
 import "./sidebar.scss";
-
+import { useTranslation } from "react-i18next";
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedSubItem, setSelectedSubItem] = useState("");
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   const [isPinned, setIsPinned] = useState(
     localStorage.getItem("sidebarPinned") === "true"
   );
@@ -54,7 +56,8 @@ const Sidebar = () => {
       setSelectedItem("help");
       setSelectedSubItem("");
     }
-  }, [location]);
+    setIsRTL(i18n.language === "ar");
+  }, [location, i18n.language]);
 
   const togglePin = (e) => {
     e.stopPropagation();
@@ -87,42 +90,42 @@ const Sidebar = () => {
   const menuItems = [
     {
       id: "dashboard",
-      label: "Dashboard",
+      label: t("dashboard"),
       icon: <Home />,
       onclick: () => navigate("/Dashboard/Home"),
     },
     {
       id: "Shops",
-      label: "Shops",
+      label: t("shops"),
       icon: <ShopIcon />,
       onclick: () => navigate("/Dashboard/Shops"),
     },
     {
       id: "Users",
-      label: "Users",
+      label: t("users"),
       icon: <Invoices />,
       onclick: () => navigate("/Dashboard/Users"),
     },
     {
       id: "Subscriptions",
-      label: "Subscriptions",
+      label: t("subscriptions"),
       icon: <Subscriptions />,
       subItems: [
         {
           id: "Plans",
-          label: "Plans",
+          label: t("plans"),
           onclick: () => navigate("/Dashboard/Plans"),
         },
         {
           id: "Shop subscriptions",
-          label: "Shop subscriptions",
+          label: t("ShopSub"),
           onclick: () => navigate("/Dashboard/ShopSub"),
         },
       ],
     },
     {
       id: "Permisions",
-      label: "Permissions",
+      label: t("permissions"),
       icon: <Permisions />,
       onclick: () => navigate("/Dashboard/AllPermissions"),
     },
@@ -131,13 +134,13 @@ const Sidebar = () => {
   const bottomMenuItems = [
     {
       id: "support",
-      label: "Support",
+      label: t("support"),
       icon: <Support />,
       onclick: () => navigate("/Dashboard/Support"),
     },
     {
       id: "help",
-      label: "Help",
+      label: t("help"),
       icon: <Help />,
       onclick: () => navigate("/Dashboard/Faqs"),
     },
@@ -145,9 +148,9 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar min-h-screen ${expanded ? "expanded" : ""} ${
-        isPinned ? "pinned" : ""
-      }`}
+      className={`sidebar min-h-screen ${isRTL ? "rtl" : "ltr"} ${
+        isRTL ? "ltr-style" : ""
+      } ${expanded ? "expanded" : ""} ${isPinned ? "pinned" : ""}`}
       onMouseEnter={() => !isPinned && setExpanded(true)}
       onMouseLeave={() => !isPinned && setExpanded(false)}
     >
@@ -180,13 +183,13 @@ const Sidebar = () => {
           {menuItems.map((item) => (
             <div key={item.id} className="menu-item-container">
               <div
-                className={`menu-item ${
+                className={`menu-item  ${
                   selectedItem === item.id ? "active" : ""
                 }`}
                 onClick={() => handleItemClick(item)}
                 data-id={item.id}
               >
-                <div className="menu-icon">
+                <div className="menu-icon ">
                   {React.cloneElement(item.icon, {
                     className: `${
                       selectedItem === item.id ? "icon-active" : ""
@@ -195,7 +198,9 @@ const Sidebar = () => {
                 </div>
                 {expanded && (
                   <div className="menu-content">
-                    <span className="menu-label">{item.label}</span>
+                    <span className="menu-label">
+                      {item.label}
+                    </span>
                     {item.subItems && (
                       <span className="menu-chevron">
                         {openSubmenu === item.id ? (

@@ -1,7 +1,7 @@
 import { Field, ErrorMessage } from "formik";
 import { FaCircleCheck } from "react-icons/fa6";
 
-function AuthInputField({ placeholder, name, type = "text", readOnly = false }) {
+function AuthInputField({ placeholder, name, type = "text", readOnly = false, dir = "ltr" }) {
   return (
     <div className="relative w-full">
       <Field name={name}>
@@ -11,6 +11,7 @@ function AuthInputField({ placeholder, name, type = "text", readOnly = false }) 
               {...field}
               type={type}
               placeholder={placeholder}
+              dir={dir} // Set input direction
               className={`w-full h-14 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14
                 ${
                   meta.touched && meta.error
@@ -25,12 +26,23 @@ function AuthInputField({ placeholder, name, type = "text", readOnly = false }) 
               readOnly={readOnly}
             />
             {meta.touched && !meta.error && (
-              <FaCircleCheck color="#28A513" className="w-5 h-5 absolute right-3 top-4" />
+              <FaCircleCheck 
+                color="#28A513" 
+                className={`w-5 h-5 absolute top-4 ${
+                  dir === "rtl" ? "left-3" : "right-3"
+                }`} 
+              />
             )}
           </div>
         )}
       </Field>
-      <ErrorMessage name={name} component="p" className="text-red-500 text-sm mt-1" />
+      <ErrorMessage 
+        name={name} 
+        component="p" 
+        className={`text-red-500 text-sm mt-1 ${
+          dir === "rtl" ? "text-right" : "text-left"
+        }`} 
+      />
     </div>
   );
 }

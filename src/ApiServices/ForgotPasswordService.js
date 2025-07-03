@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live");
+const live = localStorage.getItem("live");
 
 export const ForgotPasswordService = async (email) => {
   try {
@@ -13,7 +13,7 @@ export const ForgotPasswordService = async (email) => {
       data: { email },
     });
     if (response.status === 200) {
-      sessionStorage.setItem("Admin Email", email);
+      localStorage.setItem("Admin Email", email);
       return response.data;
     }
   } catch (error) {

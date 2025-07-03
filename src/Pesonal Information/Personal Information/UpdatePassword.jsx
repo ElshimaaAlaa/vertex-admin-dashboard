@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import PasswordInput from "../../Components/Password Input/PasswordInput";
 import MainBtn from "../../Components/Main Button/MainBtn";
 import { IoClose } from "react-icons/io5";
-
+import { useTranslation } from "react-i18next";
 function UpdatePassword() {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,14 +18,16 @@ function UpdatePassword() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   useEffect(() => {
     if (showModal || showSuccessModal) {
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
     }
-  }, [showModal, showSuccessModal]);
+    setIsRTL(i18n.language === "ar");
+  }, [showModal, showSuccessModal, i18n.language]);
 
   const initialValues = {
     password: "",
@@ -71,7 +73,7 @@ function UpdatePassword() {
           alt="update-password"
           className="w-5 h-5"
         />
-        Update Password
+        {t("updatePassword")}
       </button>
       <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <button
@@ -82,7 +84,7 @@ function UpdatePassword() {
         </button>
         <div className="w-350">
           <h1 className="text-primary text-[17px] font-bold ps-4 pb-4 pt-5">
-            Update Password
+            {t("updatePassword")}
           </h1>
           <Formik
             initialValues={initialValues}
@@ -92,19 +94,21 @@ function UpdatePassword() {
             <Form className="ps-3 pb-3">
               <PasswordInput
                 name="password"
-                placeholder="New Password"
+                placeholder={t("newPassword")}
                 showPassword={showNewPassword}
                 togglePasswordVisibility={() =>
                   setShowNewPassword(!showNewPassword)
                 }
+                dir={isRTL ? "rtl" : "ltr"}
               />
               <PasswordInput
                 name="password_confirmation"
-                placeholder="Confirm New Password"
+                placeholder={t("confirmNewPass")}
                 showPassword={showConfirmPassword}
                 togglePasswordVisibility={() =>
                   setShowConfirmPassword(!showConfirmPassword)
                 }
+                dir={isRTL ? "rtl" : "ltr"}
               />
               {error && (
                 <div className="text-red-600 text-sm mt-3">{error}</div>
@@ -112,7 +116,7 @@ function UpdatePassword() {
               <div className="mt-3">
                 <MainBtn
                   text={
-                    isLoading ? <ClipLoader color="#fff" size={22} /> : "Save"
+                    isLoading ? <ClipLoader color="#fff" size={22} /> : t("save")
                   }
                 />
               </div>
@@ -131,7 +135,7 @@ function UpdatePassword() {
             alt="success"
             className="w-32 mt-6"
           />
-          <h1 className="font-bold">Password Updated Successfully</h1>
+          <h1 className="font-bold">{t("successUpdatePass")}</h1>
         </div>
       </SuccessModal>
     </div>

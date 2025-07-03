@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./getDomainStyle.scss";
 import { Helmet } from "react-helmet";
 import AuthInputField from "../../Components/AuthInput Field/AuthInputField";
@@ -8,16 +8,29 @@ import * as Yup from "yup";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { getDomain } from "../../ApiServices/GetDomainSeivce";
+import { IoIosArrowDown } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 function GetDomain() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [isRTL, setIsRTL] = useState(false);
   const navigate = useNavigate();
-  const intialValues = {
+  const { t, i18n } = useTranslation();
+  
+  const initialValues = {
     email: "",
   };
+
+  // Update RTL state when language changes
+  useEffect(() => {
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
+
   const validationSchema = Yup.object({
-    email: Yup.string().email().required("Email is required"),
+    email: Yup.string().email(t("emailInvalid")).required(t("emailRequired")),
   });
+
   const handleSubmit = async (values) => {
     setIsLoading(true);
     try {
@@ -31,34 +44,80 @@ function GetDomain() {
       setIsLoading(false);
     }
   };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    setShowLanguageDropdown(false);
+  };
+
   return (
-    <div className="main-container">
+    <div 
+      className="main-container" 
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Get Domain</title>
+        <title>Get Domain || vertex</title>
+        <html dir={isRTL ? "rtl" : "ltr"} />
       </Helmet>
-      <div className="getDomainContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md">
-        <img
-          src="/assets/svgs/vertex.svg"
-          alt="logo"
-          className="w-48 h-10 mb-3"
-        />
+      <div 
+        className={`getDomainContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md ${
+          isRTL ? "rtl-style" : ""
+        }`}
+      >
+        <div className="flex justify-between items-center relative">
+          <img
+            src="/assets/svgs/vertex.svg"
+            alt="logo"
+            className="w-48 h-10 mb-3"
+          />
+          <div className="relative">
+            <button
+              className="flex items-center gap-1 text-14 bg-customOrange-lightOrange text-primary rounded-md p-2"
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+            >
+              {i18n.language.toUpperCase()}
+              <IoIosArrowDown size={20} />
+            </button>
+            {showLanguageDropdown && (
+              <div className={`absolute ${isRTL ? "left-0" : "right-0"} w-14 bg-white rounded-md shadow-lg z-10`}>
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => changeLanguage("en")}
+                >
+                  EN
+                </button>
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => changeLanguage("ar")}
+                >
+                  AR
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         <Formik
-          initialValues={intialValues}
+          initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           <Form>
-            <h1 className="font-bold text-[21px] mt-3">Get Your Domain</h1>
-            <p className="text-secondary mt-3 text-15 mb-3">
-              Enter your email to get your domain and start your business
+            <h1 className="font-bold text-[21px] mt-3 text-start head">{t("getDomain")}</h1>
+            <p className="text-secondary mt-3 text-15 mb-3 text-start domainp">
+              {t("enterDomain")}
             </p>
-            <AuthInputField name="email" placeholder={"Enter Email"} />
+            <AuthInputField 
+              name="email" 
+              placeholder={t("enterEmail")} 
+              dir={isRTL ? "rtl" : "ltr"}
+            />
             <div className="mt-3">
               <MainBtn
                 btnType={"submit"}
                 text={
-                  isLoading ? <ClipLoader size={22} color="#fff" /> : "Save"
+                  isLoading ? <ClipLoader size={22} color="#fff" /> : t("saveButton")
                 }
               />
             </div>

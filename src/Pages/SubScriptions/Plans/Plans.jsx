@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "../../../Components/Search Bar/SearchBar";
 import { getPlans } from "../../../ApiServices/Plan";
 import DeletePlan from "./DeletePlans";
-
+import { useTranslation } from "react-i18next";
 function Plans() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,8 @@ function Plans() {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const [itemsPerPage] = useState(5);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   useEffect(() => {
     const fetchPlans = async () => {
       setIsLoading(true);
@@ -32,17 +33,15 @@ function Plans() {
       }
     };
     fetchPlans();
-  }, []);
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
 
   useEffect(() => {
     if (planData.length > 0) {
       const filtered = planData.filter((plan) => {
         if (!searchQuery) return true;
         const searchTerm = searchQuery.toLowerCase();
-        return (
-          plan.name?.toLowerCase().includes(searchTerm) ||
-          plan.sale_price?.toLowerCase().includes(searchTerm)
-        );
+        return plan.name?.toLowerCase().includes(searchTerm);
       });
       setFilteredPlan(filtered);
     }
@@ -65,28 +64,39 @@ function Plans() {
 
   const togglePublishedStatus = async (planId) => {
     try {
-      setPlanData(prev => prev.map(plan => 
-        plan.id === planId ? {...plan, published: !plan.published} : plan
-      ));
-      
+      setPlanData((prev) =>
+        prev.map((plan) =>
+          plan.id === planId ? { ...plan, published: !plan.published } : plan
+        )
+      );
     } catch (error) {
       console.error("Failed to update published status:", error);
-      setPlanData(prev => prev.map(plan => 
-        plan.id === planId ? {...plan, published: !plan.published} : plan
-      ));
+      setPlanData((prev) =>
+        prev.map((plan) =>
+          plan.id === planId ? { ...plan, published: !plan.published } : plan
+        )
+      );
     }
   };
 
   const togglePopularStatus = async (planId) => {
     try {
-      setPlanData(prev => prev.map(plan => 
-        plan.id === planId ? {...plan, is_most_popular: !plan.is_most_popular} : plan
-      ));
+      setPlanData((prev) =>
+        prev.map((plan) =>
+          plan.id === planId
+            ? { ...plan, is_most_popular: !plan.is_most_popular }
+            : plan
+        )
+      );
     } catch (error) {
       console.error("Failed to update popular status:", error);
-      setPlanData(prev => prev.map(plan => 
-        plan.id === planId ? {...plan, is_most_popular: !plan.is_most_popular} : plan
-      ));
+      setPlanData((prev) =>
+        prev.map((plan) =>
+          plan.id === planId
+            ? { ...plan, is_most_popular: !plan.is_most_popular }
+            : plan
+        )
+      );
     }
   };
 
@@ -96,15 +106,15 @@ function Plans() {
         <title>Plans | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">Subscriptions / Plans</p>
-        <h3 className="font-bold mt-2 text-16">Plans</h3>
+        <p className="text-gray-400 text-13 rtl:text-[16px]">{t("planHead")}</p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("plans")}</h3>
       </div>
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
           onclick={() => navigate("/Dashboard/AddPlan")}
           value={searchQuery}
           onchange={(e) => setSearchQuery(e.target.value)}
-          text={"Add New Plan"}
+          text={t("addNewPlan")}
           icon={
             <Plus
               className="text-white rounded-full border-2 border-white font-bold"
@@ -113,16 +123,16 @@ function Plans() {
           }
         />
         {error ? (
-          <div className="text-red-500 text-center mt-10">
-            Failed to fetch data. Please try again.
+          <div className="text-red-500 text-center mt-10 rtl:text-[18px]">
+            {t("error")}
           </div>
         ) : isLoading ? (
           <div className="text-gray-400 text-center mt-10">
             <ClipLoader color="#E0A75E" />
           </div>
         ) : filteredPlan.length === 0 ? (
-          <div className="text-gray-400 text-center mt-10">
-            {searchQuery ? "No plans match your search." : "No plans found."}
+          <div className="text-gray-400 text-center mt-10 rtl:text-[18px]">
+            {searchQuery ? t("noMatchResults") : ""}
           </div>
         ) : (
           <>
@@ -130,32 +140,34 @@ function Plans() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left">
+                    <th className="px-3 py-3 text-16 border-t border-b text-left rtl:text-right rtl:text-[18px]">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           className="form-checkbox h-4 w-4"
                           aria-label="Select all shops"
                         />
-                        Title
+                        {t("title")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Duration
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("duration")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Sale Price
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("salePrice")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Duration Price
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("durationPrice")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Is Most Popular Plan?
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("isPopular")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Publish
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("publish")}
                     </th>
-                    <th className="px-3 py-3 text-left border w-24">Actions</th>
+                    <th className="px-3 py-3 text-center border w-24">
+                      {t("actions")}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -186,13 +198,15 @@ function Plans() {
                         <button
                           onClick={() => togglePopularStatus(plan.id)}
                           className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 focus:outline-none ${
-                            plan.is_most_popular ? 'bg-primary' : 'bg-gray-300'
+                            plan.is_most_popular ? "bg-primary" : "bg-gray-300"
                           }`}
                           aria-label={`Toggle popular status for ${plan.name}`}
                         >
                           <div
                             className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
-                              plan.is_most_popular ? 'translate-x-6' : 'translate-x-0'
+                              plan.is_most_popular
+                                ? "translate-x-6 rtl:-translate-x-0"
+                                : "translate-x-0 rtl:-translate-x-6"
                             }`}
                           />
                         </button>
@@ -201,13 +215,15 @@ function Plans() {
                         <button
                           onClick={() => togglePublishedStatus(plan.id)}
                           className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 focus:outline-none ${
-                            plan.published ? 'bg-primary' : 'bg-gray-300'
+                            plan.published ? "bg-primary" : "bg-gray-300"
                           }`}
                           aria-label={`Toggle publish status for ${plan.name}`}
                         >
                           <div
                             className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-200 ${
-                              plan.published ? 'translate-x-6' : 'translate-x-0'
+                              plan.published
+                                ? "translate-x-6 rtl:-translate-x-0 "
+                                : "translate-x-0 rtl:-translate-x-6"
                             }`}
                           />
                         </button>
@@ -232,8 +248,20 @@ function Plans() {
               containerClassName="flex items-center justify-end mt-5 space-x-1"
               pageClassName="px-3 py-1 text-14 text-gray-400 rounded "
               activeClassName="bg-customOrange-lightOrange text-primary"
-              previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
-              nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}
+              previousLabel={
+                isRTL ? (
+                  <ChevronRight className="w-5 h-5 text-primary" />
+                ) : (
+                  <ChevronLeft className="w-5 h-5 text-primary" />
+                )
+              }
+              nextLabel={
+                isRTL ? (
+                  <ChevronLeft className="w-5 h-5 text-primary" />
+                ) : (
+                  <ChevronRight className="w-5 h-5 text-primary" />
+                )
+              }
               previousClassName={`px-3 py-1 rounded ${
                 currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
               }`}

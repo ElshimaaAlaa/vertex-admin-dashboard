@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 
 export const getRoles = async () => {
   try {
@@ -9,7 +9,7 @@ export const getRoles = async () => {
         "Content-Type": "application/json",
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     return response.data;

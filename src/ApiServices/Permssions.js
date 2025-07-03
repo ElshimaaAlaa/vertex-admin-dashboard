@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 export const getPermissions = async () => {
   try {
     const response = await axios({
@@ -7,7 +7,7 @@ export const getPermissions = async () => {
       method: "GET",
       headers: {
         "Accept-Language": "en",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {

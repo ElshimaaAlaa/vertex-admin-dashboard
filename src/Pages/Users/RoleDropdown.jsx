@@ -1,20 +1,24 @@
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
 
 const RoleDropdown = ({ roleOptions, rolesLoading, values, setFieldValue }) => {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${isRTL ? 'rtl' : 'ltr'}`}>
       <Field name="role_id">
         {({ field, form, meta }) => (
           <div>
             <button
               type="button"
-              className={`w-full text-14 h-14 p-3 text-left bg-white border-2 border-gray-200 ${
+              className={`w-full text-14 h-14 p-3 text-left bg-white border-2 ${
                 meta.touched && meta.error
                   ? "border-red-500"
                   : "border-gray-200"
               } rounded-md shadow-sm focus:outline-none focus:border-primary ${
                 values.role_id ? "text-black" : "text-gray-400"
-              }`}
+              } ${isRTL ? 'text-right' : 'text-left'}`}
               onClick={(e) => {
                 e.preventDefault();
                 document
@@ -24,13 +28,13 @@ const RoleDropdown = ({ roleOptions, rolesLoading, values, setFieldValue }) => {
               disabled={rolesLoading}
             >
               {rolesLoading
-                ? "Loading roles..."
+                ? t("loadRole")
                 : values.role_id
                 ? roleOptions.find((opt) => opt.id === Number(values.role_id))
-                    ?.name || "Select a role"
-                : "Select a role"}
+                    ?.name || t("selectRole")
+                : t("selectRole")}
               {!rolesLoading && (
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <span className={`absolute inset-y-0 ${isRTL ? 'left-0 pl-2' : 'right-0 pr-2'} flex items-center pointer-events-none`}>
                   <svg
                     className="w-5 h-5 text-gray-400"
                     xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +63,7 @@ const RoleDropdown = ({ roleOptions, rolesLoading, values, setFieldValue }) => {
                   {roleOptions.map((option) => (
                     <li
                       key={option.id}
-                      className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-50"
+                      className={`cursor-pointer select-none relative py-2 ${isRTL ? 'pr-3 pl-9' : 'pl-3 pr-9'} hover:bg-blue-50`}
                       onClick={() => {
                         setFieldValue("role_id", option.id);
                         document
@@ -68,12 +72,12 @@ const RoleDropdown = ({ roleOptions, rolesLoading, values, setFieldValue }) => {
                       }}
                     >
                       <div className="flex items-center">
-                        <span className="ml-3 block font-normal truncate">
+                        <span className={`${isRTL ? 'mr-3' : 'ml-3'} block font-normal truncate`}>
                           {option.name}
                         </span>
                       </div>
                       {Number(values.role_id) === option.id && (
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+                        <span className={`absolute inset-y-0 ${isRTL ? 'left-0 pl-4' : 'right-0 pr-4'} flex items-center text-blue-600`}>
                           <svg
                             className="w-5 h-5"
                             xmlns="http://www.w3.org/2000/svg"

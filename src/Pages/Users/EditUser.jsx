@@ -9,7 +9,7 @@ import { handleUpdateUserData } from "../../ApiServices/EditUser";
 import { getRoles } from "../../ApiServices/UserRoles";
 import EndButtons from "../../Components/End Buttons/EndButtons";
 import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
-
+import { useTranslation } from "react-i18next";
 function EditUserInfo() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -19,9 +19,8 @@ function EditUserInfo() {
   const [roleOptions, setRoleOptions] = useState([]);
   const [rolesLoading, setRolesLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  
   const userData = state?.userInfo || {};
-  
+  const { t } = useTranslation();
   const initialValues = {
     name: userData?.name || "",
     email: userData?.email || "",
@@ -42,7 +41,6 @@ function EditUserInfo() {
         setRolesLoading(false);
       }
     };
-
     fetchRoles();
   }, []);
 
@@ -82,7 +80,11 @@ function EditUserInfo() {
       }
     } catch (error) {
       console.error("Update error:", error);
-      setError(error.response?.data?.message || error.message || "Failed to update user");
+      setError(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to update user"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -101,7 +103,7 @@ function EditUserInfo() {
         <title>Edit User | Vertex</title>
       </Helmet>
       <section className="bg-white mx-5 p-5 rounded-md">
-        <h1 className="font-bold text-[18px] mb-5">Edit User</h1>
+        <h1 className="font-bold text-[18px] mb-5 rtl:text-[19px]">{t("editUser")}</h1>
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
@@ -134,7 +136,7 @@ function EditUserInfo() {
                     />
                   </div>
                 )}
-                <div className="flex items-center gap-3 font-bold text-14 mt-3">
+                <div className="flex items-center gap-3 font-bold text-14 mt-3 rtl:text-[15px]">
                   <input
                     type="file"
                     accept="image/*"
@@ -145,10 +147,10 @@ function EditUserInfo() {
                   />
                   <label
                     htmlFor="imageUpload"
-                    className="cursor-pointer flex items-center gap-2"
+                    className="cursor-pointer flex items-center gap-2 rtl:text-[17px]"
                   >
                     <LuUpload size={18} />
-                    Upload Picture
+                    {t("uploadPic")}
                   </label>
                   {(selectedImage || values.image) && (
                     <button
@@ -171,14 +173,8 @@ function EditUserInfo() {
               {/* User Information Fields */}
               <div className="bg-gray-50 rounded-md p-3 border-1 border-gray-200">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <InputField
-                    name="name"
-                    placeholder="Name"
-                  />
-                  <InputField
-                    name="email"
-                    placeholder="Enter email"
-                  />
+                  <InputField name="name" placeholder="Name" />
+                  <InputField name="email" placeholder="Enter email" />
                   <InputField
                     name="phone"
                     label="Phone Number"
@@ -302,19 +298,18 @@ function EditUserInfo() {
             alt="Success"
             className="w-32 mt-6"
           />
-          <p className="font-bold mt-5 text-center">
-            User Data updated successfully!
+          <p className="font-bold mt-5 text-center rtl:text-[19px]">
+            {t("successUpdateUser")}
           </p>
           <button
-            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60"
+            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-36 rtl:text-[17px]"
             onClick={handleModalClose}
           >
-            Done! Updated Successfully
+            {t("done")}
           </button>
         </div>
       </SuccessModal>
     </div>
   );
 }
-
 export default EditUserInfo;

@@ -10,7 +10,7 @@ import {
 import LogOut from "../Auth/LogOut/LogOut";
 import { useNavigate } from "react-router-dom";
 import { GetPersonalInfo } from "../ApiServices/GetPersonalInfo";
-
+import { useTranslation } from "react-i18next";
 export default function ProfileMenu() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,8 @@ export default function ProfileMenu() {
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
   const [personalInfo, setPersonalInfo] = useState({});
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   // Default image path
   const defaultImage = "/assets/images/user.png";
 
@@ -34,7 +35,8 @@ export default function ProfileMenu() {
       }
     };
     getInfo();
-  }, []);
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -78,7 +80,7 @@ export default function ProfileMenu() {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-300 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 px-3 flex flex-col gap-3"
+          className="absolute rtl:-right-52 right-0 mt-2 w-300 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 px-3 flex flex-col gap-3"
         >
           <div className="flex items-center gap-4 py-2">
             <div className="w-14 h-14 rounded-full overflow-hidden">
@@ -95,39 +97,39 @@ export default function ProfileMenu() {
             </div>
             <div className="flex flex-col gap-1">
               <span className="font-bold text-14 mt-2">{userName}</span>
-              <span className="text-14 text-gray-500">Vertex CEO</span>
+              <span className="text-14 text-gray-500">Admin</span>
             </div>
             <ChevronDown className="w-5 h-5 font-bold text-black ml-auto" />
           </div>
           <div className="border-t-1 border-black"></div>
           <button
-            className="w-full flex items-center gap-3 p-2 hover:bg-gray-50"
+            className="w-full flex  justify-between items-center gap-3 p-2 hover:bg-gray-50"
             onClick={() => navigate("/Dashboard/MainInfo")}
           >
-            <Eye className="w-6 h-6" />
-            <span className="flex-grow text-left text-gray-600 text-15">
-              My Account
+            <span className=" flex items-center gap-2 text-left text-gray-600 text-15 rtl:text-[16px]">
+              <Eye className="w-6 h-6" />
+              {t("myAcc")}
             </span>
             <ChevronRight className="w-5 h-5 text-black" />
           </button>
 
           <button
-            className="w-full flex items-center gap-3 p-2 hover:bg-gray-50"
+            className="w-full flex justify-between items-center gap-3 p-2 hover:bg-gray-50"
             onClick={() =>
               navigate("/Dashboard/MainInfo/EditInfo", { state: personalInfo })
             }
           >
-            <PenLine className="w-6 h-6" />
-            <span className="flex-grow text-left text-gray-600 text-15">
-              Edit Profile
+            <span className="flex items-center gap-2 text-left text-gray-600 text-15 rtl:text-[16px]">
+              <PenLine className="w-6 h-6" />
+              {t("editAccount")}
             </span>
             <ChevronRight className="w-5 h-5 text-black" />
           </button>
 
           <div className="flex items-center gap-3 p-2">
             <Bell className="w-5 h-5" />
-            <span className="flex-grow text-gray-600 text-15">
-              Allow Notifications
+            <span className="flex-grow text-gray-600 text-15 rtl:text-[16px]">
+              {t("allowNotify")}
             </span>
             <button
               onClick={() => setNotifications(!notifications)}
@@ -137,7 +139,9 @@ export default function ProfileMenu() {
             >
               <div
                 className={`w-4 h-4 rounded-full bg-white transition-transform duration-200 ease-in-out ${
-                  notifications ? "translate-x-5" : "translate-x-0"
+                  notifications
+                    ? "translate-x-5 rtl:-translate-x-0"
+                    : "translate-x-0 rtl:-translate-x-5"
                 }`}
               />
             </button>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 
 export const handleUpdateUserData = async (userId, formData) => {
   try {
@@ -10,7 +10,7 @@ export const handleUpdateUserData = async (userId, formData) => {
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: formData,
     });

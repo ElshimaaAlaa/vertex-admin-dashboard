@@ -3,11 +3,11 @@ import { getHome } from "../../ApiServices/Home";
 import { BsShop } from "react-icons/bs";
 import { TbUsers } from "react-icons/tb";
 import { IoCalendarNumberOutline } from "react-icons/io5";
-
+import { useTranslation } from "react-i18next";
 function ViewAllActivities() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
@@ -53,8 +53,8 @@ function ViewAllActivities() {
     if (activity.description) {
       return activity.description;
     }
-    return activity.type === "subscription" 
-      ? "New subscription was created" 
+    return activity.type === "subscription"
+      ? "New subscription was created"
       : "Contact message received";
   };
 
@@ -71,8 +71,8 @@ function ViewAllActivities() {
   return (
     <div className="bg-gray-100 min-h-screen mx-5 py-4">
       <div className="">
-        <h1 className="text-lg font-bold text-black mb-4">
-          All Recent Activities
+        <h1 className="text-lg font-bold text-black mb-4 rtl:ms-3 rtl:text-[20px]">
+          {t("allActivties")}
         </h1>
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="divide-y divide-gray-200">
@@ -84,7 +84,11 @@ function ViewAllActivities() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className={`p-2 rounded-full ${getActivityColor(activity.type)}`}>
+                      <div
+                        className={`p-2 rounded-full ${getActivityColor(
+                          activity.type
+                        )}`}
+                      >
                         {getActivityIcon(activity.type)}
                       </div>
                       <p className="text-sm text-gray-600">
@@ -92,9 +96,7 @@ function ViewAllActivities() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <p className="text-16 text-gray-500">
-                        {activity.date}
-                      </p>
+                      <p className="text-16 text-gray-500">{activity.date}</p>
                       <IoCalendarNumberOutline color="#69ABB5" size={15} />
                     </div>
                   </div>

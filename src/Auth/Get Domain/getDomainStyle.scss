@@ -20,7 +20,36 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     border-radius: 10px;
     margin: auto;
-    // padding: 30px;
     top: 27%;
+  }
+  .rtl-style{
+    .mainButton{
+      font-size: 20px;
+    }
+    .head{
+      font-size: 22px;
+    }
+    .domainp{
+      font-size: 17px;
+    }
+    .forgot{
+      font-size: 15px;
+    }
+    .remeber{
+      font-size: 14px;
+    }
+    .loginHead{
+      font-size: 28px;
+      margin-right: 7px;
+    }
+    .socialText{
+      font-size: 12px;
+    }
+    .or{
+      font-size: 14px;
+    }
+    .forgotHead{
+      font-size: 25px;
+    }
   }
 }

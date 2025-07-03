@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -9,7 +8,7 @@ import {
   ResponsiveContainer,
   ReferenceDot,
 } from "recharts";
-
+import { useTranslation } from "react-i18next";
 const RevenueTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
@@ -44,17 +43,17 @@ const RevenueChart = ({ data }) => {
   }));
 
   const maxValue = Math.max(...chartData.map((item) => item.value), 0);
-
+  const { t } = useTranslation();
   return (
     <div className="relative z-10 ">
-      <h3 className="font-bold text-17">Monthly Revenue</h3>
+      <h3 className="font-bold text-17 rtl:text-[18px]">{t("monthlyRevenue")}</h3>
       <div className="flex items-center justify-between my-3">
         <p className="text-primary font-bold text-lg">
           ${chartData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}
         </p>
         <div className="flex items-center gap-1">
           <div className="w-2 h-2 rounded-full bg-[#69ABB5]"></div>
-          <span className="text-gray-400 text-14">Monthly Revenue</span>
+          <span className="text-gray-400 text-14">{t("monthlyRevenue")}</span>
         </div>
       </div>
 
@@ -108,5 +107,4 @@ const RevenueChart = ({ data }) => {
     </div>
   );
 };
-
 export default RevenueChart;

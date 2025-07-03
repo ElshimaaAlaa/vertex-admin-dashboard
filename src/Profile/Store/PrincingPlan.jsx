@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
-
+// import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const PLANS = [
   {
     id: 1,
@@ -52,10 +52,10 @@ const PLANS = [
 ];
 
 function Pricing() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const planId = localStorage.getItem("plan_id");
     if (planId) {
@@ -72,7 +72,7 @@ function Pricing() {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
-          <p>Loading your plan...</p>
+          <p>{t("loadPlan")}</p>
         </div>
       </div>
     );
@@ -80,7 +80,7 @@ function Pricing() {
 
   if (!selectedPlan) {
     return (
-      <p className="text-gray-400 text-15 text-center">No plan selected yet.</p>
+      <p className="text-gray-400 text-15 text-center">{t("noPlan")}</p>
     );
   }
 
@@ -91,7 +91,7 @@ function Pricing() {
       </Helmet>
 
       <div className="">
-        <h1 className="text-[18px] font-bold">Your Current Plan</h1>
+        <h1 className="text-[18px] font-bold">{t("currentPlan")}</h1>
         <div className="border w-300 rounded-md p-5 mt-3">
           <div className="">
             <div className="flex flex-col items-center gap-3">
@@ -102,7 +102,7 @@ function Pricing() {
               />
               <div>
                 <h2 className="text-16 mt-2 text-center font-bold text-customOrange-darkOrange">
-                  {selectedPlan.name} Plan
+                  {selectedPlan.name} {t("plan")}
                 </h2>
                 <p className="text-center text-3xl my-3 font-bold">
                   ${selectedPlan.price}

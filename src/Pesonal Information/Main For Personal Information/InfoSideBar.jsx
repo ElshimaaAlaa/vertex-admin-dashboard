@@ -4,35 +4,35 @@ import StoreTheme from "../../Svgs/StoreTheme";
 import StoreInformation from "../../Svgs/StoreInformation";
 import PricingPlan from "../../Svgs/PricingPlan";
 import Profile from "../../Svgs/Profile";
-
+import { useTranslation } from "react-i18next";
 function InfoSideBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(null);
-
+  const { t } = useTranslation();
   const menuItems = [
     {
       IconComponent: Profile,
       alt: "Personal Information Icon",
-      label: "Personal Information",
+      label: t("personalInfo"),
       path: "",
     },
     {
       IconComponent: StoreTheme,
       alt: "Store Theme Icon",
-      label: "Store Theme",
+      label: t("storeTheme"),
       path: "StoreTheme",
     },
     {
       IconComponent: StoreInformation,
       alt: "Store Information Icon",
-      label: "Store Information",
+      label: t("storeInfo"),
       path: "StoreInformation",
     },
     {
       IconComponent: PricingPlan,
       alt: "Pricing Plans Icon",
-      label: "Pricing Plans",
+      label: t("pricingPlan"),
       path: "Pricing",
     },
   ];
@@ -43,8 +43,11 @@ function InfoSideBar() {
   };
 
   const isActive = (path) => {
-    const currentPath = location.pathname.split('/').pop();
-    return currentPath === path || (path === "" && location.pathname.endsWith('MainInfo'));
+    const currentPath = location.pathname.split("/").pop();
+    return (
+      currentPath === path ||
+      (path === "" && location.pathname.endsWith("MainInfo"))
+    );
   };
 
   return (
@@ -59,13 +62,21 @@ function InfoSideBar() {
             aria-label={label}
             onClick={() => handleItemClick(path)}
           >
-            <div className={`w-6 h-6 me-3 ${isActive(path) ? "text-primary" : "text-gray-600"}`}>
-              <IconComponent 
+            <div
+              className={`w-6 h-6 me-3 ${
+                isActive(path) ? "text-primary" : "text-gray-600"
+              }`}
+            >
+              <IconComponent
                 className="w-full h-full"
                 stroke={isActive(path) ? "#E0A75E" : "#000"}
               />
             </div>
-            <p className={`font-semibold text-14 mt-1 ${isActive(path) ? "text-primary" : ""}`}>
+            <p
+              className={`font-semibold text-14 mt-1 ${
+                isActive(path) ? "text-primary" : ""
+              }`}
+            >
               {label}
             </p>
           </button>

@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SuccessModal from "../../../Components/Modal/Success Modal/SuccessModal";
 import { FeaturesDropdown } from "./FeatureDropDown";
-
+import { useTranslation } from "react-i18next";
 function AddPlan() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
+  const { t } = useTranslation();
   const AVAILABLE_FEATURES = [
     "24/7 Support",
     "Advanced Analytics",
@@ -77,10 +77,10 @@ function AddPlan() {
       </Helmet>
 
       <section className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">
-          Menu / Subscriptions / Plans / Add Plan
+        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        {t("addPlanHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16">Add Plan</h3>
+        <h3 className="font-bold mt-2 text-16  rtl:text-[19px]">{t("addPlan")}</h3>
       </section>
 
       <Formik
@@ -92,26 +92,19 @@ function AddPlan() {
           <Form className="flex flex-col h-full">
             <div className="mx-5 mt-3 bg-white p-5 rounded-md border-1 border-gray-200">
               <div className="flex items-center gap-2 rounded-md border-1 border-gray-200 bg-gray-50 p-5">
-                <InputField name={"name"} placeholder={"Title"} required />
+                <InputField name={"name"} placeholder={t("title")} required />
                 <InputField
                   name={"duration"}
-                  placeholder={"Duration"}
+                  placeholder={t("duration")}
                   required
                 />
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-16 mb-3">Pricing</h3>
+                <h3 className="font-bold text-16 mb-3  rtl:text-[19px]">{t("pricing")}</h3>
                 <div className="flex gap-2 items-center">
-                  <InputField
-                    name={"price"}
-                    placeholder={"Price"}
-                    required
-                  />
-                  <InputField
-                    name={"sale_price"}
-                    placeholder={"Sale Price"}
-                  />
+                  <InputField name={"price"} placeholder={t("price")} required />
+                  <InputField name={"sale_price"} placeholder={t("salePrice")} />
                 </div>
                 <div className="flex w-full gap-4 items-center mt-2">
                   <Field
@@ -125,7 +118,7 @@ function AddPlan() {
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3">Features</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("feature")}</h3>
                 <FeaturesDropdown
                   features={AVAILABLE_FEATURES}
                   values={values}
@@ -135,8 +128,8 @@ function AddPlan() {
 
               {/* Most Popular Plan Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3">
-                  Is Most Popular Plan?
+                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">
+                 {t("isPopular")}
                 </h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
@@ -177,14 +170,14 @@ function AddPlan() {
                         </svg>
                       )}
                     </span>
-                    <p className="text-15 text-gray-500 ml-2">Most Popular</p>
+                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[16px] ">{t("mostPopular")}</p>
                   </label>
                 </div>
               </div>
 
               {/* Publish Status Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3">Status</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("status")}</h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
                     <input
@@ -221,7 +214,7 @@ function AddPlan() {
                         </svg>
                       )}
                     </span>
-                    <p className="text-15 text-gray-500 ml-2">Publish</p>
+                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[16px]">{t("publish")}</p>
                   </label>
                 </div>
               </div>
@@ -229,8 +222,8 @@ function AddPlan() {
             <Footer
               saveBtnType={"submit"}
               cancelBtnType={"button"}
-              saveText={"Save"}
-              cancelText={"Cancel"}
+              saveText={t("save")}
+              cancelText={t("cancel")}
               isLoading={isLoading}
               cancelOnClick={() => navigate("/Dashboard/Plans")}
             />
@@ -245,19 +238,18 @@ function AddPlan() {
             alt="Success"
             className="w-32 mt-6"
           />
-          <p className="font-bold text-16 mt-5 text-center">
-            Plan Data Added successfully!
+          <p className="font-bold text-16 mt-5 text-center rtl:text-[19px]">
+            {t("successAddPlan")}
           </p>
           <button
-            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60"
+            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-36 rtl:text-[17px]"
             onClick={() => navigate("/Dashboard/Plans")}
           >
-            Done! Plan Added Successfully
+            {t("done")}
           </button>
         </div>
       </SuccessModal>
     </div>
   );
 }
-
 export default AddPlan;

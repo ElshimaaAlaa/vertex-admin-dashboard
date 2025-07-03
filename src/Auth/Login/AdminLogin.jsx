@@ -10,16 +10,21 @@ import MainBtn from "../../Components/Main Button/MainBtn";
 import { loginService } from "../../ApiServices/LoginService";
 import AuthInputField from "../../Components/AuthInput Field/AuthInputField";
 import PasswordInput from "../../Components/Password Input/PasswordInput";
+import { IoIosArrowDown } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
-    rememberMe: false
+    rememberMe: false,
   });
 
   useEffect(() => {
@@ -32,15 +37,14 @@ function AdminLogin() {
         rememberMe: true,
       });
     }
-  }, []);
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
 
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+    email: Yup.string().email(t("emailInvalid")).required(t("emailRequired")),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters long")
-      .required("Password is required"),
+      .min(8, t("passwordLenght"))
+      .required(t("passwordRequired")),
   });
 
   const handleSubmit = async (values) => {
@@ -60,10 +64,15 @@ function AdminLogin() {
       }, 1500);
     } catch (error) {
       console.error(error);
-      setError("Invalid email or password. Please try again.");
+      setError(t("invalidCredentials"));
     } finally {
       setLoading(false);
     }
+  };
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    setShowLanguageDropdown(false);
   };
 
   const togglePasswordVisibility = useCallback(() => {
@@ -71,19 +80,55 @@ function AdminLogin() {
   }, []);
 
   return (
-    <div className="main-container">
+    <div className="main-container" dir={isRTL ? "rtl" : "ltr"}>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Login</title>
+        <title>{t("login")}</title>
+        <html dir={isRTL ? "rtl" : "ltr"} lang={i18n.language} />
       </Helmet>
-      <div className="loginContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md">
-        <img
-          src="/assets/svgs/vertex.svg"
-          alt="logo"
-          className="w-48 h-10 mb-3"
-        />
-        <div className="flex items-center gap-3 mt-2">
-          <h1 className="font-bold text-[21px]">Welcome Back</h1>
+      <div
+        className={`loginContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md ${
+          isRTL ? "rtl-style" : ""
+        }`}
+      >
+        <div className="flex justify-between items-center">
+          <img
+            src="/assets/svgs/vertex.svg"
+            alt="logo"
+            className="w-48 h-10 mb-3"
+          />
+          <div className="relative">
+            <button
+              className="flex items-center gap-1 text-14 bg-customOrange-lightOrange text-primary rounded-md p-2"
+              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+            >
+              {i18n.language.toUpperCase()}
+              <IoIosArrowDown size={20} />
+            </button>
+            {showLanguageDropdown && (
+              <div
+                className={`absolute ${
+                  isRTL ? "left-0" : "right-0"
+                } w-14 bg-white rounded-md shadow-lg z-10`}
+              >
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => changeLanguage("en")}
+                >
+                  EN
+                </button>
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => changeLanguage("ar")}
+                >
+                  AR
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={`flex items-center gap-3 mt-2 `}>
+          <h1 className={`font-bold text-[21px] loginHead `}>{t("welcome")}</h1>
           <img
             src="/assets/images/waving-hand_svgrepo.com.png"
             alt="welcome-back"
@@ -100,19 +145,23 @@ function AdminLogin() {
             <Form className="loginForm mt-4">
               <AuthInputField
                 name={"email"}
-                placeholder={"Email"}
+                placeholder={t("email")}
                 error={touched.email && errors.email}
                 active={touched.email}
+                dir={isRTL ? "rtl" : "ltr"}
               />
               <PasswordInput
                 name={"password"}
-                placeholder={"Password"}
+                placeholder={t("password")}
                 showPassword={showPassword}
                 togglePasswordVisibility={togglePasswordVisibility}
                 error={touched.password && errors.password}
                 active={touched.password}
+                dir={isRTL ? "rtl" : "ltr"}
               />
-              {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
+              {error && (
+                <p className="text-red-500 text-sm mt-3 text-start">{error}</p>
+              )}
               <div className="flex items-center justify-between mt-5">
                 <div className="flex items-center">
                   <label className="inline-flex items-center cursor-pointer">
@@ -121,13 +170,17 @@ function AdminLogin() {
                       name="rememberMe"
                       className="hidden peer"
                       checked={values.rememberMe}
-                      onChange={(e) => setFieldValue("rememberMe", e.target.checked)}
+                      onChange={(e) =>
+                        setFieldValue("rememberMe", e.target.checked)
+                      }
                     />
-                    <span className={`w-4 h-4 border-2 rounded flex items-center justify-center transition-all duration-200 ${
-                      values.rememberMe 
-                        ? "border-primary bg-primary" 
-                        : "border-gray-300"
-                    }`}>
+                    <span
+                      className={`w-4 h-4 border-2 rounded flex items-center justify-center transition-all duration-200 ${
+                        values.rememberMe
+                          ? "border-primary bg-primary"
+                          : "border-gray-300"
+                      }`}
+                    >
                       {values.rememberMe && (
                         <svg
                           className="w-3 h-3 text-white"
@@ -138,24 +191,28 @@ function AdminLogin() {
                         </svg>
                       )}
                     </span>
-                    <span className="text-11 lg:text-13 text-gray-600 ms-1">
-                      Remember Me
+                    <span
+                      className={`text-11 lg:text-13 text-gray-600 remeber ${
+                        isRTL ? "ms-2 " : "ms-1"
+                      }`}
+                    >
+                      {t("rememberMe")}
                     </span>
                   </label>
                 </div>
                 <div
                   role="button"
                   tabIndex={0}
-                  className="font-bold text-11 lg:text-13 cursor-pointer"
+                  className="font-bold text-11 lg:text-13 cursor-pointer forgot"
                   onClick={() => navigate("/AdminLogin/ForgotPassword")}
                 >
-                  Forget your password?
+                  {t("areForgotPassword")}
                 </div>
               </div>
               <div className="mt-5">
                 <MainBtn
                   text={
-                    loading ? <ClipLoader color="#fff" size={22} /> : "Login"
+                    loading ? <ClipLoader color="#fff" size={22} /> : t("login")
                   }
                   btnType="submit"
                   disabled={loading}
@@ -166,7 +223,9 @@ function AdminLogin() {
         </Formik>
         <div className="flex items-center justify-center mt-4">
           <div className="border-t border-gray-300 flex-grow"></div>
-          <span className="mx-4 text-gray-400 text-13 font-bold">OR</span>
+          <span className="mx-4 text-gray-400 text-13 font-bold or">
+            {t("or")}
+          </span>
           <div className="border-t border-gray-300 flex-grow"></div>
         </div>
         <OAuth />

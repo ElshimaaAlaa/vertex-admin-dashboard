@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live");
+const live = localStorage.getItem("live");
 export const VerifayPasswordService = async (otp, email) => {
   try {
     const response = await axios({
@@ -7,7 +7,7 @@ export const VerifayPasswordService = async (otp, email) => {
       url: `https://${live}/api/admin/verify-otp`,
       data: { otp, email },
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Accept-Language": "ar",
       },
     });

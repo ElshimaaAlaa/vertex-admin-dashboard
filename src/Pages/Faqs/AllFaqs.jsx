@@ -2,14 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { getFaqs } from "../../ApiServices/AllFaqs";
 import { ClipLoader } from "react-spinners";
-
+import { useTranslation } from "react-i18next";
 function AllFaqs({ refreshTrigger }) {
   const [openIndex, setOpenIndex] = useState(null);
   const [displayCount, setDisplayCount] = useState(5);
   const [faqsData, setFaqsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef(null);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
@@ -23,9 +24,9 @@ function AllFaqs({ refreshTrigger }) {
         setIsLoading(false);
       }
     };
-
     fetchFaqs();
-  }, [refreshTrigger]);
+    setIsRTL(i18n.language === "ar");
+  }, [refreshTrigger, i18n.language]);
 
   useEffect(() => {
     if (containerRef.current && displayCount > 5) {
@@ -91,7 +92,7 @@ function AllFaqs({ refreshTrigger }) {
         ))}
         {faqsData.length === 0 && !isLoading && (
           <div className="mt-5 p-5 bg-gray-50 rounded-lg text-center">
-            <p className="text-gray-500">No FAQs found</p>
+            <p className="text-gray-500">{t("noFaqs")}</p>
           </div>
         )}
       </div>
@@ -99,17 +100,17 @@ function AllFaqs({ refreshTrigger }) {
         {displayCount < faqsData.length && (
           <button
             onClick={showMoreFaqs}
-            className="text-center text-15 font-bold bg-primary text-white cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition"
+            className="text-center text-15 font-bold bg-primary text-white cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[17px]"
           >
-            Show More (5)
+            {t("showMore")}
           </button>
         )}
         {displayCount > 5 && (
           <button
             onClick={showLessFaqs}
-            className="text-center text-15 font-bold bg-gray-50 text-gray-500 cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition"
+            className="text-center text-15 font-bold bg-gray-50 text-gray-500 cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[17px]"
           >
-            Show Less
+            {t("showLess")}
           </button>
         )}
       </div>

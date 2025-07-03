@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 export const GetPersonalInfo = async () => {
   try {
     const response = await axios({
@@ -8,15 +8,15 @@ export const GetPersonalInfo = async () => {
       headers: {
         Accept: "application/json",
         "Accept-Language": "en",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {
       console.log(response.data.data);
-      sessionStorage.setItem("admin-Name", response.data.data.name);
-      sessionStorage.setItem("admin-email", response.data.data.email);
-      sessionStorage.setItem("admin-Phone", response.data.data.phone);
-      sessionStorage.setItem("admin pic", response.data.data.image);
+      localStorage.setItem("admin-Name", response.data.data.name);
+      localStorage.setItem("admin-email", response.data.data.email);
+      localStorage.setItem("admin-Phone", response.data.data.phone);
+      localStorage.setItem("admin pic", response.data.data.image);
       return response.data.data;
     } else {
       console.error("Failed to fetch data");

@@ -6,7 +6,7 @@ export const addFaqs = async (question, answer) => {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Accept-Language": "ar",
+        "Accept-Language": "en",
       },
       data: { question, answer },
     });

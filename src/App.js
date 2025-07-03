@@ -29,11 +29,40 @@ import ViewSubscription from "./Pages/SubScriptions/Shop Sub/ViewSubscription";
 import AddPlan from "./Pages/SubScriptions/Plans/AddPlan";
 import AddRole from "./Pages/Permissions/AddRole";
 import ViewAllActivties from "./Pages/Home/ViewAllActivties";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import enTranslation from "./Translation/en.json";
+import arTranslation from "./Translation/ar.json";
+
+i18n
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .init({
+    lng: "en",
+    resources: {
+      en: {
+        translation: enTranslation,
+      },
+      ar: {
+        translation: arTranslation,
+      },
+    },
+    fallbackLng: "en",
+    debug: true,
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+    
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -50,12 +79,42 @@ function App() {
     <SearchProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<GetDomain />} />
+          <Route 
+            path="/" 
+            element={isAuthenticated ? <Navigate to="/Dashboard/Home" replace /> : <GetDomain />} 
+          />
           <Route
             path="/Dashboard"
-            element={<Navigate to="/Dashboard/Home" replace />}
+            element={isAuthenticated ? <Dashboard /> : <Navigate to="/" replace />}
+          >
+            <Route path="MainInfo" element={<MainInfo />}>
+              <Route index element={<PersonalInformation />} />
+              <Route path="EditInfo" element={<EditInfo />} />
+              <Route path="StoreTheme" element={<StoreTheme />} />
+              <Route path="StoreInformation" element={<StoreInformation />} />
+              <Route path="Pricing" element={<Pricing />} />
+            </Route>
+            <Route path="Shops" element={<Shops />} />
+            <Route path="Users" element={<Users />} />
+            <Route path="Users/AddUser" element={<AddUser />} />
+            <Route path="Users/View/:id" element={<ViewUserDetails />} />
+            <Route path="Users/Edit/:id" element={<EditUserInfo />} />
+            <Route path="AddUser" element={<AddUser />} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Support" element={<Support />} />
+            <Route path="Faqs" element={<Faqs />} />
+            <Route path="Plans" element={<Plans />} />
+            <Route path="AddPlan" element={<AddPlan />} />
+            <Route path="ShopSub" element={<ShopSub />} />
+            <Route path="ShopSub/:id" element={<ViewSubscription />} />
+            <Route path="AllPermissions" element={<AllPermissions />} />
+            <Route path="AddRole" element={<AddRole />} />
+            <Route path="ViewAllActivties" element={<ViewAllActivties />} />
+          </Route>
+          <Route 
+            path="/AdminLogin" 
+            element={isAuthenticated ? <Navigate to="/Dashboard/Home" replace /> : <AdminLogin />} 
           />
-          <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route
             path="/AdminLogin/ForgotPassword"
             element={<ForgotPassword />}
@@ -68,33 +127,6 @@ function App() {
             path="/AdminLogin/CreateNewPassword"
             element={<CreateNewPassword />}
           />
-
-          <Route path="/Dashboard" element={<Dashboard />}>
-            <Route path="MainInfo" element={<MainInfo />}>
-              <Route index element={<PersonalInformation />} />
-              <Route path="EditInfo" element={<EditInfo />} />
-              <Route path="StoreTheme" element={<StoreTheme />} />
-              <Route path="StoreInformation" element={<StoreInformation />} />
-              <Route path="Pricing" element={<Pricing />} />
-            </Route>
-            <Route path="Shops" element={<Shops />} />
-            <Route path="Users" element={<Users />} />
-            <Route path="Users" element={<Users />} />
-            <Route path="Users/AddUser" element={<AddUser />} />
-            <Route path="Users/View/:id" element={<ViewUserDetails />} />
-            <Route path="Users/Edit/:id" element={<EditUserInfo />} />
-            <Route path="AddUser" element={<AddUser />} />
-            <Route path="Home" element={<Home />} />
-            <Route path="Support" element={<Support />} />
-            <Route path="Faqs" element={<Faqs />} />
-            <Route path="Plans" element={<Plans />} />
-            <Route path="AddPlan" element={<AddPlan/>} />
-            <Route path="ShopSub" element={<ShopSub />} />
-            <Route path="ShopSub/:id" element={<ViewSubscription />} />
-            <Route path="AllPermissions" element={<AllPermissions />} />
-            <Route path="AddRole" element={<AddRole/>}/>
-            <Route path="ViewAllActivties" element={<ViewAllActivties/>}/>
-          </Route>
         </Routes>
       </BrowserRouter>
     </SearchProvider>

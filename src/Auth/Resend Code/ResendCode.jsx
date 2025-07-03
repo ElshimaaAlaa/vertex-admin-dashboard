@@ -1,15 +1,17 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live");
+import { useTranslation } from "react-i18next";
+const live = localStorage.getItem("live");
 function ResendCode() {
+  const { t } = useTranslation();
   const resndCode = async () => {
-    const email = sessionStorage.getItem("Admin Email");
+    const email = localStorage.getItem("Admin Email");
     const response = await axios({
       url: `https://${live}/api/admin/send-otp`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept-Language": "en",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: { email },
     });
@@ -25,7 +27,7 @@ function ResendCode() {
         onClick={resndCode}
         className="font-bold text-primary text-15 cursor-pointer"
       >
-        Resend
+        {t("resend")}
       </p>
     </div>
   );

@@ -5,13 +5,13 @@ import axios from "axios";
 import { RxCopy } from "react-icons/rx";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useTranslation } from "react-i18next";
 function ViewUserDetails() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
-  const live = sessionStorage.getItem("live");
+  const live = localStorage.getItem("live");
   const { id } = useParams();
-
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -22,7 +22,7 @@ function ViewUserDetails() {
             "Content-Type": "application/json",
             Accept: "application/json",
             "Accept-Language": "ar",
-            Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
           },
         });
 
@@ -85,7 +85,7 @@ function ViewUserDetails() {
 
       <section className="bg-white mx-5 p-5 rounded-md">
         <div className="flex flex-col md:flex-row items-center justify-between">
-          <h1 className="font-bold text-[18px]">View User</h1>
+          <h1 className="font-bold text-[18px] rtl:text-[19px]">{t("viewUser")}</h1>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -93,10 +93,10 @@ function ViewUserDetails() {
                 state: { userInfo: userInfo },
               });
             }}
-            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md hover:bg-primary-dark transition-colors"
+            className="text-white font-semibold flex items-center justify-center gap-3 bg-primary p-2 w-24 rounded-md hover:bg-primary-dark transition-colors rtl:text-[17px]"
           >
             <img src="/assets/svgs/edit.svg" alt="Edit icon" className="w-7" />
-            Edit
+            {t("edit")}
           </button>
         </div>
 
@@ -112,7 +112,7 @@ function ViewUserDetails() {
               }}
             />
           </div>
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left rtl:md:text-right">
             <h2 className="font-semibold text-16">{userInfo?.name || "N/A"}</h2>
             <p className="text-gray-400 text-14 mt-2">
               {userInfo?.role?.name || "Vertex CEO"}
@@ -123,18 +123,18 @@ function ViewUserDetails() {
         <div className="border rounded-md p-3 w-full">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
             <div className="w-full md:w-1/2">
-              <p className="text-gray-400 text-15">Name</p>
+              <p className="text-gray-400 text-15 rtl:text-[16px]">{t("name")}</p>
               <h3 className="text-13">{userInfo?.name || "N/A"}</h3>
             </div>
             <div className="w-full md:w-1/2">
-              <p className="text-gray-400 text-15">Email</p>
+              <p className="text-gray-400 text-15 rtl:text-[16px]">{t("email")}</p>
               <h3 className="text-13">{userInfo?.email || "N/A"}</h3>
             </div>
           </div>
 
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
             <div className="w-full md:w-1/2">
-              <p className="text-gray-400 text-15">Phone</p>
+              <p className="text-gray-400 text-15 rtl:text-[16px]">{t("phone")}</p>
               <h3 className="text-13 flex items-center gap-2">
                 {userInfo?.phone || "N/A"}
                 {userInfo?.phone && (
@@ -153,7 +153,7 @@ function ViewUserDetails() {
               </h3>
             </div>
             <div className="w-full md:w-1/2">
-              <p className="text-gray-400 text-15">Role</p>
+              <p className="text-gray-400 text-15 rtl:text-[16px]">{t("role")}</p>
               <h3 className="text-13">{userInfo?.role?.name || "N/A"}</h3>
             </div>
           </div>
@@ -162,5 +162,4 @@ function ViewUserDetails() {
     </div>
   );
 }
-
 export default ViewUserDetails;

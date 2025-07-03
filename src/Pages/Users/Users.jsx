@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { getUsers } from "../../ApiServices/users";
 import DeleteUser from "./DeleteUser";
 import SearchBar from "../../Components/Search Bar/SearchBar";
-
+import { useTranslation } from "react-i18next";
 function Users() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,13 +20,14 @@ function Users() {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const [itemsPerPage] = useState(5);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   const copyToClipboard = (text) => {
     if (!text) {
       toast.warning("No phone number to copy");
       return;
     }
-    //to copy phone number 
+    //to copy phone number
     navigator.clipboard
       .writeText(text)
       .then(() => {
@@ -52,7 +53,8 @@ function Users() {
       }
     };
     fetchUsers();
-  }, []);
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
 
   useEffect(() => {
     if (userData.length > 0) {
@@ -103,8 +105,8 @@ function Users() {
       </Helmet>
 
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">Menu / Users</p>
-        <h3 className="font-bold mt-2 text-16">Users</h3>
+        <p className="text-gray-400 text-13 rtl:text-[16px]">{t("userMenu")}</p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("users")}</h3>
       </div>
 
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
@@ -112,7 +114,7 @@ function Users() {
           onclick={() => navigate("/Dashboard/Users/AddUser")}
           value={searchQuery}
           onchange={(e) => setSearchQuery(e.target.value)}
-          text={"Add New User"}
+          text={t("AddUser")}
           icon={
             <Plus
               className="text-white rounded-full border-2 border-white font-bold"
@@ -122,16 +124,16 @@ function Users() {
         />
 
         {error ? (
-          <div className="text-red-500 text-center mt-10">
-            Failed to fetch data. Please try again.
+          <div className="text-red-500 text-center mt-10 rtl:text-[18px]">
+            {t("error")}
           </div>
         ) : isLoading ? (
           <div className="text-gray-400 text-center mt-10">
             <ClipLoader color="#E0A75E" />
           </div>
         ) : filteredUser.length === 0 ? (
-          <div className="text-gray-400 text-center mt-10">
-            {searchQuery ? "No users match your search." : "No users found."}
+          <div className="text-gray-400 text-center mt-10 rtl:text-[18px]">
+            {searchQuery ? t("noMatchResults") : ""}
           </div>
         ) : (
           <>
@@ -139,26 +141,28 @@ function Users() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left cursor-pointer">
+                    <th className="px-3 py-3 text-16 border-t border-b text-left cursor-pointer rtl:text-right rtl:text-[18px]">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           className="form-checkbox h-4 w-4"
                           aria-label="Select all users"
                         />
-                        Name
+                        {t("name")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Phone
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("phone")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      User Role
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("userRole")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Added Date
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("addedDate")}
                     </th>
-                    <th className="px-3 py-3 text-left border w-24">Actions</th>
+                    <th className="px-3 py-3 text-center border w-24">
+                      {t("actions")}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -169,7 +173,9 @@ function Users() {
                     >
                       <td
                         className="px-3 py-3 border-t border-r text-gray-600 text-14"
-                        onClick={() => navigate(`/Dashboard/Users/View/${user.id}`)}
+                        onClick={() =>
+                          navigate(`/Dashboard/Users/View/${user.id}`)
+                        }
                       >
                         <p className="flex items-center gap-2">
                           <input
@@ -210,7 +216,7 @@ function Users() {
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/Dashboard/Users/Edit/${user.id}`, {
-                                state: { userInfo: user }
+                                state: { userInfo: user },
                               });
                             }}
                             className="text-primary hover:text-primary-dark"

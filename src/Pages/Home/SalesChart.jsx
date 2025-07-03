@@ -9,7 +9,7 @@ import {
   ReferenceDot,
 } from "recharts";
 import { FaArrowRight } from "react-icons/fa";
-
+import { useTranslation } from "react-i18next";
 const SalesTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
@@ -32,29 +32,39 @@ const SalesTooltip = ({ active, payload }) => {
 
 const SalesChart = ({ data }) => {
   const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
-  const chartData = data.map(item => ({
+  const chartData = data.map((item) => ({
     month: monthNames[item.month - 1],
     value: parseFloat(item.income),
-    highlight: parseFloat(item.income) > 0
+    highlight: parseFloat(item.income) > 0,
   }));
 
   const calculatePerformance = () => {
     if (data.length === 0) return 0;
-    
+
     const lastMonthIncome = parseFloat(data[data.length - 1].income);
     const firstMonthIncome = parseFloat(data[0].income) || 1;
-    
+
     return Math.round((lastMonthIncome / firstMonthIncome) * 100);
   };
-
+  const { t } = useTranslation();
   return (
     <div className="relative z-10">
       <div className="flex flex-col items-center justify-center gap-1">
-        <h3 className="font-bold text-17">Sales Change Rate</h3>
+        <h3 className="font-bold text-17 rtl:text-[18px]">{t("sale")}</h3>
         <span className="text-gray-400 text-12">Jan - Dec</span>
       </div>
 
@@ -95,32 +105,31 @@ const SalesChart = ({ data }) => {
                 strokeWidth: 2,
               }}
             />
-            {chartData?.map((item, index) => (
-              item.highlight && (
-                <ReferenceDot
-                  key={index}
-                  x={item.month}
-                  y={item.value}
-                  r={4}
-                  fill="#4aadb5"
-                  stroke="none"
-                />
-              )
-            ))}
+            {chartData?.map(
+              (item, index) =>
+                item.highlight && (
+                  <ReferenceDot
+                    key={index}
+                    x={item.month}
+                    y={item.value}
+                    r={4}
+                    fill="#4aadb5"
+                    stroke="none"
+                  />
+                )
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>
       <div className="flex flex-col gap-3 items-center justify-center mt-5">
         <div className="flex gap-2">
-          <h1 className="text-lg font-bold">
-            {calculatePerformance()}%
-          </h1>
-          <p className="text-13 leading-normal text-gray-600 w-64 text-center">
-            Your sales performance compared to the beginning of the year
+          <h1 className="text-lg font-bold">{calculatePerformance()}%</h1>
+          <p className="text-13 leading-normal text-gray-600 w-64 text-center rtl:text-[18px]">
+            {t("yourSale")}
           </p>
         </div>
-        <button className="text-primary text-15 flex items-center gap-3 font-semibold">
-          View Details <FaArrowRight />
+        <button className="text-primary text-15 flex items-center gap-3 font-semibold rtl:text-[18px]">
+          {t("viewDetails")} <FaArrowRight />
         </button>
       </div>
     </div>

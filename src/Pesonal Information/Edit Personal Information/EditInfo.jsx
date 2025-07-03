@@ -8,7 +8,7 @@ import InputField from "../../Components/InputFields/InputField";
 import { AiOutlineDelete } from "react-icons/ai";
 import { LuUpload } from "react-icons/lu";
 import EndButtons from "../../Components/End Buttons/EndButtons";
-
+import { useTranslation } from "react-i18next";
 function EditInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +16,9 @@ function EditInfo() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { t } = useTranslation();
   const personalInfo = state || {};
-  const live = sessionStorage.getItem("live");
+  const live = localStorage.getItem("live");
 
   const initialValues = {
     name: personalInfo?.name || "",
@@ -45,7 +46,7 @@ function EditInfo() {
             Accept: "application/json",
             "Accept-Language": "ar",
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+            Authorization: `Bearer ${localStorage.getItem("admin token")}`,
           },
         }
       );
@@ -65,7 +66,7 @@ function EditInfo() {
         <title>Edit Personal Information</title>
       </Helmet>
       <section>
-        <h1 className="font-bold text-[18px]">Edit Personal Information</h1>
+        <h1 className="font-bold text-[18px]">{t("editProfile")}</h1>
         <Formik
           initialValues={initialValues}
           enableReinitialize
@@ -87,7 +88,7 @@ function EditInfo() {
                     />
                   ) : (
                     <span className="text-gray-400 text-15">
-                      No image available
+                     {t("noImage")}
                     </span>
                   )}
                   <div className="flex items-center gap-3 font-bold text-14">
@@ -107,7 +108,7 @@ function EditInfo() {
                       className="cursor-pointer flex items-center gap-2"
                     >
                       <LuUpload size={18} />
-                      Upload Picture
+                    {t("uploadPic")}
                     </label>
                     {(selectedImage || personalInfo?.image) && (
                       <button
@@ -155,13 +156,13 @@ function EditInfo() {
             className="w-32 mt-6"
           />
           <p className="font-bold mt-5 text-center">
-            Profile updated successfully!
+            {t("updateProfile")}
           </p>
           <button
             className="bg-primary font-bold text-white rounded-md p-2 text-14 mt-4 w-60 "
             onClick={() => navigate("/Dashboard/MainInfo")}
           >
-            Done ! Updated Successfully
+            {t("done")}
           </button>
         </div>
       </SuccessModal>

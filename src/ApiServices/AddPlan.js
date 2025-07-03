@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live")
 
 export const addPlan = async (formData) => {
   try {
@@ -8,7 +8,7 @@ export const addPlan = async (formData) => {
         "Content-Type": "multipart/form-data",
         "Accept": "application/json",
         "Accept-Language": "en",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     return response.data;

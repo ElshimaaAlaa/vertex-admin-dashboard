@@ -6,7 +6,7 @@ export const getFaqs = async () => {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Accept-Language": "ar",
+        "Accept-Language": "en",
       },
     });
     if (response.status === 200) {

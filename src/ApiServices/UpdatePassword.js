@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live")
 export const handleUpdatePassword = async (password, password_confirmation) => {
   try {
     const response = await axios({
@@ -8,7 +8,7 @@ export const handleUpdatePassword = async (password, password_confirmation) => {
       headers: {
         Accept: "application/json",
         "Accept-Language": "ar",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
       data: {
         password,

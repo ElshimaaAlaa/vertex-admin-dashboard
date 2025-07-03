@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "../../Components/Search Bar/SearchBar";
 import { getPermissions } from "../../ApiServices/Permssions";
 import DeleteRole from "./DeleteRole";
+import { useTranslation } from "react-i18next";
 function Permisions() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +17,8 @@ function Permisions() {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const [itemsPerPage] = useState(5);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   useEffect(() => {
     const fetchRole = async () => {
       setIsLoading(true);
@@ -42,7 +44,8 @@ function Permisions() {
       });
       setFilteredRole(filtered);
     }
-  }, [searchQuery, roleData]);
+    setIsRTL(i18n.language === "ar");
+  }, [searchQuery, roleData, i18n.language]);
 
   const pageCount = Math.ceil(filteredRole.length / itemsPerPage);
   const offset = currentPage * itemsPerPage;
@@ -103,15 +106,17 @@ function Permisions() {
         <title>Plans | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">Permissions / Roles</p>
-        <h3 className="font-bold mt-2 text-16">Roles</h3>
+        <p className="text-gray-400 text-13 rtl:text-[16px]">
+          {t("permissionsHead")}
+        </p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("roles")}</h3>
       </div>
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
           onclick={() => navigate("/Dashboard/AddRole")}
           value={searchQuery}
           onchange={(e) => setSearchQuery(e.target.value)}
-          text={"Add New Role"}
+          text={t("addRole")}
           icon={
             <Plus
               className="text-white rounded-full border-2 border-white font-bold"
@@ -120,16 +125,16 @@ function Permisions() {
           }
         />
         {error ? (
-          <div className="text-red-500 text-center mt-10">
-            Failed to fetch data. Please try again.
+          <div className="text-red-500 text-center mt-10 rtl:text-[19px]">
+            {t("error")}
           </div>
         ) : isLoading ? (
           <div className="text-gray-400 text-center mt-10">
             <ClipLoader color="#E0A75E" />
           </div>
         ) : filteredRole.length === 0 ? (
-          <div className="text-gray-400 text-center mt-10">
-            {searchQuery ? "No Role match your search." : "No Role found."}
+          <div className="text-gray-400 text-center mt-10 rtl:text-[18px]">
+            {searchQuery ? t("noMatchResults"): ""}
           </div>
         ) : (
           <>
@@ -137,23 +142,25 @@ function Permisions() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left">
+                    <th className="px-3 py-3 text-16 border-t border-b rtl:text-[18px]  text-left ">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           className="form-checkbox h-4 w-4"
                           aria-label="Select all shops"
                         />
-                        User Role
+                        {t("userRole")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Can Access Admin Panel
+                    <th className="px-3 py-3 text-16 text-left rtl:text-right rtl:text-[18px] border">
+                      {t("accessAdminPanel")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border">
-                      Publish
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                      {t("publish")}
                     </th>
-                    <th className="px-3 py-3 text-left border w-24">Actions</th>
+                    <th className="px-3 py-3 text-center border w-24  rtl:text-[18px]">
+                      {t("actions")}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -221,8 +228,20 @@ function Permisions() {
               containerClassName="flex items-center justify-end mt-5 space-x-1"
               pageClassName="px-3 py-1 text-14 text-gray-400 rounded "
               activeClassName="bg-customOrange-lightOrange text-primary"
-              previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
-              nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}
+              previousLabel={
+                isRTL ? (
+                  <ChevronRight className="w-5 h-5 text-primary" />
+                ) : (
+                  <ChevronLeft className="w-5 h-5 text-primary" />
+                )
+              }
+              nextLabel={
+                isRTL ? (
+                  <ChevronLeft className="w-5 h-5 text-primary" />
+                ) : (
+                  <ChevronRight className="w-5 h-5 text-primary" />
+                )
+              }
               previousClassName={`px-3 py-1 rounded ${
                 currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
               }`}

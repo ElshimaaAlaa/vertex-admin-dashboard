@@ -11,9 +11,9 @@ export const getDomain = async (email) => {
     });
     if (response.status === 200) {
       console.log("Domain fetched successfully", response.data.data);
-      sessionStorage.setItem("live", response.data.data.domain);
-      sessionStorage.setItem("live_email", response.data.data.email);
-      sessionStorage.setItem("role", response.data.data.role);
+      localStorage.setItem("live", response.data.data.domain);
+      localStorage.setItem("live_email", response.data.data.email);
+      localStorage.setItem("role", response.data.data.role);
       return response.data.data;
     }
   } catch (error) {

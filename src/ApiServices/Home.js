@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 export const getHome = async () => {
   try {
     const response = await axios({
@@ -7,11 +7,11 @@ export const getHome = async () => {
       method: "GET",
       headers: {
         "Accept-Language": "ar",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+        Authorization: `Bearer ${localStorage.getItem("admin token")}`,
       },
     });
     if (response.status === 200) {
-      console.log(response.data.data);
+      console.log("home data", response.data.data);
       return response.data.data;
     }
   } catch (error) {

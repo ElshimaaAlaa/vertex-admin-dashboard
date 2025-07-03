@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Field } from "formik";
+import { useTranslation } from "react-i18next";
+
 export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
 
   const toggleFeature = (feature) => {
     const currentFeatures = values.features || [];
@@ -16,18 +20,20 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${isRTL ? "text-right" : "text-left"}`}>
       <Field name="features">
         {({ field, form, meta }) => (
           <div>
             <button
               type="button"
-              className={`w-full text-14 h-14 p-3 text-left bg-white border ${
+              className={`w-full text-14 h-14 p-3 ${
+                isRTL ? "text-right pr-10" : "text-left pl-3"
+              } bg-white border ${
                 meta.touched && meta.error
                   ? "border-red-500"
                   : "border-gray-200"
               } rounded-md shadow-sm focus:outline-none focus:border-primary ${
-                values.features?.length > 0 ? "text-black " : "text-gray-400"
+                values.features?.length > 0 ? "text-black" : "text-gray-400"
               }`}
               onClick={(e) => {
                 e.preventDefault();
@@ -35,9 +41,13 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
               }}
             >
               {values.features?.length > 0
-                ? `${values.features.length} selected`
-                : "Select features"}
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                ? `${values.features.length} ${t("selected")}`
+                : t("selectFeature")}
+              <span
+                className={`absolute inset-y-0 ${
+                  isRTL ? "left-0 pl-2" : "right-0 pr-2"
+                } flex items-center pointer-events-none`}
+              >
                 <svg
                   className="w-5 h-5 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +69,11 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
             )}
 
             {/* Selected features chips */}
-            <div className="flex flex-wrap gap-2 mt-3 ">
+            <div
+              className={`flex flex-wrap gap-2 mt-3 ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
               {values.features?.map((feature) => (
                 <span
                   key={feature}
@@ -68,13 +82,15 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
                   {feature}
                   <button
                     type="button"
-                    className="ml-1.5 inline-flex text-red-600 text-lg rounded-full focus:outline-none"
+                    className={`${
+                      isRTL ? "mr-1.5" : "ml-1.5"
+                    } inline-flex text-red-600 text-lg rounded-full focus:outline-none`}
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFeature(feature);
                     }}
                   >
-                    <span className="sr-only">Remove</span>
+                    <span className="sr-only">{t("remove")}</span>
                     <svg
                       className="w-3 h-3"
                       fill="currentColor"
@@ -93,12 +109,18 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
 
             {/* Dropdown menu */}
             {isOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg">
+              <div
+                className={`absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg ${
+                  isRTL ? "right-0" : "left-0"
+                }`}
+              >
                 <ul className="py-1 overflow-auto text-base rounded-md max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none">
                   {features.map((feature) => (
                     <li
                       key={feature}
-                      className="cursor-pointer select-none relative text-13 py-2 pl-3 pr-9 hover:bg-blue-50"
+                      className={`cursor-pointer select-none relative text-13 py-2 ${
+                        isRTL ? "pr-3 pl-9" : "pl-3 pr-9"
+                      } hover:bg-blue-50`}
                       onClick={() => toggleFeature(feature)}
                     >
                       <div className="flex items-center">
@@ -108,12 +130,20 @@ export const FeaturesDropdown = ({ features, values, setFieldValue }) => {
                           checked={values.features?.includes(feature)}
                           onChange={() => {}}
                         />
-                        <span className="ml-3 block font-normal truncate">
+                        <span
+                          className={`block font-normal truncate ${
+                            isRTL ? "mr-3" : "ml-3"
+                          }`}
+                        >
                           {feature}
                         </span>
                       </div>
                       {values.features?.includes(feature) && (
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary">
+                        <span
+                          className={`absolute inset-y-0 ${
+                            isRTL ? "left-0 pl-4" : "right-0 pr-4"
+                          } flex items-center text-primary`}
+                        >
                           <svg
                             className="w-5 h-5"
                             xmlns="http://www.w3.org/2000/svg"

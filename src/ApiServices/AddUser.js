@@ -1,16 +1,20 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 
 export const addUser = async (formData) => {
   try {
-    const response = await axios.post(`https://${live}/api/admin/users/store`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
-        "Accept-Language": "ar",
-        Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
-      },
-    });
+    const response = await axios.post(
+      `https://${live}/api/admin/users/store`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+          "Accept-Language": "ar",
+          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     if (error.response) {

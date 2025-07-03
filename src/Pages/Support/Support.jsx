@@ -11,12 +11,13 @@ import { LuSend } from "react-icons/lu";
 import MainBtn from "../../Components/Main Button/MainBtn";
 import InputField from "../../Components/InputFields/InputField";
 import ContactInfo from "./ContactInfo";
-
+import { useTranslation } from "react-i18next";
 function Support() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   const initialValues = {
     name: "",
     email: "",
@@ -33,21 +34,10 @@ function Support() {
   }, [showModal]);
 
   const validationSchema = Yup.object({
-    name: Yup.string()
-      .min(3, "Name should be at least 3 characters long")
-      .max(50, "Name should not exceed 50 characters")
-      .required("Name is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    phone: Yup.string()
-      .min(10, "Phone number should be at least 10 digits long")
-      .max(15, "Phone number should not exceed 15 digits")
-      .required("Phone number is required"),
-    message: Yup.string()
-      .min(10, "Message should be at least 10 characters long")
-      .max(500, "Message should not exceed 500 characters")
-      .required("Message is required"),
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email(t("emailInvalid")).required(t("emailRequired")),
+    phone: Yup.string().required("Phone number is required"),
+    message: Yup.string().required("Message is required"),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -68,9 +58,11 @@ function Support() {
       setIsLoading(false);
     }
   };
-
+  useEffect(() => {
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
   return (
-    <div className="bg-white">
+    <div className={`bg-white ${isRTL ? "ltr-style" : ""}`}>
       <Helmet>
         <title>Support | Vertex</title>
         <meta name="description" content="Support Page" />
@@ -81,10 +73,10 @@ function Support() {
         <meta property="og:url" content="https://vertex.com/support" />
       </Helmet>
 
-      <h1 className="font-bold text-center text-17 mt-6">
-        Send us Your Problem and we are <br /> contact with you
+      <h1 className="font-bold text-center text-17 mt-5 m-auto w-330 rtl:text-[21px]">
+        {t("send")}
       </h1>
-      <div className="flex justify-center gap-5 mx-20">
+      <div className={`flex justify-center gap-5 mx-20 ${isRTL?"flex-row-reverse":""}`}>
         <ContactInfo />
         <section className="bg-customOrange-mediumOrange p-5 mt-10 w-[430px] md:w-[430px] lg:w-500 rounded-md">
           <div className="flex justify-center">
@@ -94,11 +86,11 @@ function Support() {
               className="w-14 mt-4 mb-2"
             />
           </div>
-          <h2 className="font-bold text-17 text-center mb-1">
-            Send your problem
+          <h2 className="font-bold text-17 text-center mb-1 rtl:text-[19px] ">
+            {t("sendProblem")}
           </h2>
-          <p className="text-gray-400 text-14 text-center mb-2">
-            We are here to help you
+          <p className="text-gray-400 text-14 text-center mb-2 rtl:text-[15px]  ">
+            {t("helpYou")}
           </p>
 
           <Formik
@@ -108,12 +100,16 @@ function Support() {
           >
             {({ errors, touched }) => (
               <Form className="flex flex-col gap-2">
-                <InputField name="name" placeholder="Name" />
-                <AuthInputField name="email" placeholder="Email" />
-                <InputField name="phone" placeholder="Phone Number" />
+                <InputField name="name" placeholder={t("name")} />
+                <AuthInputField
+                  name="email"
+                  placeholder={t("email")}
+                  dir={isRTL ? "rtl" : "ltr"}
+                />
+                <InputField name="phone" placeholder={t("phone")} />
                 <Field
                   as="textarea"
-                  placeholder="Message"
+                  placeholder={t("message")}
                   name="message"
                   className={`w-full bg-white outline-none border-2 rounded-lg p-2 h-24 block placeholder:text-14 
                   ${
@@ -135,7 +131,7 @@ function Support() {
                     ) : (
                       <div className="flex justify-center items-center gap-2">
                         <LuSend />
-                        Send Message
+                        {t("sendMessage")}
                       </div>
                     )
                   }
@@ -153,13 +149,13 @@ function Support() {
             alt="success"
             className="w-32 mt-6"
           />
-          <p className="font-bold mt-5">Message sent successfully!</p>
+          <p className="font-bold mt-5 rtl:text-[19px]">{t("doneMessage")}</p>
           <button
-            className="bg-primary text-white font-bold p-2 w-40 mt-4 rounded-md"
+            className="bg-primary text-white font-bold p-2 w-40 mt-4 rounded-md rtl:text-[17px]"
             type="button"
             onClick={() => setShowModal(false)}
           >
-            Done!
+            {t("done")}
           </button>
         </div>
       </SuccessModal>

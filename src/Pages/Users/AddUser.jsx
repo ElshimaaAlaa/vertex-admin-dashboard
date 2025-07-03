@@ -8,6 +8,7 @@ import EndButtons from "../../Components/End Buttons/EndButtons";
 import ImageUploadSection from "./ImageUploadSection";
 import UserFormFields from "./UserFormFields";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 function AddUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
@@ -18,7 +19,7 @@ function AddUser() {
   const [rolesLoading, setRolesLoading] = useState(true);
   const [rolesError, setRolesError] = useState(null);
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const initialValues = {
     name: "",
     email: "",
@@ -31,16 +32,16 @@ function AddUser() {
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().email(t("emailInvalid")).required(t("emailRequired")),
     phone: Yup.string().required("Phone number is required"),
-    role_id: Yup.number().required("Role is required"),
+    role_id: Yup.number().required(t("roleRequired")),
     password: Yup.string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .required(t("passwordRequired"))
+      .min(8, t("passwordLenght")),
     password_confirmation: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Password confirmation is required"),
-    image: Yup.mixed().required("Image is required"),
+      .oneOf([Yup.ref("password"), null], t("matchPassword"))
+      .required(t("confirmRequired")),
+    image: Yup.mixed().required(t("imageRequired")),
   });
 
   useEffect(() => {
@@ -116,7 +117,7 @@ function AddUser() {
         <title>Add New User | Vertex</title>
       </Helmet>
       <section className="bg-white rounded-md p-5">
-        <h3 className="font-bold text-17 mb-5">Add Users</h3>
+        <h3 className="font-bold text-17 mb-5 rtl:text-[20px]">{t("AddUser")}</h3>
 
         {apiError && (
           <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">

@@ -7,7 +7,7 @@ import Footer from "../../Components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "../../Components/Modal/Success Modal/SuccessModal";
 import { addRole } from "../../ApiServices/AddRole";
-
+import { useTranslation } from "react-i18next";
 function AddRole() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +15,8 @@ function AddRole() {
   const [permissions, setPermissions] = useState([]);
   const [isFetchingPermissions, setIsFetchingPermissions] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
   const initialValues = {
     name: "",
     description: "",
@@ -39,22 +40,20 @@ function AddRole() {
     };
 
     fetchPermissions();
-  }, []);
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language, setIsRTL]);
 
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(true);
-
-   const formData = new FormData();
-
-formData.append('name', values.name);
-formData.append("description[ar]",values.description)
-formData.append("description[en]",values.description)
-formData.append('can_access_panel', values.can_access_panel ? 1 : 0);
-formData.append('publish', values.publish ? 1 : 0);
-values.permissions.forEach((id) => {
-  formData.append('permissions[]', parseInt(id));
-});
-
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description[ar]", values.description);
+    formData.append("description[en]", values.description);
+    formData.append("can_access_panel", values.can_access_panel ? 1 : 0);
+    formData.append("publish", values.publish ? 1 : 0);
+    values.permissions.forEach((id) => {
+      formData.append("permissions[]", parseInt(id));
+    });
 
     try {
       await addRole(formData);
@@ -103,20 +102,20 @@ values.permissions.forEach((id) => {
         <title>Add Role | Vertex</title>
       </Helmet>
       <section className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13">
-          Menu / Permissions / Roles / Add User Role
+        <p className="text-gray-400 text-13 rtl:text-[16px]">
+          {t("addHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16">Add User Role</h3>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("addUserRole")}</h3>
       </section>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, setFieldValue }) => (
           <Form className="mt-3">
             <div className="bg-white rounded-md p-5 mx-5">
               <section className="flex flex-col gap-2 bg-gray-50 border-1 border-gray-200 p-3 rounded-md">
-                <InputField name={"name"} placeholder={"Role Name"} required />
+                <InputField name={"name"} placeholder={t("roleName")} required />
                 <Field
                   name={"description"}
-                  placeholder={"Description"}
+                  placeholder={t("description")}
                   as="textarea"
                   className="w-full h-24 p-3 border-2 rounded-lg outline-none transition-all duration-200 placeholder:text-14 focus:border-primary placeholder:text-gray-400"
                   required
@@ -143,7 +142,7 @@ values.permissions.forEach((id) => {
                     onClick={() =>
                       setFieldValue(
                         "can_access_panel",
-                        !values.can_access_panel 
+                        !values.can_access_panel
                       )
                     }
                   >
@@ -163,14 +162,14 @@ values.permissions.forEach((id) => {
                       </svg>
                     )}
                   </span>
-                  <p className="text-15 font-bold ml-2">
-                    Can Access Admin Panel ?
+                  <p className="text-15 font-bold ml-2 rtl:mr-2 rtl:text-[19px]">
+                    {t("accessPanel")} 
                   </p>
                 </label>
               </section>
 
               <section className="bg-gray-50 border-1 border-gray-200 p-5 rounded-md mt-3">
-                <h3 className="font-bold text-15 mb-3">Status</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("status")}</h3>
                 <label className="inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -185,9 +184,7 @@ values.permissions.forEach((id) => {
                         ? "bg-primary border-primary"
                         : "border-gray-300"
                     }`}
-                    onClick={() =>
-                      setFieldValue("publish", !values.publish )
-                    }
+                    onClick={() => setFieldValue("publish", !values.publish)}
                   >
                     {values.publish && (
                       <svg
@@ -205,13 +202,13 @@ values.permissions.forEach((id) => {
                       </svg>
                     )}
                   </span>
-                  <p className="text-15 text-gray-500 ml-2">Publish</p>
+                  <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[17px]">{t("publish")}</p>
                 </label>
               </section>
 
               <section className="border-1 border-gray-200 rounded-md mt-3">
                 <div className="flex justify-between bg-customOrange-lightOrange p-5 rounded-t-md">
-                  <h3 className="text-16 font-bold text-black">Permissions</h3>
+                  <h3 className="text-16 font-bold text-black rtl:text-[19px]">{t("permissions")}</h3>
                   <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -243,15 +240,15 @@ values.permissions.forEach((id) => {
                         </svg>
                       )}
                     </span>
-                    <p className="text-14 font-bold text-primary ml-2">
-                      Select All
+                    <p className="text-14 font-bold text-primary ml-2 rtl:mr-2 rtl:text-[17px]">
+                      {t("selectAll")}
                     </p>
                   </label>
                 </div>
 
                 <div className="bg-white p-5">
                   {isFetchingPermissions ? (
-                    <p>Loading permissions...</p>
+                    <p>{t("loadingPermission")}</p>
                   ) : (
                     Object.entries(groupedPermissions).map(([group, perms]) => (
                       <div key={group} className="mb-6">
@@ -330,7 +327,7 @@ values.permissions.forEach((id) => {
                                     </svg>
                                   )}
                                 </span>
-                                <p className="text-14 text-gray-600 ml-2">
+                                <p className="text-14 text-gray-600 ml-2 rtl:mr-2">
                                   {permission.name}
                                 </p>
                               </label>
@@ -342,20 +339,10 @@ values.permissions.forEach((id) => {
                   )}
                 </div>
               </section>
-
-              {/* <div className="flex justify-end mt-6">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-6 py-2 rounded-md bg-primary text-white text-15 font-semibold hover:opacity-90 transition-all duration-200"
-                >
-                  {isLoading ? "Saving..." : "Save"}
-                </button>
-              </div> */}
             </div>
             <Footer
-              saveText={"Save"}
-              cancelText={"Cancel"}
+              saveText={t("save")}
+              cancelText={t("cancel")}
               cancelBtnType={"button"}
               saveBtnType={"submit"}
               cancelOnClick={() => navigate("/Dashboard/AllPermissions")}
@@ -372,19 +359,18 @@ values.permissions.forEach((id) => {
             alt="Success"
             className="w-32 mt-6"
           />
-          <p className="font-bold text-16 mt-5 text-center">
-            New Role Added successfully!
+          <p className="font-bold text-16 mt-5 text-center rtl:text-[19px]">
+            {t("successAddRole")}
           </p>
           <button
-            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-60"
+            className="bg-primary text-white rounded-md p-2 text-14 mt-4 w-36 rtl:text-[17px]"
             onClick={() => navigate("/Dashboard/AllPermissions")}
           >
-            Done! Role Added Successfully
+            {t("done")}
           </button>
         </div>
       </SuccessModal>
     </div>
   );
 }
-
 export default AddRole;

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import FailedModal from "../../Components/Modal/Failed Modal/FailedModal";
 import { ClipLoader } from "react-spinners";
 import "./style.scss";
+import { useTranslation } from "react-i18next";
 function DeleteRole({ id, onDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-const live = sessionStorage.getItem("live")
+  const { t, i18n } = useTranslation();
+  const [isRTL, setIsRTL] = useState(false);
+  const live = localStorage.getItem("live");
   const handleDeleteRole = async () => {
     setIsLoading(true);
     try {
@@ -15,7 +18,7 @@ const live = sessionStorage.getItem("live")
         url: `https://${live}/api/admin/roles/delete/${id}`,
         headers: {
           "Accept-Language": "en",
-          Authorization: `Bearer ${sessionStorage.getItem("admin token")}`,
+          Authorization: `Bearer ${localStorage.getItem("admin token")}`,
         },
       });
       if (response.status === 200) {
@@ -37,8 +40,11 @@ const live = sessionStorage.getItem("live")
   } else {
     document.body.classList.remove("no-scroll");
   }
+  useEffect(() => {
+    setIsRTL(i18n.language === "ar");
+  }, [i18n.language]);
   return (
-    <div>
+    <div className={`${isRTL ? "ltr-style" : ""}`}>
       <div className="flex justify-center">
         <button onClick={() => setShowModal(true)}>
           <img
@@ -57,24 +63,25 @@ const live = sessionStorage.getItem("live")
             className="h-14 w-14 p-1"
           />
         </div>
-        <p className="font-bold w-72 text-center">
-          Are You Sure You Want To Delete This Role ?
-        </p>
-        <div className="flex gap-3 mt-5 mb-3">
+        <p className="font-bold w-72 text-center rtl:text-[19px] ">{t("deleteRole")}</p>
+        <div
+          className={`flex gap-3 mt-5 mb-3 ${isRTL ? "flex-row-reverse" : ""}`}
+          dir={isRTL ? "rtl" : "ltr"}
+        >
           <button
-            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32"
+            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32 rtl:text-[17px]"
             onClick={() => setShowModal(false)}
           >
-            Cancel
+            {t("cancel")}
           </button>
           <button
-            className="rounded text-white bg-customred font-bold p-3 w-32"
+            className="rounded text-white bg-customred font-bold p-3 w-32 rtl:text-[17px]"
             onClick={handleDeleteRole}
           >
             {isLoading ? (
               <ClipLoader color="#fff" size={"22px"} className="text-center" />
             ) : (
-              "Delete"
+              t("delete")
             )}
           </button>
         </div>

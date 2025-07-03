@@ -1,5 +1,5 @@
 import axios from "axios";
-const live = sessionStorage.getItem("live")
+const live = localStorage.getItem("live");
 export const CreateNewPasswordService = async (
   password,
   password_confirmation,
