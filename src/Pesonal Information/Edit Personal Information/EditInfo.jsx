@@ -66,7 +66,7 @@ function EditInfo() {
         <title>Edit Personal Information</title>
       </Helmet>
       <section>
-        <h1 className="font-bold text-[18px]">{t("editProfile")}</h1>
+        <h1 className="font-bold text-[18px] rtl:text-[20px]">{t("editProfile")}</h1>
         <Formik
           initialValues={initialValues}
           enableReinitialize
@@ -105,7 +105,7 @@ function EditInfo() {
                     />
                     <label
                       htmlFor="imageUpload"
-                      className="cursor-pointer flex items-center gap-2"
+                      className="cursor-pointer flex items-center gap-2 rtl:text-[16px]"
                     >
                       <LuUpload size={18} />
                     {t("uploadPic")}
@@ -132,11 +132,11 @@ function EditInfo() {
               </div>
               <div className="border p-3 rounded-md bg-gray-50 w-full">
                 <div className="flex flex-col md:flex-row gap-2">
-                  <InputField placeholder="Name" name="name" />
-                  <InputField placeholder="Email" name="email" />
+                  <InputField placeholder={t("name")} name="name" />
+                  <InputField placeholder={t("email")} name="email" />
                 </div>
                 <div className="mt-2">
-                  <InputField placeholder="Phone" name="phone" />
+                  <InputField placeholder={t("phone")} name="phone" />
                 </div>
               </div>
               <EndButtons

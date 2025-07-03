@@ -174,5 +174,7 @@
   "logout":"Logout",
   "sureLogout":"Are You Sure You Want To Logout ?",
   "successAddPlan":"Plan Data Added successfully!",
-  "noMatchResults":"No results match your search !"
+  "noMatchResults":"No results match your search !",
+  "phoneCopy":"Phone number copied to clipboard!",
+  "noPhone":"No phone number to copy"
 }

@@ -18,6 +18,7 @@ function LogOut() {
     setIsLoading(true);
     try {
       await logOut();
+      localStorage.clear();
       navigate("/");
     } catch (error) {
       setShowModal(true);
@@ -37,15 +38,24 @@ function LogOut() {
         className="text-gray-500 flex items-center gap-3 p-2 text-15 hover:bg-gray-50 cursor-pointer rtl:text-[16px]"
         onClick={() => setShowModal(true)}
       >
-        {isRTL ? <TbLogout2 className="text-red-600 h-6 w-6" /> : <TbLogout className="text-red-600 h-6 w-6" />}
+        {isRTL ? (
+          <TbLogout2 className="text-red-600 h-6 w-6" />
+        ) : (
+          <TbLogout className="text-red-600 h-6 w-6" />
+        )}
         {t("logout")}
       </p>
       <FailedModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="bg-red-50 p-3 rounded-md text-red-600 my-6">
           <TbLogout size={26} />
         </div>
-        <p className="font-bold w-72 text-center rtl:text-[19px]">{t("sureLogout")}</p>
-        <div className="flex gap-3 mt-5 mb-3">
+        <p className="font-bold w-72 text-center rtl:text-[18px]">
+          {t("sureLogout")}
+        </p>
+        <div
+          className={`flex gap-3 mt-5 mb-3 ${isRTL ? "flex-row-reverse" : ""}`}
+          dir={isRTL ? "rtl" : "ltr"}
+        >
           <button
             className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32"
             onClick={() => setShowModal(false)}
@@ -67,5 +77,4 @@ function LogOut() {
     </div>
   );
 }
-
 export default LogOut;

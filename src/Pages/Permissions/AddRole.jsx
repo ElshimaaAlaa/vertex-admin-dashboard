@@ -102,10 +102,10 @@ function AddRole() {
         <title>Add Role | Vertex</title>
       </Helmet>
       <section className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">
           {t("addHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("addUserRole")}</h3>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[18px]">{t("addUserRole")}</h3>
       </section>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values, setFieldValue }) => (
@@ -162,14 +162,14 @@ function AddRole() {
                       </svg>
                     )}
                   </span>
-                  <p className="text-15 font-bold ml-2 rtl:mr-2 rtl:text-[19px]">
+                  <p className="text-15 font-bold ml-2 rtl:mr-2 rtl:text-[16px]">
                     {t("accessPanel")} 
                   </p>
                 </label>
               </section>
 
               <section className="bg-gray-50 border-1 border-gray-200 p-5 rounded-md mt-3">
-                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("status")}</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[16px]">{t("status")}</h3>
                 <label className="inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -202,13 +202,13 @@ function AddRole() {
                       </svg>
                     )}
                   </span>
-                  <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[17px]">{t("publish")}</p>
+                  <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[15px]">{t("publish")}</p>
                 </label>
               </section>
 
               <section className="border-1 border-gray-200 rounded-md mt-3">
                 <div className="flex justify-between bg-customOrange-lightOrange p-5 rounded-t-md">
-                  <h3 className="text-16 font-bold text-black rtl:text-[19px]">{t("permissions")}</h3>
+                  <h3 className="text-16 font-bold text-black rtl:text-[17px]">{t("permissions")}</h3>
                   <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -240,7 +240,7 @@ function AddRole() {
                         </svg>
                       )}
                     </span>
-                    <p className="text-14 font-bold text-primary ml-2 rtl:mr-2 rtl:text-[17px]">
+                    <p className="text-14 font-bold text-primary ml-2 rtl:mr-2 rtl:text-[16px]">
                       {t("selectAll")}
                     </p>
                   </label>

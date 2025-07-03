@@ -41,18 +41,17 @@ function ViewUserDetails() {
 
   const copyToClipboard = (text) => {
     if (!text) {
-      toast.warning("No phone number to copy");
+      toast.warning(t("noPhone"));
       return;
     }
 
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        toast.success("Phone number copied to clipboard!");
+        toast.success(t("phoneCopy"));
       })
       .catch((err) => {
         console.error("Failed to copy:", err);
-        toast.error("Failed to copy phone number");
       });
   };
 
@@ -100,8 +99,8 @@ function ViewUserDetails() {
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-5 my-3 border rounded-md p-3 w-full">
-          <div className="w-32 h-24 flex items-center justify-center overflow-hidden rounded-xl bg-gray-100">
+        <div className="flex flex-col md:flex-row items-center gap-5 my-3 border rounded-md p-3 w-full rtl:flex-row-reverse">
+          <div className="w-32 h-24 flex items-center justify-center overflow-hidden rounded-xl bg-gray-100 ">
             <img
               src={userInfo.image}
               alt="User profile"
@@ -112,7 +111,7 @@ function ViewUserDetails() {
               }}
             />
           </div>
-          <div className="text-center md:text-left rtl:md:text-right">
+          <div className="text-center md:text-left ">
             <h2 className="font-semibold text-16">{userInfo?.name || "N/A"}</h2>
             <p className="text-gray-400 text-14 mt-2">
               {userInfo?.role?.name || "Vertex CEO"}

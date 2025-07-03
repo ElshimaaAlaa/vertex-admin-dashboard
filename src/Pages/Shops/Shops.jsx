@@ -81,8 +81,8 @@ function Shops() {
         <title>Shops | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">{t("meunShop")}</p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-right rtl:text-[19px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">{t("meunShop")}</p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-right rtl:text-[18px]">
           {t("shop")}
         </h3>
       </div>
@@ -125,7 +125,7 @@ function Shops() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t text-left rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 border-t text-left rtl:text-right rtl:text-[16px]">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
@@ -135,10 +135,10 @@ function Shops() {
                         {t("shopName")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("owner")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("totalProduct")}
                     </th>
                     <th className="px-3 py-3 text-center border w-24">

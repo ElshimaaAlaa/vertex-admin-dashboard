@@ -49,10 +49,10 @@ function Faqs() {
       <Helmet>
         <title>Frequently Asked Questions | VERTEX</title>
       </Helmet>
-      <h2 className="font-bold text-center text-lg mt-6 rtl:text-[21px]">
+      <h2 className="font-bold text-center text-lg mt-6 rtl:text-[20px]">
         {t("faqs")}
       </h2>
-      <p className="text-gray-400 text-center m-auto mt-2 text-15 w-[500px] rtl:text-[17px] rtl:w-350 ">
+      <p className="text-gray-400 text-center m-auto mt-2 text-15 w-[500px] rtl:text-[16px] rtl:w-350 ">
         {t("faqsP")}
       </p>
       <div className={`flex justify-center gap-5 mx-20 ${isRTL?"flex-row-reverse":""}`}>
@@ -67,10 +67,10 @@ function Faqs() {
               className="w-14 mt-4 mb-2"
             />
           </div>
-          <h2 className="font-bold text-17 text-center mb-1 rtl:text-[19px]">
+          <h2 className="font-bold text-17 text-center mb-1 rtl:text-[18px]">
            {t("addQuestion")}
           </h2>
-          <p className="text-gray-400 text-14 text-center mb-3 rtl:text-[15px]">
+          <p className="text-gray-400 text-14 text-center mb-3 rtl:text-[14px]">
             {t("helpYou")}
           </p>
           <Formik

@@ -21,7 +21,7 @@ function ContactInfo() {
       <div className="flex gap-4">
         <div className="w-10 h-10 flex items-center justify-center">{icon}</div>
         <div>
-          <h3 className="font-bold text-16 mb-2 rtl:text-[17px]">{title}</h3>
+          <h3 className="font-bold text-16 mb-2 rtl:text-[15px]">{title}</h3>
           <a href={link} className="text-gray-400 mt-5 text-15 ">
             {value}
           </a>

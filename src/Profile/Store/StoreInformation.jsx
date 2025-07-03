@@ -22,27 +22,27 @@ function StoreInformation() {
         />
       </Helmet>
       <section>
-        <h1 className="font-bold text-[18px] mb-3">{t("storeInfo")}</h1>
+        <h1 className="font-bold text-[18px] mb-3 rtl:text-[20px]">{t("storeInfo")}</h1>
         <div className=" border border-gray-200 rounded-md p-5 w-full">
           <div className="flex flex-col md:flex-row items-center gap-x-96">
             <div className="text-center md:text-left">
-              <h2 className="text-15  text-gray-400">{t("name")}</h2>
+              <h2 className="text-15  text-gray-400 rtl:text-[15px]">{t("name")}</h2>
               <p className="mt-2 text-14">
                 {storeInformation.store_name || "N/A"}
               </p>
             </div>
             <div className="text-center md:text-left">
-              <h2 className="text-15 text-gray-400">{t("location")}</h2>
+              <h2 className="text-15 text-gray-400 rtl:text-[15px]">{t("location")}</h2>
               <p className="mt-2 text-14">
                 {storeInformation.address || "N/A"}
               </p>
             </div>
           </div>
-          <h2 className="text-15 mt-5 text-gray-400">{t("bio")}</h2>
+          <h2 className="text-15 mt-5 text-gray-400 rtl:text-[15px]">{t("bio")}</h2>
           <p className="mt-2 text-14">{storeInformation.bio || "N/A"}</p>
           <div className="flex flex-col lg:flex-row md:flex-row items-end gap-x-[360px]">
             <div>
-              <p className="text-17 font-bold mb-3 mt-7">{t("banners")}</p>
+              <p className="text-17 font-bold mb-3 mt-7 rtl:text-[18px]">{t("banners")}</p>
               <div className="flex flex-wrap gap-4">
                 {banner.banners &&
                   Array.isArray(banner.banners) &&
@@ -62,11 +62,11 @@ function StoreInformation() {
             <div className="flex items-center gap-10 mb-3">
               <div className="flex items-center gap-2">
                 <FaRegEye color="#E0A75E" size={20} />
-                <p className="text-15">{t("view")}</p>
+                <p className="text-15 rtl:text-[16px]">{t("view")}</p>
               </div>
               <div className="flex items-center gap-2">
                 <IoDownloadOutline color="#E0A75E" size={20} />
-                <p className="text-15">{t("download")}</p>
+                <p className="text-15 rtl:text-[16px]">{t("download")}</p>
               </div>
             </div>
           </div>

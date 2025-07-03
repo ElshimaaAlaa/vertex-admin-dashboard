@@ -52,7 +52,7 @@ function InfoSideBar() {
 
   return (
     <aside className="w-full">
-      <div className="flex flex-col gap-7  md:gap-16 border-l p-4 md:pt-10">
+      <div className="flex flex-col gap-7  md:gap-16 border-l p-4 md:pt-10 ">
         {menuItems.map(({ IconComponent, alt, label, path }, index) => (
           <button
             key={index}
@@ -73,7 +73,7 @@ function InfoSideBar() {
               />
             </div>
             <p
-              className={`font-semibold text-14 mt-1 ${
+              className={`font-semibold text-14 mt-1 rtl:text-[17px] ${
                 isActive(path) ? "text-primary" : ""
               }`}
             >

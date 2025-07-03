@@ -106,10 +106,10 @@ function Permisions() {
         <title>Plans | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">
           {t("permissionsHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("roles")}</h3>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[18px]">{t("roles")}</h3>
       </div>
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
@@ -142,7 +142,7 @@ function Permisions() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b rtl:text-[18px]  text-left ">
+                    <th className="px-3 py-3 text-16 border-t border-b rtl:text-[16px]  text-left ">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
@@ -152,13 +152,13 @@ function Permisions() {
                         {t("userRole")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left rtl:text-right rtl:text-[18px] border">
+                    <th className="px-3 py-3 text-16 text-left rtl:text-right rtl:text-[16px] border">
                       {t("accessAdminPanel")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("publish")}
                     </th>
-                    <th className="px-3 py-3 text-center border w-24  rtl:text-[18px]">
+                    <th className="px-3 py-3 text-center border w-24  rtl:text-[16px]">
                       {t("actions")}
                     </th>
                   </tr>

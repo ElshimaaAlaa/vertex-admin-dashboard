@@ -29,12 +29,13 @@ import ViewSubscription from "./Pages/SubScriptions/Shop Sub/ViewSubscription";
 import AddPlan from "./Pages/SubScriptions/Plans/AddPlan";
 import AddRole from "./Pages/Permissions/AddRole";
 import ViewAllActivties from "./Pages/Home/ViewAllActivties";
+// translation
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import enTranslation from "./Translation/en.json";
 import arTranslation from "./Translation/ar.json";
-
+// Initialize i18n
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -54,15 +55,10 @@ i18n
       escapeValue: false,
     },
   });
-
 function App() {
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-    
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -79,14 +75,26 @@ function App() {
     <SearchProvider>
       <BrowserRouter>
         <Routes>
-          <Route 
-            path="/" 
-            element={isAuthenticated ? <Navigate to="/Dashboard/Home" replace /> : <GetDomain />} 
-          />
+          <Route path="/" element={<GetDomain />} />
           <Route
             path="/Dashboard"
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/" replace />}
-          >
+            element={<Navigate to="/Dashboard/Home" replace />}
+          />
+          <Route path="/AdminLogin" element={<AdminLogin />} />
+          <Route
+            path="/AdminLogin/ForgotPassword"
+            element={<ForgotPassword />}
+          />
+          <Route
+            path="/AdminLogin/VerifayPassword"
+            element={<VerifayPassword />}
+          />
+          <Route
+            path="/AdminLogin/CreateNewPassword"
+            element={<CreateNewPassword />}
+          />
+
+          <Route path="/Dashboard" element={<Dashboard />}>
             <Route path="MainInfo" element={<MainInfo />}>
               <Route index element={<PersonalInformation />} />
               <Route path="EditInfo" element={<EditInfo />} />
@@ -95,6 +103,7 @@ function App() {
               <Route path="Pricing" element={<Pricing />} />
             </Route>
             <Route path="Shops" element={<Shops />} />
+            <Route path="Users" element={<Users />} />
             <Route path="Users" element={<Users />} />
             <Route path="Users/AddUser" element={<AddUser />} />
             <Route path="Users/View/:id" element={<ViewUserDetails />} />
@@ -111,26 +120,9 @@ function App() {
             <Route path="AddRole" element={<AddRole />} />
             <Route path="ViewAllActivties" element={<ViewAllActivties />} />
           </Route>
-          <Route 
-            path="/AdminLogin" 
-            element={isAuthenticated ? <Navigate to="/Dashboard/Home" replace /> : <AdminLogin />} 
-          />
-          <Route
-            path="/AdminLogin/ForgotPassword"
-            element={<ForgotPassword />}
-          />
-          <Route
-            path="/AdminLogin/VerifayPassword"
-            element={<VerifayPassword />}
-          />
-          <Route
-            path="/AdminLogin/CreateNewPassword"
-            element={<CreateNewPassword />}
-          />
         </Routes>
       </BrowserRouter>
     </SearchProvider>
   );
 }
-
 export default App;

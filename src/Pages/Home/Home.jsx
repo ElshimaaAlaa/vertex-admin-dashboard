@@ -37,7 +37,7 @@ function Home() {
     <div className={`bg-gray-50 min-h-screen p-5 ${isRTL ? "rtl" : "ltr"}`}>
       {/* Statistics Section */}
       <section className="bg-white p-6 rounded-lg shadow-sm mb-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4 rtl:text-[22px]">{t("statistics")}</h3>
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 rtl:text-[20px]">{t("statistics")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <ReportsItem
             icon={HiCurrencyDollar}
@@ -78,7 +78,7 @@ function Home() {
       {/* Dashboard Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <section className="bg-white p-6 rounded-lg shadow-sm">
-          <h4 className="text-lg font-medium text-gray-700 mb-4 rtl:text-[23px]">
+          <h4 className="text-lg font-medium text-gray-700 mb-4 rtl:text-[20px]">
            {t("revenueGenerated")}
           </h4>
           <RevenueChart data={statistics.monthly_income} />
@@ -91,7 +91,7 @@ function Home() {
       {/* Recent Activity */}
       <section className=" p-6 rounded-lg">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-800 rtl:text-[22px]">
+          <h2 className="text-xl font-semibold rtl:text-[20px]">
             {t("recentActivities")}
           </h2>
           <button

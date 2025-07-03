@@ -15,7 +15,7 @@ function EndButtons({ isLoading, onclick }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="p-3 bg-primary font-bold text-white rounded-md w-36 flex items-center justify-center gap-2 rtl:text-[17px]"
+            className="p-3 bg-primary font-bold text-white rounded-md w-36 flex items-center justify-center gap-2 rtl:text-[16px]"
           >
             {isLoading ? (
               <ClipLoader size={22} color="#fff" />
@@ -29,7 +29,7 @@ function EndButtons({ isLoading, onclick }) {
           <button
             onClick={onclick}
             type="button"
-            className="bg-gray-100 font-bold text-gray-400 p-3 w-36 rounded-md rtl:text-[17px]"
+            className="bg-gray-100 font-bold text-gray-400 p-3 w-36 rounded-md rtl:text-[16px]"
           >
             {t("cancel")}
           </button>

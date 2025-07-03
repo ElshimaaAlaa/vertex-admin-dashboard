@@ -117,7 +117,7 @@ function AddUser() {
         <title>Add New User | Vertex</title>
       </Helmet>
       <section className="bg-white rounded-md p-5">
-        <h3 className="font-bold text-17 mb-5 rtl:text-[20px]">{t("AddUser")}</h3>
+        <h3 className="font-bold text-17 mb-5 rtl:text-[19px]">{t("AddUser")}</h3>
 
         {apiError && (
           <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">

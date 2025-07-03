@@ -28,7 +28,7 @@ function VerifayPassword() {
 
   const handleSubmit = async (values) => {
     setLoading(true);
-    const email = localStorage.getItem("Admin Email");
+    const email = localStorage.getItem("admin Email");
     const otp =
       values.otp1 +
       values.otp2 +
@@ -70,13 +70,24 @@ function VerifayPassword() {
       }
     }
   };
+
   useEffect(() => {
-    setIsRTL(i18n.language === "ar");
+    const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+    i18n.changeLanguage(savedLanguage);
+    setIsRTL(savedLanguage === "ar");
+  }, [i18n]);
+  // Update RTL state and localStorage when language changes
+  useEffect(() => {
+    const currentLanguage = i18n.language;
+    setIsRTL(currentLanguage === "ar");
+    localStorage.setItem("selectedLanguage", currentLanguage);
   }, [i18n.language]);
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setShowLanguageDropdown(false);
+    localStorage.setItem("selectedLanguage", lng);
   };
+
   return (
     <div
       className="main-container min-h-screen flex items-center justify-center"
@@ -85,11 +96,10 @@ function VerifayPassword() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Verifay Password</title>
+        <html dir={isRTL ? "rtl" : "ltr"} lang={i18n.language} />
       </Helmet>
       <div
-        className={`verivayContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 rounded-md ${
-          isRTL ? "rtl-style" : ""
-        }`}
+        className={`verivayContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 rounded-md`}
       >
         <div className="flex justify-between items-center">
           <img
@@ -123,8 +133,8 @@ function VerifayPassword() {
             )}
           </div>
         </div>
-        <h1 className="font-bold text-[21px] mt-2 forgotHead">{t("verification")}</h1>
-        <p className="text-secondary mt-2 text-15 domainp">{t("enterVerifayCode")}</p>
+        <h1 className="font-bold text-[21px] mt-2">{t("verification")}</h1>
+        <p className="text-secondary mt-2 text-15 ">{t("enterVerifayCode")}</p>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}

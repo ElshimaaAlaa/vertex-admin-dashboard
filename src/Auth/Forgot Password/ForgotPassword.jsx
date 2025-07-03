@@ -18,7 +18,7 @@ function ForgotPassword() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [isRTL, setIsRTL] = useState(false);
   const { t, i18n } = useTranslation();
-  
+
   useEffect(() => {
     setIsRTL(i18n.language === "ar");
   }, [i18n.language]);
@@ -28,19 +28,16 @@ function ForgotPassword() {
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email(t("invalidEmail"))
-      .required(t("emailRequired")),
+    email: Yup.string().email(t("invalidEmail")).required(t("emailRequired")),
   });
 
-  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     setIsLoading(true);
     try {
       await ForgotPasswordService(values.email);
       navigate("/AdminLogin/VerifayPassword");
     } catch (error) {
       console.error(error.message);
-      setErrors({ email: t("otpSendError") });
     } finally {
       setIsLoading(false);
       setSubmitting(false);
@@ -53,15 +50,18 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="main-container min-h-screen flex items-center justify-center" dir={isRTL ? "rtl" : "ltr"}>
+    <div
+      className="main-container min-h-screen flex items-center justify-center"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <Helmet>
         <meta charSet="utf-8" />
         <title>{t("forgotPasswordTitle")}</title>
         <html dir={isRTL ? "rtl" : "ltr"} lang={i18n.language} />
       </Helmet>
-      <div className={`forgotpasswordContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 rounded-lg p-6 ${
-        isRTL ? "rtl-style" : ""
-      }`}>
+      <div
+        className={`forgotpasswordContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 rounded-lg p-6 `}
+      >
         <div className="flex justify-between items-center">
           <img
             src="/assets/svgs/vertex.svg"
@@ -77,7 +77,11 @@ function ForgotPassword() {
               <IoIosArrowDown size={20} />
             </button>
             {showLanguageDropdown && (
-              <div className={`absolute ${isRTL ? "left-0" : "right-0"} w-14 bg-white rounded-md shadow-lg z-10`}>
+              <div
+                className={`absolute ${
+                  isRTL ? "left-0" : "right-0"
+                } w-14 bg-white rounded-md shadow-lg z-10`}
+              >
                 <button
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => changeLanguage("en")}
@@ -94,13 +98,15 @@ function ForgotPassword() {
             )}
           </div>
         </div>
-        
-        <h1 className="font-bold text-[21px] mt-2 text-start forgotHead">{t("forgotpassword")}</h1>
-        
-        <p className="text-secondary mt-2 text-15 text-start domainp">
+
+        <h1 className="font-bold text-[21px] mt-2 text-start">
+          {t("forgotpassword")}
+        </h1>
+
+        <p className="text-secondary mt-2 text-15 text-start ">
           {t("enterForgotEmail")}
         </p>
-        
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -116,7 +122,7 @@ function ForgotPassword() {
                 active={touched.email}
                 dir={isRTL ? "rtl" : "ltr"}
               />
-              
+
               <div className="mt-3 w-full">
                 <MainBtn
                   text={

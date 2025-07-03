@@ -18,7 +18,7 @@ const ImageUploadSection = ({
       />
       <label
         htmlFor="image-upload-image"
-        className="font-bold flex items-center gap-2 text-14 cursor-pointer rtl:text-[17px]"
+        className="font-bold flex items-center gap-2 text-14 cursor-pointer rtl:text-[16px]"
       >
         <FiUpload size={18} />
         {t("uploadPic")}

@@ -63,10 +63,10 @@ function DeleteShop({ id, onDelete }) {
             className="h-14 w-14 p-1"
           />
         </div>
-        <p className="font-bold w-72 text-center rtl:text-[19px]">
+        <p className="font-bold w-72 text-center rtl:text-[18px]">
           {t("deleteShop")}
         </p>
-        <p className="text-gray-500 text-13 mt-2 w-80 text-center rtl:text-[15px]">
+        <p className="text-gray-500 text-13 mt-2 w-80 text-center rtl:text-[14px]">
           {t("confirm")}
         </p>
          <div
@@ -74,13 +74,13 @@ function DeleteShop({ id, onDelete }) {
           dir={isRTL ? "rtl" : "ltr"}
         >
           <button
-            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32 rtl:text-[17px]"
+            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32 rtl:text-[16px]"
             onClick={() => setShowModal(false)}
           >
            {t("cancel")}
           </button>
           <button
-            className="rounded text-white bg-customred font-bold p-3 w-32 rtl:text-[17px]"
+            className="rounded text-white bg-customred font-bold p-3 w-32 rtl:text-[16px]"
             onClick={handleDeleteShop}
           >
             {isLoading ? (

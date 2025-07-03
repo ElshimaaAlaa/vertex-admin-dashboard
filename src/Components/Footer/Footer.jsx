@@ -24,7 +24,7 @@ function Footer({
         <>
           <button
             type={"submit"}
-            className="bg-primary font-bold text-white rounded-md rtl:text-[18px] p-3 w-40 flex items-center gap-2 justify-center"
+            className="bg-primary font-bold text-white rounded-md rtl:text-[16px] p-3 w-40 flex items-center gap-2 justify-center"
             onClick={saveOnClick}
           >
             {isLoading ? (
@@ -37,7 +37,7 @@ function Footer({
           </button>
           <button
             type={"button"}
-            className="bg-gray-100 font-bold text-gray-400 p-3 rtl:text-[18px] w-40 rounded-md"
+            className="bg-gray-100 font-bold text-gray-400 p-3 rtl:text-[16px] w-40 rounded-md"
             onClick={cancelOnClick}
           >
             {cancelText}

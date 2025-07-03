@@ -4,7 +4,7 @@ const live = localStorage.getItem("live");
 function ResendCode() {
   const { t } = useTranslation();
   const resndCode = async () => {
-    const email = localStorage.getItem("Admin Email");
+    const email = localStorage.getItem("admin Email");
     const response = await axios({
       url: `https://${live}/api/admin/send-otp`,
       method: "POST",
@@ -25,7 +25,7 @@ function ResendCode() {
     <div>
       <p
         onClick={resndCode}
-        className="font-bold text-primary text-15 cursor-pointer"
+        className="font-bold text-primary text-15 cursor-pointer rtl:text-[15px]"
       >
         {t("resend")}
       </p>

@@ -106,8 +106,8 @@ function Plans() {
         <title>Plans | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">{t("planHead")}</p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("plans")}</h3>
+        <p className="text-gray-400 text-13 rtl:text-[15px]">{t("planHead")}</p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[18px]">{t("plans")}</h3>
       </div>
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
         <SearchBar
@@ -140,7 +140,7 @@ function Plans() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 border-t border-b text-left rtl:text-right rtl:text-[16px]">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
@@ -150,19 +150,19 @@ function Plans() {
                         {t("title")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("duration")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("salePrice")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("durationPrice")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("isPopular")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("publish")}
                     </th>
                     <th className="px-3 py-3 text-center border w-24">

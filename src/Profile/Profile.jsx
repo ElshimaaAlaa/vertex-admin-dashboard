@@ -15,8 +15,8 @@ export default function ProfileMenu() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(false);
-  const userImage = sessionStorage.getItem("admin pic");
-  const userName = sessionStorage.getItem("admin name");
+  const userImage = localStorage.getItem("admin pic");
+  const userName = localStorage.getItem("admin name");
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
   const [personalInfo, setPersonalInfo] = useState({});
@@ -82,7 +82,7 @@ export default function ProfileMenu() {
           ref={dropdownRef}
           className="absolute rtl:-right-52 right-0 mt-2 w-300 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 px-3 flex flex-col gap-3"
         >
-          <div className="flex items-center gap-4 py-2">
+          <div className="flex items-center gap-4 py-2 rtl:flex-row-reverse">
             <div className="w-14 h-14 rounded-full overflow-hidden">
               <img
                 src={userImage || defaultImage}
@@ -95,9 +95,9 @@ export default function ProfileMenu() {
                 }}
               />
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 ">
               <span className="font-bold text-14 mt-2">{userName}</span>
-              <span className="text-14 text-gray-500">Admin</span>
+              <span className="text-14 text-gray-500 rtl:text-left">Admin</span>
             </div>
             <ChevronDown className="w-5 h-5 font-bold text-black ml-auto" />
           </div>

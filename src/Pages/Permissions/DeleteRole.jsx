@@ -63,19 +63,19 @@ function DeleteRole({ id, onDelete }) {
             className="h-14 w-14 p-1"
           />
         </div>
-        <p className="font-bold w-72 text-center rtl:text-[19px] ">{t("deleteRole")}</p>
+        <p className="font-bold w-72 text-center rtl:text-[17px] ">{t("deleteRole")}</p>
         <div
           className={`flex gap-3 mt-5 mb-3 ${isRTL ? "flex-row-reverse" : ""}`}
           dir={isRTL ? "rtl" : "ltr"}
         >
           <button
-            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32 rtl:text-[17px]"
+            className="rounded p-3 bg-gray-100 text-gray-400 font-bold w-32 rtl:text-[16px]"
             onClick={() => setShowModal(false)}
           >
             {t("cancel")}
           </button>
           <button
-            className="rounded text-white bg-customred font-bold p-3 w-32 rtl:text-[17px]"
+            className="rounded text-white bg-customred font-bold p-3 w-32 rtl:text-[16px]"
             onClick={handleDeleteRole}
           >
             {isLoading ? (

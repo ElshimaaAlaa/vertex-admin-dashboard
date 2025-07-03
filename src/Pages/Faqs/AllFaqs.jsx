@@ -100,7 +100,7 @@ function AllFaqs({ refreshTrigger }) {
         {displayCount < faqsData.length && (
           <button
             onClick={showMoreFaqs}
-            className="text-center text-15 font-bold bg-primary text-white cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[17px]"
+            className="text-center text-15 font-bold bg-primary text-white cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[15px]"
           >
             {t("showMore")}
           </button>
@@ -108,7 +108,7 @@ function AllFaqs({ refreshTrigger }) {
         {displayCount > 5 && (
           <button
             onClick={showLessFaqs}
-            className="text-center text-15 font-bold bg-gray-50 text-gray-500 cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[17px]"
+            className="text-center text-15 font-bold bg-gray-50 text-gray-500 cursor-pointer w-44 px-4 py-2 rounded-lg hover:bg-opacity-90 transition rtl:text-[15px]"
           >
             {t("showLess")}
           </button>

@@ -37,7 +37,7 @@ function CreateNewPassword() {
   const handleSubmit = async (values) => {
     setLoading(true);
     setError(null);
-    const email = localStorage.getItem("Email Admin");
+    const email = localStorage.getItem("admin Email");
     const token = localStorage.getItem("access token");
     try {
       await CreateNewPasswordService(
@@ -47,7 +47,7 @@ function CreateNewPassword() {
         token
       );
       setShowSuccessModal(true);
-      localStorage.removeItem("Email");
+      localStorage.removeItem("admin Email");
       setTimeout(() => navigate("/AdminLogin"), 2500);
     } catch (error) {
       setError(error);
@@ -55,20 +55,37 @@ function CreateNewPassword() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+    i18n.changeLanguage(savedLanguage);
+    setIsRTL(savedLanguage === "ar");
+  }, [i18n]);
+  // Update RTL state and localStorage when language changes
+  useEffect(() => {
+    const currentLanguage = i18n.language;
+    setIsRTL(currentLanguage === "ar");
+    localStorage.setItem("selectedLanguage", currentLanguage);
+  }, [i18n.language]);
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setShowLanguageDropdown(false);
+    localStorage.setItem("selectedLanguage", lng);
   };
-  useEffect(() => {
-    setIsRTL(i18n.language === "ar");
-  }, [i18n.language]);
   return (
-    <div className="p-4 sm:p-8 md:p-16 main-container min-h-screen flex items-center justify-center" dir={isRTL ? "rtl" :"ltr"}>
+    <div
+      className="p-4 sm:p-8 md:p-16 main-container min-h-screen flex items-center justify-center"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <Helmet>
         <meta charSet="utf-8" />
         <title>Create New Password</title>
+        <html dir={isRTL ? "rtl" : "ltr"} lang={i18n.language} />
       </Helmet>
-      <div className={`CreateNewPasswordContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 ${isRTL ? "rtl-style":""}`}>
+      <div
+        className={`CreateNewPasswordContainer w-96 lg:w-450 md:w-450 sm:w-450 xs:w-450 s:w-450 bg-gray-50 ${
+          isRTL ? "rtl-style" : ""
+        }`}
+      >
         <div className="flex justify-between items-center">
           <img
             src="/assets/svgs/vertex.svg"
@@ -101,7 +118,9 @@ function CreateNewPassword() {
             )}
           </div>
         </div>
-        <h1 className="font-bold mt-2 text-[21px] forgotHead">{t("createNewPassword")}</h1>
+        <h1 className="font-bold mt-2 text-[21px] forgotHead">
+          {t("createNewPassword")}
+        </h1>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -149,8 +168,10 @@ function CreateNewPassword() {
               alt="success"
               className="w-32 mt-6"
             />
-            <h2 className="font-bold text-xl mt-4">{t("passwordChange")}</h2>
-            <p className="w-80 text-secondary text-14 text-center mt-2">
+            <h2 className="font-bold text-xl mt-4 rtl:text-[18px]">
+              {t("passwordChange")}
+            </h2>
+            <p className="w-80 text-secondary text-14 text-center mt-2 rtl:text-[16px]">
               {t("successChange")}
             </p>
           </div>

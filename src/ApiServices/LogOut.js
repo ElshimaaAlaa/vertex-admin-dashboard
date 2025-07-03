@@ -14,7 +14,7 @@ export const logOut = async () => {
     });
     if (response.status === 200) {
       console.log("Logged out successfully");
-      localStorage.removeItem("token");
+      localStorage.clear();
       return true;
     } else {
       console.error("Failed to log out");

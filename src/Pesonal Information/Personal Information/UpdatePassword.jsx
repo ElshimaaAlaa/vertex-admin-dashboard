@@ -35,11 +35,11 @@ function UpdatePassword() {
   };
   const validationSchema = Yup.object({
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters long")
-      .required("Password is required"),
+      .min(8, t("passwordLenght"))
+      .required(t("passwordRequired")),
     password_confirmation: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
+      .oneOf([Yup.ref("password"), null], t("matchPassword"))
+      .required(t("confirmRequired")),
   });
 
   const handleSubmit = async (values) => {
@@ -64,7 +64,7 @@ function UpdatePassword() {
   return (
     <div>
       <button
-        className="flex items-center gap-2 text-15 border border-primary rounded-md p-3 text-primary mt-5"
+        className="flex items-center gap-2 text-15 border border-primary rounded-md p-3 text-primary mt-5 rtl:text-[16px]"
         onClick={() => setShowModal(true)}
         aria-label="Update password"
       >
@@ -83,7 +83,7 @@ function UpdatePassword() {
           <IoClose size={23} />
         </button>
         <div className="w-350">
-          <h1 className="text-primary text-[17px] font-bold ps-4 pb-4 pt-5">
+          <h1 className="text-primary text-[17px] font-bold ps-4 pb-4 pt-5 rtl:text-[21px]">
             {t("updatePassword")}
           </h1>
           <Formik
@@ -91,7 +91,7 @@ function UpdatePassword() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="ps-3 pb-3">
+            <Form className="ps-3 pb-3 rtl:pe-3">
               <PasswordInput
                 name="password"
                 placeholder={t("newPassword")}
@@ -116,7 +116,11 @@ function UpdatePassword() {
               <div className="mt-3">
                 <MainBtn
                   text={
-                    isLoading ? <ClipLoader color="#fff" size={22} /> : t("save")
+                    isLoading ? (
+                      <ClipLoader color="#fff" size={22} />
+                    ) : (
+                      t("save")
+                    )
                   }
                 />
               </div>
@@ -135,7 +139,7 @@ function UpdatePassword() {
             alt="success"
             className="w-32 mt-6"
           />
-          <h1 className="font-bold">{t("successUpdatePass")}</h1>
+          <h1 className="font-bold rtl:text-[19px]">{t("successUpdatePass")}</h1>
         </div>
       </SuccessModal>
     </div>

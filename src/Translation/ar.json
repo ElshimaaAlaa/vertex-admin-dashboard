@@ -174,5 +174,7 @@
   "logout": "تسجيل الخروج",
   "sureLogout":"هل أنت متأكد من رغبتك في تسجيل الخروج؟",
   "successAddPlan":"تم الإضافة بنجاح",
-  "noMatchResults":"لا يوجد نتائج بحث مطابقة"
+  "noMatchResults":"لا يوجد نتائج بحث مطابقة",
+  "phoneCopy":"تم نسخ رقم الهاتف إلى الحافظة!",
+  "noPhone":"No phone number to copy"
 }

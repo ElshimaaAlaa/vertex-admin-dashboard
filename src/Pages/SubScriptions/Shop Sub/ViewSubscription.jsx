@@ -37,47 +37,47 @@ function ViewSubscription() {
         <title>View Shop Subscriptions | Vertex</title>
       </Helmet>
       <section className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">
           {t("shopSubHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16 rtl:text[19px]">{t("viewShopSubHead")}</h3>
+        <h3 className="font-bold mt-2 text-16 rtl:text[18px]">{t("viewShopSubHead")}</h3>
       </section>
       <section className="bg-white p-5 rounded-md mx-5 mt-3 flex gap-8">
         <div>
-          <h3 className="font-bold my-3 rtl:text-[20px] rtl:ms-1">{t("shopSub")}</h3>
+          <h3 className="font-bold my-3 rtl:text-[19px] rtl:ms-1">{t("shopSub")}</h3>
           <div className="rounded-md border-1 border-gray-200 py-4 px-5 w-330">
-            <p className="text-gray-400 text-14 mb-2 rtl:text-[16px]">{t("status")}</p>
+            <p className="text-gray-400 text-14 mb-2 rtl:text-[15px]">{t("status")}</p>
             <span
               className={
                 data.status === "active"
-                  ? "bg-[#E7F6E5] text-[#28A513] rounded-md py-2 px-4 "
-                  : "bg-red-50 text-red-600 rounded-md p-2 font-bold"
+                  ? "bg-[#E7F6E5] text-[#28A513] rounded-md py-2 px-4 text-13 "
+                  : "bg-red-50 text-red-600 rounded-md text-13 p-2 font-bold"
               }
             >
               {data.status}
             </span>
-            <p className="text-gray-400 text-14 mt-5 rtl:text-[16px]">{t("plan")}</p>
+            <p className="text-gray-400 text-14 mt-5 rtl:text-[15px]">{t("plan")}</p>
             <span className="text-14">{plandata.name}</span>
-            <p className="text-gray-400 text-14 mt-4 rtl:text-[16px]">{t("duration")}</p>
+            <p className="text-gray-400 text-14 mt-4 rtl:text-[15px]">{t("duration")}</p>
             <span className="text-14">{plandata.duration}</span>
-            <p className="text-gray-400 text-14 mt-4 rtl:text-[16px]">{t("salePrice")}</p>
+            <p className="text-gray-400 text-14 mt-4 rtl:text-[15px]">{t("salePrice")}</p>
             <span className="text-14">{plandata.sale_price}</span>
-            <p className="text-gray-400 text-14 mt-4 rtl:text-[16px]">{t("durationPrice")}</p>
+            <p className="text-gray-400 text-14 mt-4 rtl:text-[15px]">{t("durationPrice")}</p>
             <span className="text-14">{plandata?.duration_price || "___"}</span>
           </div>
         </div>
         <div>
-          <h3 className="font-bold my-3 rtl:text-[20px] rtl:ms-1">{t("transactionInfo")}</h3>
+          <h3 className="font-bold my-3 rtl:text-[19px] rtl:ms-1">{t("transactionInfo")}</h3>
           <div className="rounded-md border-1 border-gray-200 px-5 py-4 w-900">
             <div className="flex gap-72">
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("transactionId")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("transactionId")}</p>
                 <span className="text-14">
                   {data.transaction_id || "unavailable"}
                 </span>
               </div>
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("userName")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("userName")}</p>
                 <span className="text-14">
                   {data.user_name || "unavailable"}
                 </span>
@@ -85,11 +85,11 @@ function ViewSubscription() {
             </div>
             <div className="flex gap-80 mt-3">
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("totalPrice")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("totalPrice")}</p>
                 <span className="text-14">{data.price || "unavailable"}</span>
               </div>
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("paymentMethod")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("paymentMethod")}</p>
                 <span className="text-14">
                   {data.payment_method || "unavailable"}
                 </span>
@@ -97,13 +97,13 @@ function ViewSubscription() {
             </div>
             <div className="flex gap-72 mt-3">
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("purchaseDate")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("purchaseDate")}</p>
                 <span className="text-14">
                   {data.start_date || "unavailable"}
                 </span>
               </div>
               <div>
-                <p className="text-gray-400 text-14 rtl:text-[16px]">{t("expireDate")}</p>
+                <p className="text-gray-400 text-14 rtl:text-[15px]">{t("expireDate")}</p>
                 <span className="text-14">
                   {data.end_date || "unavailable"}
                 </span>

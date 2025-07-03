@@ -77,10 +77,10 @@ function AddPlan() {
       </Helmet>
 
       <section className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">
         {t("addPlanHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16  rtl:text-[19px]">{t("addPlan")}</h3>
+        <h3 className="font-bold mt-2 text-16  rtl:text-[18px]">{t("addPlan")}</h3>
       </section>
 
       <Formik
@@ -101,7 +101,7 @@ function AddPlan() {
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-16 mb-3  rtl:text-[19px]">{t("pricing")}</h3>
+                <h3 className="font-bold text-16 mb-3  rtl:text-[17px]">{t("pricing")}</h3>
                 <div className="flex gap-2 items-center">
                   <InputField name={"price"} placeholder={t("price")} required />
                   <InputField name={"sale_price"} placeholder={t("salePrice")} />
@@ -118,7 +118,7 @@ function AddPlan() {
               </div>
 
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("feature")}</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[17px]">{t("feature")}</h3>
                 <FeaturesDropdown
                   features={AVAILABLE_FEATURES}
                   values={values}
@@ -128,7 +128,7 @@ function AddPlan() {
 
               {/* Most Popular Plan Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">
+                <h3 className="font-bold text-15 mb-3 rtl:text-[17px]">
                  {t("isPopular")}
                 </h3>
                 <div className="flex items-center gap-2">
@@ -170,14 +170,14 @@ function AddPlan() {
                         </svg>
                       )}
                     </span>
-                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[16px] ">{t("mostPopular")}</p>
+                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[15px] ">{t("mostPopular")}</p>
                   </label>
                 </div>
               </div>
 
               {/* Publish Status Toggle */}
               <div className="rounded-md border-1 border-gray-200 bg-gray-50 p-5 mt-3">
-                <h3 className="font-bold text-15 mb-3 rtl:text-[19px]">{t("status")}</h3>
+                <h3 className="font-bold text-15 mb-3 rtl:text-[17px]">{t("status")}</h3>
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center cursor-pointer">
                     <input
@@ -214,7 +214,7 @@ function AddPlan() {
                         </svg>
                       )}
                     </span>
-                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[16px]">{t("publish")}</p>
+                    <p className="text-15 text-gray-500 ml-2 rtl:mr-2 rtl:text-[15px]">{t("publish")}</p>
                   </label>
                 </div>
               </div>

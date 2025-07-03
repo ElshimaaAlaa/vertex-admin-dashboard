@@ -73,7 +73,7 @@ function Support() {
         <meta property="og:url" content="https://vertex.com/support" />
       </Helmet>
 
-      <h1 className="font-bold text-center text-17 mt-5 m-auto w-330 rtl:text-[21px]">
+      <h1 className="font-bold text-center text-17 mt-5 m-auto w-330 rtl:text-[20px]">
         {t("send")}
       </h1>
       <div className={`flex justify-center gap-5 mx-20 ${isRTL?"flex-row-reverse":""}`}>
@@ -86,10 +86,10 @@ function Support() {
               className="w-14 mt-4 mb-2"
             />
           </div>
-          <h2 className="font-bold text-17 text-center mb-1 rtl:text-[19px] ">
+          <h2 className="font-bold text-17 text-center mb-1 rtl:text-[18px] ">
             {t("sendProblem")}
           </h2>
-          <p className="text-gray-400 text-14 text-center mb-2 rtl:text-[15px]  ">
+          <p className="text-gray-400 text-14 text-center mb-2 rtl:text-[14px]  ">
             {t("helpYou")}
           </p>
 

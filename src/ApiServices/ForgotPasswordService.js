@@ -13,7 +13,7 @@ export const ForgotPasswordService = async (email) => {
       data: { email },
     });
     if (response.status === 200) {
-      localStorage.setItem("Admin Email", email);
+      localStorage.setItem("admin Email", email);
       return response.data;
     }
   } catch (error) {

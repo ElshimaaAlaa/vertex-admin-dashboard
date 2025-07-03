@@ -46,7 +46,7 @@ const RevenueChart = ({ data }) => {
   const { t } = useTranslation();
   return (
     <div className="relative z-10 ">
-      <h3 className="font-bold text-17 rtl:text-[18px]">{t("monthlyRevenue")}</h3>
+      <h3 className="font-bold text-17 rtl:text-[17px]">{t("monthlyRevenue")}</h3>
       <div className="flex items-center justify-between my-3">
         <p className="text-primary font-bold text-lg">
           ${chartData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}

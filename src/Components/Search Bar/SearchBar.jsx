@@ -23,7 +23,7 @@ function SearchBar({ onclick, value, onchange, text, icon }) {
           placeholder={t("search")}
           value={value}
           onChange={onchange}
-          className="w-full  h-12 pl-10 rtl:pr-10 pr-4 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary rtl:placeholder:text-[17px]"
+          className="w-full  h-12 pl-10 rtl:pr-10 pr-4 py-4 bg-muted/50 rounded-md text-sm focus:outline-none border-2 border-gray-200 bg-gray-50 placeholder:text-15 focus:border-primary rtl:placeholder:text-[16px]"
         />
       </div>
       <div
@@ -31,7 +31,7 @@ function SearchBar({ onclick, value, onchange, text, icon }) {
         onClick={onclick}
       >
         <div className="font-bold">{icon}</div>
-        <p className="text-16 font-bold rtl:text-[19px]">{text}</p>
+        <p className="text-16 font-bold rtl:text-[16px]">{text}</p>
       </div>
     </div>
   );

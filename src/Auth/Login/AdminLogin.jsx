@@ -28,8 +28,8 @@ function AdminLogin() {
   });
 
   useEffect(() => {
-    const savedEmail = sessionStorage.getItem("Email");
-    const savedPassword = sessionStorage.getItem("password");
+    const savedEmail = localStorage.getItem("admin Email");
+    const savedPassword = localStorage.getItem("admin password");
     if (savedEmail && savedPassword) {
       setInitialValues({
         email: savedEmail,
@@ -51,20 +51,19 @@ function AdminLogin() {
     setLoading(true);
     setError(null);
     try {
-      await loginService(values.email, values.password);
       if (values.rememberMe) {
-        sessionStorage.setItem("Email", values.email);
-        sessionStorage.setItem("password", values.password);
+        localStorage.setItem("admin Email", values.email);
+        localStorage.setItem("admin password", values.password);
       } else {
-        sessionStorage.removeItem("Email");
-        sessionStorage.removeItem("password");
+        localStorage.removeItem("admin Email");
+        localStorage.removeItem("admin password");
       }
+      await loginService(values.email, values.password);
       setTimeout(() => {
         navigate("/Dashboard/Home");
       }, 1500);
     } catch (error) {
       console.error(error);
-      setError(t("invalidCredentials"));
     } finally {
       setLoading(false);
     }
@@ -87,9 +86,7 @@ function AdminLogin() {
         <html dir={isRTL ? "rtl" : "ltr"} lang={i18n.language} />
       </Helmet>
       <div
-        className={`loginContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md ${
-          isRTL ? "rtl-style" : ""
-        }`}
+        className={`loginContainer w-[350px] p-5 lg:p-7 md:p-7 lg:w-450 md:w-450 sm:w-80 xs:w-450 s:w-80 bg-gray-50 rounded-md`}
       >
         <div className="flex justify-between items-center">
           <img
@@ -128,7 +125,9 @@ function AdminLogin() {
           </div>
         </div>
         <div className={`flex items-center gap-3 mt-2 `}>
-          <h1 className={`font-bold text-[21px] loginHead `}>{t("welcome")}</h1>
+          <h1 className={`font-bold text-[21px] rtl:text-[25px] `}>
+            {t("welcome")}
+          </h1>
           <img
             src="/assets/images/waving-hand_svgrepo.com.png"
             alt="welcome-back"

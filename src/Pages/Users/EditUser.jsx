@@ -147,7 +147,7 @@ function EditUserInfo() {
                   />
                   <label
                     htmlFor="imageUpload"
-                    className="cursor-pointer flex items-center gap-2 rtl:text-[17px]"
+                    className="cursor-pointer flex items-center gap-2 rtl:text-[16px]"
                   >
                     <LuUpload size={18} />
                     {t("uploadPic")}

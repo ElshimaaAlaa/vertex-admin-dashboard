@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { Helmet } from "react-helmet";
-// import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 const PLANS = [
   {
@@ -80,7 +79,7 @@ function Pricing() {
 
   if (!selectedPlan) {
     return (
-      <p className="text-gray-400 text-15 text-center">{t("noPlan")}</p>
+      <p className="text-gray-400 text-15 text-center rtl:text-[18px]">{t("noPlan")}</p>
     );
   }
 
@@ -91,7 +90,7 @@ function Pricing() {
       </Helmet>
 
       <div className="">
-        <h1 className="text-[18px] font-bold">{t("currentPlan")}</h1>
+        <h1 className="text-[18px] font-bold rtl:text-[20px]">{t("currentPlan")}</h1>
         <div className="border w-300 rounded-md p-5 mt-3">
           <div className="">
             <div className="flex flex-col items-center gap-3">

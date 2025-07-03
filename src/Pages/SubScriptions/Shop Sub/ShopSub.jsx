@@ -63,10 +63,10 @@ function ShopSub() {
         <title>Shop Subscriptions | Vertex</title>
       </Helmet>
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">
+        <p className="text-gray-400 text-13 rtl:text-[15px]">
           {t("shopSubHead")}
         </p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">
+        <h3 className="font-bold mt-2 text-16 rtl:text-[18px]">
           {t("shopSub")}
         </h3>
       </div>
@@ -112,19 +112,19 @@ function ShopSub() {
                         {t("userName")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("transactionId")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("plan")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("duration")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("paymentMethod")}
                     </th>
-                    <th className="px-3 py-3 text-left border w-24 rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-left border w-24 rtl:text-right rtl:text-[16px]">
                       {t("status")}
                     </th>
                   </tr>
@@ -161,7 +161,7 @@ function ShopSub() {
                       <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-180 ">
                         {sub.payment_method || "unavailable"}
                       </td>
-                      <td className="px-3 py-3 border-t border-r text-gray-600 text-14 w-32 ">
+                      <td className="px-3 py-3 border-t border-r text-gray-600 text-13 w-32 ">
                         <span
                           className={
                             sub.status === "active"

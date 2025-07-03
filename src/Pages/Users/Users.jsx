@@ -24,18 +24,17 @@ function Users() {
   const [isRTL, setIsRTL] = useState(false);
   const copyToClipboard = (text) => {
     if (!text) {
-      toast.warning("No phone number to copy");
+      toast.warning(t("noPhone"));
       return;
     }
     //to copy phone number
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        toast.success("Phone number copied to clipboard!");
+        toast.success(t("phoneCopy"));
       })
       .catch((err) => {
         console.error("Failed to copy:", err);
-        toast.error("Failed to copy phone number");
       });
   };
 
@@ -105,8 +104,8 @@ function Users() {
       </Helmet>
 
       <div className="bg-white p-5 mx-5 rounded-md">
-        <p className="text-gray-400 text-13 rtl:text-[16px]">{t("userMenu")}</p>
-        <h3 className="font-bold mt-2 text-16 rtl:text-[19px]">{t("users")}</h3>
+        <p className="text-gray-400 text-13 rtl:text-[15px]">{t("userMenu")}</p>
+        <h3 className="font-bold mt-2 text-16 rtl:text-[18px]">{t("users")}</h3>
       </div>
 
       <div className="bg-white rounded-md p-5 mt-3 mx-5">
@@ -141,7 +140,7 @@ function Users() {
               <table className="bg-white min-w-full table">
                 <thead>
                   <tr>
-                    <th className="px-3 py-3 text-16 border-t border-b text-left cursor-pointer rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 border-t border-b text-left cursor-pointer rtl:text-right rtl:text-[16px]">
                       <p className="flex items-center gap-3">
                         <input
                           type="checkbox"
@@ -151,13 +150,13 @@ function Users() {
                         {t("name")}
                       </p>
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("phone")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("userRole")}
                     </th>
-                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[18px]">
+                    <th className="px-3 py-3 text-16 text-left border rtl:text-right rtl:text-[16px]">
                       {t("addedDate")}
                     </th>
                     <th className="px-3 py-3 text-center border w-24">
@@ -246,8 +245,8 @@ function Users() {
               containerClassName="flex items-center justify-end mt-5 "
               pageClassName="px-3 py-1 text-14 text-gray-400 rounded "
               activeClassName="bg-customOrange-lightOrange text-primary"
-              previousLabel={<ChevronLeft className="w-5 h-5 text-primary" />}
-              nextLabel={<ChevronRight className="w-5 h-5 text-primary" />}
+              previousLabel={isRTL?<ChevronRight className="w-5 h-5 text-primary" /> : <ChevronLeft className="w-5 h-5 text-primary" />}
+              nextLabel={isRTL ? <ChevronLeft className="w-5 h-5 text-primary" />:<ChevronRight className="w-5 h-5 text-primary" />}
               previousClassName={`px-3 py-1 rounded ${
                 currentPage === 0
                   ? "opacity-50 cursor-not-allowed"
