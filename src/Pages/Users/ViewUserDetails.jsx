@@ -11,7 +11,7 @@ function ViewUserDetails() {
   const [userInfo, setUserInfo] = useState({});
   const live = localStorage.getItem("live");
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t } = useTranslation(); 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
