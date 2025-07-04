@@ -44,11 +44,23 @@ function ForgotPassword() {
     }
   };
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setShowLanguageDropdown(false);
-  };
-
+   useEffect(() => {
+      const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+      i18n.changeLanguage(savedLanguage);
+      setIsRTL(savedLanguage === "ar");
+    }, [i18n]);
+    // Update RTL state and localStorage when language changes
+    useEffect(() => {
+      const currentLanguage = i18n.language;
+      setIsRTL(currentLanguage === "ar");
+      localStorage.setItem("selectedLanguage", currentLanguage);
+    }, [i18n.language]);
+    const changeLanguage = (lng) => {
+      i18n.changeLanguage(lng);
+      setShowLanguageDropdown(false);
+      localStorage.setItem("selectedLanguage", lng);
+    };
+  
   return (
     <div
       className="main-container min-h-screen flex items-center justify-center"
